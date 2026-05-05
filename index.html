@@ -3,422 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NCCropBench — Agricultural Instruction Tuning Benchmark</title>
-
-<!-- SEO & Open Graph -->
-<meta name="description" content="NCBench: A domain-specific instruction tuning benchmark for agricultural LLMs, targeting soybean and sweetpotato farming in the US. Built on the CROP dataset methodology.">
-<meta property="og:title" content="NCBench — Agricultural Instruction Tuning Benchmark">
-<meta property="og:description" content="68,210 QA pairs across 24 topics for rice and corn. Extending to soybean and sweetpotato for US agriculture.">
-<meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="NCBench — Agricultural LLM Benchmark">
-<meta name="twitter:description" content="Interactive explorer for the CROP dataset. 68,210 QA pairs, 24 topics, 2 crops.">
-
-<!-- Emoji favicon -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
-
+<title>NC Soybean — NCBench</title>
+<meta name="description" content="NC Soybean deep-dive: production guide, grower resources, county data, and QA pairs for agricultural LLM instruction tuning.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫘</text></svg>">
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
-
 <style>
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    background: #ffffff;
-    color: #222;
-    scroll-behavior: smooth;
-}
-
-.container {
-    max-width: 960px;
-    margin: auto;
-    padding: 40px 20px;
-}
-
-h1 {
-    text-align: center;
-    font-size: 36px;
-}
-
-.authors {
-    text-align: center;
-    margin-top: 10px;
-    font-size: 18px;
-}
-
-.affiliation {
-    text-align: center;
-    color: gray;
-    margin-bottom: 20px;
-}
-
-.links {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.links a {
-    margin: 0 10px;
-    color: #1565c0;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.section {
-    margin-bottom: 50px;
-}
-
-pre {
-    background: #f4f4f4;
-    padding: 15px;
-}
-
-.card {
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 8px;
-    min-width: 150px;
-}
-
-.footer {
-    text-align: center;
-    color: gray;
-    margin-top: 50px;
-}
-
-/* layout */
-.explorer-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
-
-.explorer-inner {
-    display: flex;
-    gap: 30px;
-}
-
-.panel {
-    width: 320px;
-    padding: 18px;
-    height: 550px;
-    max-height: 550px;
-    overflow-y: auto;
-    background: #ffffff;
-    border: 1px solid #cfcfcf;
-    border-left: 4px solid #cfcfcf;
-    border-radius: 6px;
-    transition: border-color 0.5s ease, background 0.5s ease;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
-    align-self: flex-start;
-}
-
-/* custom scrollbar */
-.panel::-webkit-scrollbar {
-    width: 6px;
-}
-.panel::-webkit-scrollbar-track {
-    background: transparent;
-}
-.panel::-webkit-scrollbar-thumb {
-    background: var(--thumb-color, #cfcfcf);
-    border-radius: 10px;
-    transition: background 0.3s;
-}
-.panel::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-}
-
-.panel h3 {
-    background: #e6e6e6;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: 16px;
-    margin-bottom: 15px;
-    transition: background 0.5s ease, color 0.5s ease;
-}
-
-/* topic badge */
-.topic-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    background: #e6e6e6;
-    color: #444;
-    transition: background 0.5s ease, color 0.5s ease;
-}
-
-/* question count */
-.qa-count {
-    font-size: 11px;
-    color: #888;
-    margin-bottom: 14px;
-    letter-spacing: 0.03em;
-}
-
-/* each question card */
-.qa-card {
-    border-radius: 6px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    border: 1px solid #e0e0e0;
-    transition: border-color 0.4s ease;
-}
-
-.qa-card-question {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 10px 12px;
-    cursor: pointer;
-    background: #fafafa;
-    font-size: 13px;
-    font-weight: 600;
-    color: #222;
-    line-height: 1.4;
-    transition: background 0.2s ease;
-    user-select: none;
-}
-
-.qa-card-question:hover {
-    background: #f0f0f0;
-}
-
-.qa-card-chevron {
-    flex-shrink: 0;
-    margin-top: 2px;
-    font-size: 10px;
-    color: #999;
-    transition: transform 0.25s ease;
-}
-
-.qa-card-answer {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    font-size: 13px;
-    color: #444;
-    line-height: 1.6;
-    background: #fff;
-    padding: 0 12px;
-    border-top: 0px solid transparent;
-}
-
-.qa-card.open .qa-card-answer {
-    max-height: 400px;
-    padding: 10px 12px;
-    border-top: 1px solid #e0e0e0;
-}
-
-.qa-card.open .qa-card-chevron {
-    transform: rotate(90deg);
-}
-
-/* sticky nav */
-.topnav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(6px);
-    border-bottom: 1px solid #eee;
-    padding: 8px 0;
-    text-align: center;
-}
-.topnav a {
-    display: inline-block;
-    margin: 0 8px;
-    padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #555;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
-}
-.topnav a:hover {
-    background: #f0f0f0;
-    color: #222;
-}
-.topnav a.active {
-    background: #2e7d32;
-    color: #fff;
-}
-
-/* progress bar */
-#progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    width: 0%;
-    background: linear-gradient(90deg, #6a994e, #d4a72c);
-    z-index: 200;
-    transition: width 0.1s linear;
-}
-
-/* section anchor links */
-.section h2 {
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
-    position: relative;
-}
-.section h2 .anchor-link {
-    display: none;
-    margin-left: 8px;
-    font-size: 18px;
-    color: #ccc;
-    text-decoration: none;
-    vertical-align: middle;
-    font-weight: 400;
-}
-.section h2 .anchor-link:hover {
-    color: #666;
-}
-.section h2:hover .anchor-link {
-    display: inline;
-}
-
-/* inline bar for table */
-.bar-cell {
-    position: relative;
-    padding-right: 50px !important;
-}
-.bar-cell .bar-bg {
-    position: absolute;
-    left: 4px;
-    top: 50%;
-    transform: translateY(-50%);
-    height: 14px;
-    border-radius: 3px;
-    opacity: 0.18;
-}
-.bar-cell .bar-val {
-    position: relative;
-    z-index: 1;
-}
-
-/* open-book toggle */
-.toggle-wrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #f4f4f4;
-    border-radius: 20px;
-    padding: 3px 4px;
-    font-size: 12px;
-    font-weight: 600;
-    margin-left: 12px;
-    vertical-align: middle;
-}
-.toggle-wrap button {
-    border: none;
-    background: transparent;
-    padding: 4px 12px;
-    border-radius: 16px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #777;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.toggle-wrap button.active {
-    background: #2e7d32;
-    color: #fff;
-}
-
-/* loading skeleton shimmer */
-@keyframes shimmer {
-  0% { background-position: -200px 0; }
-  100% { background-position: 200px 0; }
-}
-.skeleton {
-    height: 14px;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 400px 100%;
-    animation: shimmer 1.5s infinite;
-}
-
-/* copy button */
-.copy-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: none;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 3px 8px;
-    font-size: 11px;
-    color: #888;
-    cursor: pointer;
-    transition: all 0.2s;
-    float: right;
-    margin-top: -2px;
-}
-.copy-btn:hover {
-    border-color: #999;
-    color: #555;
-    background: #f8f8f8;
-}
-.copy-btn.copied {
-    border-color: #4caf50;
-    color: #4caf50;
-}
-
-/* keyboard focus ring on outer segments */
-.segment-focused {
-    outline: 2px solid #333;
-    outline-offset: 2px;
-}
-
-/* county table accordion */
-.county-row td {
-    cursor: pointer;
-}
-.county-row:hover td {
-    background: #f5f5f5 !important;
-}
-.county-detail {
-    display: none;
-}
-.county-detail td {
-    padding: 8px 14px !important;
-    background: #fafafa;
-    cursor: default;
-}
-.county-detail ul {
-    margin: 0;
-    padding: 0 0 0 16px;
-    font-size: 12px;
-    line-height: 1.8;
-}
-.county-detail ul a {
-    color: #1565c0;
-    text-decoration: none;
-}
-.county-detail ul a:hover {
-    text-decoration: underline;
-}
-.county-detail .detail-label {
-    font-size: 11px;
-    font-weight: 700;
-    color: #888;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-}
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h1 { text-align: center; font-size: 32px; color: #8c6d00; }
+h2 { border-bottom: 2px solid #f0e6c0; padding-bottom: 5px; color: #333; }
+h3 { color: #8c6d00; }
+a { color: #8c6d00; }
+a:hover { color: #d4a72c; }
+.section { margin-bottom: 50px; }
+.card { background: #fdf8ec; padding: 15px; border-radius: 8px; min-width: 150px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #f0e6c0; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #8c6d00; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+.topnav a:hover { background: #fdf8ec; }
+.topnav a.back { color: #999; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #f6e8b1, #8c6d00); z-index: 200; }
+.chapter-list { list-style: none; padding: 0; margin: 0; }
+.chapter-item { border: 1px solid #e8dbb0; border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.3s; }
+.chapter-item:hover { border-color: #d4a72c; }
+.chapter-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; background: #fdf8ec; font-size: 14px; font-weight: 600; color: #333; user-select: none; transition: background 0.2s; }
+.chapter-header:hover { background: #f6e8b1; }
+.chapter-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #d4a72c; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.chapter-chevron { margin-left: auto; font-size: 10px; color: #bbb; transition: transform 0.25s; }
+.chapter-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 16px; font-size: 13px; color: #555; line-height: 1.6; background: #fff; }
+.chapter-item.open .chapter-body { max-height: 500px; padding: 12px 16px; border-top: 1px solid #e8dbb0; }
+.chapter-item.open .chapter-chevron { transform: rotate(90deg); }
+.resource-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.resource-card { flex: 1; min-width: 250px; border-left: 3px solid #d4a72c; padding: 10px 14px; background: #fdf8ec; border-radius: 0 6px 6px 0; }
+.resource-card h4 { margin: 0 0 4px; font-size: 13px; color: #333; }
+.resource-card p { margin: 0; font-size: 11px; color: #777; }
+.resource-card a { font-size: 11px; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #fdf8ec; padding: 15px; border-radius: 8px; border-top: 3px solid #d4a72c; }
+.stat-num { font-size: 28px; font-weight: bold; color: #8c6d00; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.stat-sub { font-size: 10px; color: #999; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #f0e6c0; }
+#nc-soy-map { width: 100%; max-width: 700px; margin: 0 auto; position: relative; }
 
 /* hero header */
 .hero {
-    background: linear-gradient(135deg, #1a3a2a 0%, #2d6a4f 40%, #6a994e 70%, #d4a72c 100%);
-    padding: 50px 20px 40px;
+    background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 30%, #4a8c5c 60%, #6aaa6e 100%);
+    padding: 60px 20px 50px;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -427,1970 +58,580 @@ pre {
     content: "";
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70'%3E%3Cpath d='M35 10 Q42 25 35 40 Q28 25 35 10' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1.5'/%3E%3Ccircle cx='20' cy='55' r='4' fill='rgba(255,255,255,0.03)'/%3E%3Ccircle cx='50' cy='50' r='3' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E") repeat;
-    animation: heroFloat 22s linear infinite;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 15 30 5' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='1.5'/%3E%3Cpath d='M30 25 Q35 35 30 45 Q25 35 30 25' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1.5'/%3E%3Ccircle cx='30' cy='50' r='3' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E") repeat;
+    animation: heroFloat 20s linear infinite;
 }
 @keyframes heroFloat {
     0% { transform: translateY(0); }
-    100% { transform: translateY(-70px); }
+    100% { transform: translateY(-60px); }
 }
 .hero h1 { color: #fff; font-size: 36px; margin: 0; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-.hero .subtitle { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 6px; position: relative; z-index: 1; }
-.hero .authors { color: rgba(255,255,255,0.75); font-size: 14px; margin-top: 12px; position: relative; z-index: 1; }
-.hero .affiliation { color: rgba(255,255,255,0.55); font-size: 12px; margin-top: 4px; position: relative; z-index: 1; }
-.hero .links { margin-top: 15px; position: relative; z-index: 1; }
-.hero .links a { color: rgba(255,255,255,0.5); margin: 0 8px; font-size: 12px; font-weight: 600; text-decoration: none; }
-.hero .links a.active-link { color: #f6e8b1; pointer-events: auto; }
+.hero p { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 8px; position: relative; z-index: 1; }
+.hero a { color: #f6e8b1; }
 
-/* scroll fade-in */
-.section {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.section.visible {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* search box in panel */
-.panel-search {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 7px 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 12px;
-    margin-bottom: 12px;
-    outline: none;
-    transition: border-color 0.2s;
-}
-.panel-search:focus {
-    border-color: #6a994e;
-}
-.panel-search::placeholder {
-    color: #bbb;
-}
-
-/* responsive */
-@media (max-width: 920px) {
-  .explorer-inner {
-    flex-direction: column;
-    align-items: center;
-  }
-  .panel {
-    width: 100%;
-    max-width: 550px;
-    height: 400px;
-    max-height: 400px;
-    align-self: center;
-  }
-}
+@media (max-width: 600px) { .stat-row { flex-direction: column; } .resource-grid { flex-direction: column; } }
 </style>
 </head>
-
 <body>
 
 <div id="progress-bar"></div>
 
 <nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
 <a href="#overview">Overview</a>
-<a href="#ncbench">NCBench</a>
-<a href="#explorer">Explorer</a>
-<a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
-<a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
-<a href="tracker.html" style="color:#555;">📋 Tracker</a>
-<a href="#full-dataset">Full Dataset</a>
-<a href="#dialogue">Dialogue</a>
-<a href="#benchmark">Benchmark</a>
-<a href="#results">Results</a>
-<a href="#methodology">Methodology</a>
-<a href="#pipeline">Pipeline</a>
-<a href="#cite">Cite</a>
+<a href="#history">History</a>
+<a href="#growing">Growing</a>
+<a href="#nc-soybeans">NC Soybeans</a>
+<a href="#guide">Production Guide</a>
+<a href="#resources">Grower Resources</a>
+<a href="#map">County Map</a>
+<a href="#data">Data Sources</a>
+<a href="#generated">Generated QA</a>
 </nav>
 
 <div class="hero">
-<h1>NCBench</h1>
-<div class="subtitle">A Domain-Specific Instruction Tuning Benchmark for Agricultural LLMs</div>
-<div class="authors">
-    Dr. Shaohu Zhang<sup>1</sup>,
-    Dr. Mesafint Fanuel<sup>1</sup>,
-    Dr. Crystal Cook Marshall<sup>1</sup>,
-    Dr. Mahmoud Nabile Mahmoud<sup>2</sup>
-</div>
-<div class="affiliation">
-    <sup>1</sup>North Carolina Agricultural &amp; Technical State University ·
-    <sup>2</sup>University of Alabama
-</div>
-<div class="links">
-    <a href="#">[Paper — coming soon]</a>
-    <a href="#">[Dataset — coming soon]</a>
-    <a href="#">[Code — coming soon]</a>
-    <a href="#qa-panel" class="active-link" onclick="document.getElementById('qa-panel').scrollIntoView({behavior:'smooth'}); return false;">[Demo ↓]</a>
-</div>
+<h1>🫘 NC Soybean</h1>
+<p>A deep-dive into North Carolina soybean production — part of the <a href="index.html">NCBench</a> project</p>
 </div>
 
 <div class="container">
 
+<!-- ═══ OVERVIEW ═══════════════════════════════════════════════════════════ -->
 <div class="section" id="overview">
-<h2>Overview &amp; Motivation</h2>
+<h2>Overview</h2>
 <p>
-<b>NCBench</b> is a large-scale instruction tuning dataset for agricultural language models,
-targeting <b>soybean</b> and <b>sweetpotato</b> farming in the United States.
-Built on the methodology of the <b>CROP dataset</b> — which produced <b>68,210</b> QA pairs
-across rice and corn — NCBench extends the same proven pipeline to crops relevant
-to North Carolina and the broader US agricultural landscape.
+Soybeans are the <b>#1 crop produced in North Carolina</b>, with 1.63 million acres planted
+and 57.96 million bushels harvested. All 100 NC counties grow soybeans, with the heaviest
+production concentrated in the Coastal Plain and Piedmont regions. 95% of NC farms are
+family-owned and operated.
 </p>
-<p>
-The CROP dataset demonstrated that structured, domain-specific QA data significantly
-improves agricultural reasoning in LLMs. Its construction pipeline — prompt-based generation,
-task decomposition, and multi-turn dialogue synthesis — is largely <b>crop-agnostic</b>,
-meaning it transfers directly to new domains with minimal adaptation.
-NCBench leverages this reusability: the same templates, taxonomy, and quality controls
-apply to soybean and sweetpotato with only the source documents and regional context changing.
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">1.63M</div>
+<div class="stat-label">Acres Planted</div>
+<div class="stat-sub">USDA NASS 2025</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">57.96M</div>
+<div class="stat-label">Bushels Harvested</div>
+<div class="stat-sub">36 bu/acre avg yield</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">100</div>
+<div class="stat-label">Counties Growing Soy</div>
+<div class="stat-sub">All NC counties</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">12</div>
+<div class="stat-label">Guide Chapters</div>
+<div class="stat-sub">NC Soybean Production Guide</div>
+</div>
+</div>
+
+<p style="font-size:13px; color:#666;">
+The <a href="https://www.ncsoy.org" target="_blank">NC Soybean Producers Association (NCSPA)</a>
+administers checkoff-funded programs for NC soybean growers through research, promotion, and advocacy.
+The <a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">NC Soybean Production Guide</a>,
+funded by NCSPA and published by NC State Extension, is the authoritative reference for soybean
+production in the state.
 </p>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="ncbench">
-<h2>NCBench: What We're Building</h2>
+<!-- ═══ HISTORY ════════════════════════════════════════════════════════════ -->
+<div class="section" id="history">
+<h2>History of Soybeans</h2>
 
-<p>
-While the CROP dataset covers rice and corn with a focus on Chinese agriculture,
-<b>no equivalent instruction tuning dataset exists for US-grown crops</b>.
-NCBench fills this gap by targeting <b>soybean</b> and <b>sweetpotato</b> —
-two crops with significant economic importance to North Carolina and the broader
-US agricultural landscape.
-</p>
-
-<h3>Why These Crops</h3>
 <div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
-<div class="card" style="flex:1; min-width:250px; border-top:3px solid #d4a72c;">
-<div style="font-size:24px; margin-bottom:6px;">🫘</div>
-<div style="font-weight:700; font-size:14px;">Soybean</div>
-<p style="font-size:12px; color:#555; margin-top:6px; line-height:1.6;">
-Soybean is one of the most widely grown crops in the US, with North Carolina
-ranking among the top producing states in the Southeast. It is critical for
-animal feed, oil production, and soil nitrogen fixation in crop rotation systems.
-Despite its importance, LLMs have limited domain-specific knowledge about
-US soybean agronomy, pest management, and regional growing practices.
+
+<div style="flex:2; min-width:300px;">
+<h3 style="margin-top:0;">Origins &amp; Early Spread</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans originated in Southeast Asia and were first domesticated by Chinese farmers around
+<b>1100 BC</b>. By the first century AD, the crop had spread to Japan and across Asia.
+Soybean seeds first arrived in the Americas in <b>1765</b>, when a colonist in Georgia planted
+seed from China. In 1851, seeds were distributed to farmers in Illinois — reportedly from
+a rescued Japanese fisherman — marking the first steps toward American soybean farming.
+</p>
+
+<h3>Rise in American Agriculture</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+By the 1870s, soybeans gained popularity as livestock forage, thriving in the hot, humid
+conditions of states like North Carolina. In <b>1904</b>, George Washington Carver discovered
+their value as a source of protein, oil, and soil enrichment — leading to his famous crop
+rotation system that revitalized cotton farming in the South. In 1919, William Morse
+co-founded the American Soybean Association and later collected over 10,000 varieties from
+China to expand research.
+</p>
+
+<h3>Modern Era</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Production accelerated during the 1940s when WWII disrupted supply from China, driving demand
+for soybean-based oils, lubricants, and plastics. Henry Ford explored soy's potential for
+making plastics and car parts as early as the 1930s. By the 1990s, biotechnology transformed
+the crop with herbicide-tolerant varieties that increased yields and reduced erosion.
 </p>
 </div>
-<div class="card" style="flex:1; min-width:250px; border-top:3px solid #e67e22;">
-<div style="font-size:24px; margin-bottom:6px;">🍠</div>
-<div style="font-weight:700; font-size:14px;">Sweetpotato</div>
-<p style="font-size:12px; color:#555; margin-top:6px; line-height:1.6;">
-North Carolina is the <b>#1 sweetpotato producer</b> in the United States,
-accounting for over half of national production. Sweetpotato cultivation
-involves unique challenges — curing, storage, pest pressure from wireworms
-and flea beetles, and variety selection for different markets. This specialized
-knowledge is poorly represented in current LLM training data.
+
+<div style="flex:1; min-width:200px;">
+<div class="card" style="border-left:3px solid #d4a72c; margin-bottom:12px;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">Key Dates</div>
+<ul style="font-size:11px; color:#555; margin:8px 0 0; padding-left:16px; line-height:1.8;">
+<li><b>1100 BC</b> — Domesticated in China</li>
+<li><b>1765</b> — First seeds in Americas (Georgia)</li>
+<li><b>1851</b> — Distributed to Illinois farmers</li>
+<li><b>1870s</b> — Popular as forage in NC</li>
+<li><b>1904</b> — Carver discovers protein/oil value</li>
+<li><b>1919</b> — American Soybean Association founded</li>
+<li><b>1940s</b> — WWII drives US production boom</li>
+<li><b>1966</b> — NCSPA incorporated</li>
+<li><b>1990s</b> — Biotech herbicide-tolerant varieties</li>
+</ul>
+</div>
+
+<div class="card" style="border-left:3px solid #d4a72c;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">NC Today</div>
+<p style="font-size:11px; color:#555; margin:6px 0 0; line-height:1.6;">
+Soybeans are grown in all 31 US states, with Iowa, Illinois, Indiana, and Minnesota leading.
+North Carolina plays a vital role as both a grower and a major consumer due to its large
+pork and poultry industries. NC farmers grow soybeans alongside corn, wheat, cotton,
+sweetpotatoes, and peanuts.
 </p>
 </div>
 </div>
 
-<h3>NC Production Map</h3>
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/learn" target="_blank">NCSoy.org — History of Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ GROWING SOYBEANS ═══════════════════════════════════════════════════ -->
+<div class="section" id="growing">
+<h2>Growing Soybeans</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🌱</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Planting</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+May–July in NC. Seeds planted ~1.5" deep in rows up to 30" apart. No-till planting into wheat stubble saves time and reduces erosion.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🌿</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Growth</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Sprouts in 4–7 days. Blooms July–September with small white to violet flowers. Self-pollinating — each flower has male and female parts.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🫘</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Maturity</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Late September — leaves turn yellow then brown and fall off, exposing mature pods. Ready for harvest by mid-October to November.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🚜</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Harvest</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Combines cut and separate beans from pods. Transported to grain dealers or on-farm storage. Processed into soybean meal (protein) and soy oil.
+</p>
+</div>
+
+</div>
+
+<h3>Why Soybeans Are Special</h3>
+<div style="display:flex; gap:15px; flex-wrap:wrap; margin:10px 0;">
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🔄 Nitrogen Fixation</h4>
+<p>Soybeans are legumes that form a symbiotic relationship with bacteria in their root nodules, converting atmospheric nitrogen into plant-usable form. This reduces fertilizer needs and restores nitrogen to the soil for the next crop.</p>
+</div>
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🌾 Rotational Crop</h4>
+<p>Farmers rotate soybeans with corn, wheat, cotton, and other crops. After soybean harvest, winter wheat can be planted in the nitrogen-enriched soil. Soybeans can also be double-cropped after wheat harvest in the same year.</p>
+</div>
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🧬 Seed Selection</h4>
+<p>Farmers select seed based on yield potential, drought tolerance, disease resistance, and herbicide tolerance traits (Roundup Ready, Liberty Link, Xtend). NC Official Variety Testing provides local performance data.</p>
+</div>
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/growing-soybeans" target="_blank">NCSoy.org — Growing Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ NC SOYBEANS ══════════════════════════════════════════════════════ -->
+<div class="section" id="nc-soybeans">
+<h2>Soybeans in North Carolina</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+<div style="flex:2; min-width:300px;">
+<p style="font-size:13px; color:#444; line-height:1.7;">
+NC farmers plant soybeans in <b>all 100 counties</b> from the mountains to the sea, though
+75% of production is concentrated in the eastern Coastal Plain. At 1.6 million acres in an
+average year, soybeans have the biggest footprint of any crop in the state — worth up to
+<b>$800 million</b> to farmers in a good year.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans rank in the <b>top 5 commodities by cash receipts</b> in NC. The crop is deeply
+connected to the state's livestock industry — NC's large pork and poultry operations are
+major consumers of soybean meal for animal feed. Roughly 95% of NC farms are family-owned
+and operated.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans work well in rotation with tobacco, cotton, corn, and wheat — making them an
+integral part of NC's diverse agricultural landscape. Many farmers double-crop soybeans
+after winter wheat harvest, maximizing land use within a single growing season.
+</p>
+</div>
+<div style="flex:1; min-width:200px;">
+<div class="card" style="border-left:3px solid #d4a72c; margin-bottom:12px;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">NC Soybean Facts</div>
+<ul style="font-size:11px; color:#555; margin:8px 0 0; padding-left:16px; line-height:1.8;">
+<li>#1 crop by acreage in NC</li>
+<li>1.6 million acres average</li>
+<li>All 100 counties</li>
+<li>75% in eastern Coastal Plain</li>
+<li>Up to $800M annual value</li>
+<li>Top 5 commodity by cash receipts</li>
+<li>95% family-owned farms</li>
+<li>Key rotation with wheat &amp; corn</li>
+</ul>
+</div>
+<div class="card" style="border-left:3px solid #d4a72c;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">Top Counties</div>
+<p style="font-size:11px; color:#555; margin:6px 0 0; line-height:1.6;">
+Beaufort (3.3M bu), Robeson (3.1M bu), Union (2.8M bu), Pitt (2.5M bu), Sampson (2.4M bu)
+</p>
+</div>
+</div>
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/north-carolina-soybeans" target="_blank">NCSoy.org — NC Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ PRODUCTION GUIDE ══════════════════════════════════════════════════ -->
+<div class="section" id="guide">
+<h2>NC Soybean Production Guide</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+The 12-chapter guide covers every aspect of soybean production in North Carolina — from
+plant biology to marketing. Click a chapter to see details and a link to the full text.
+This is the primary source material for NCBench's soybean QA generation pipeline.
+</p>
+
+<ul class="chapter-list">
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">1</span> The Soybean Plant <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Biology of the soybean plant — growth stages, root nodulation, nitrogen fixation, and how plant structure affects yield potential.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/the-soybean-plant" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">2</span> Variety Selection <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Choosing the right maturity group, herbicide tolerance traits, disease resistance packages, and using NC Official Variety Testing data to make informed decisions.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-variety-selection" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">3</span> Fertilization and Nutrient Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Soil testing, lime requirements, phosphorus and potassium recommendations, micronutrients, and the role of biological nitrogen fixation in soybean fertility.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-fertilization-and-nutrient-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">4</span> Soil Health, Tillage, Cover Crops, and Crop Rotation <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Conservation tillage systems, cover crop selection and termination, rotation benefits with corn and cotton, and building long-term soil health.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/rotational-considerations" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">5</span> Planting Decisions <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Optimal planting dates by region, seeding rates (80,000–120,000 plants/acre), row spacing, and planter setup for no-till conditions.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-planting-decisions" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">6</span> Weed Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Herbicide programs for Roundup Ready, Liberty Link, and Xtend systems. Resistance management, residual herbicides, and integrated weed management strategies.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-weed-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">7</span> Soybean Diseases and Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Major diseases in NC — frogeye leaf spot, sudden death syndrome, Phytophthora root rot, charcoal rot. Fungicide timing and variety resistance.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-disease-and-nematode-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">8</span> Soybean Nematode Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Soybean cyst nematode (SCN) — the #1 yield-robbing pest. Soil sampling, SCN race identification, resistant varieties, and rotation strategies.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/8-soybean-nematode-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">9</span> Insect Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Scouting thresholds for stink bugs, bean leaf beetles, soybean loopers, and corn earworm. Economic thresholds and spray timing.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-insect-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">10</span> Water Management in Soybeans <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Irrigation scheduling, drought stress during reproductive stages, and water management in the Coastal Plain's high water table environments.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/10-water-management-in-soybeans" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">11</span> Late-Season Management, Harvesting, Drying, and Storage <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Harvest timing, combine settings, drying to 13% moisture, on-farm storage, and minimizing harvest losses.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/harvesting-drying-and-storage" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">12</span> Soybean Marketing in North Carolina <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Basis, futures contracts, crop insurance, marketing plans, and understanding NC's position in the global soybean market.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-production-and-marketing-in-north-carolina" target="_blank">Read full chapter →</a></div>
+</li>
+
+</ul>
+
+<p style="font-size:12px; color:#999; margin-top:10px;">
+Source: <a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">NC State Extension, AG-835</a>.
+Funded by the NC Soybean Producers Association.
+</p>
+</div>
+
+<!-- ═══ GROWER RESOURCES (NCSoy.org) ═════════════════════════════════════ -->
+<div class="section" id="resources">
+<h2>Grower Resources — NCSoy.org</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+The <a href="https://www.ncsoy.org" target="_blank">NC Soybean Producers Association</a>
+publishes research-based articles for NC soybean growers. These cover practical
+production decisions backed by NC State research data.
+</p>
+
+<div class="resource-grid">
+<div class="resource-card">
+<h4>🌱 Planting &amp; Maturity Groups</h4>
+<p>Optimal planting dates, maturity group selection, and yield impact of early vs late planting (7.2 bu/ac difference on average).</p>
+<a href="https://www.ncsoy.org/news/article/maximizing-soybean-yield-through-maturity-group-and-planting-date-selection" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🧪 Fertility Basics</h4>
+<p>Soybeans require 1.5–3x more P and K per bushel than corn. Soil testing, lime, and nutrient management for NC soils.</p>
+<a href="https://www.ncsoy.org/news/article/soybean-fertility-basics" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>📏 Seeding Rate</h4>
+<p>Optimal plant population: 80,000–120,000 plants/acre. Research on seeding rate economics across NC environments.</p>
+<a href="https://www.ncsoy.org/news/article/seeding-rate" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🧴 Foliar Yield Enhancements</h4>
+<p>Fungicide applications providing 2.5 bu/A yield advantage. Dual MOA vs single MOA fungicide comparisons.</p>
+<a href="https://www.ncsoy.org/news/article/foliar-yield-enhancements" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>💊 Seed Treatments</h4>
+<p>Value of fungicidal seed treatments in NC — especially important for early planting into cool, wet soils.</p>
+<a href="https://www.ncsoy.org/news/article/value-of-a-fungicidal-seed-treatment-in-nc-soybeans" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🌿 Weed Control</h4>
+<p>Herbicide-resistant weed management. Long-term profit increases of 14–17% from proactive resistance management.</p>
+<a href="https://www.ncsoy.org/news/article/2018-management-decisions-weed-control" target="_blank">Read article →</a>
+</div>
+</div>
+
+<h3 style="margin-top:25px;">NC Soy News &amp; Events</h3>
+<div class="resource-grid" style="margin-top:10px;">
+<div class="resource-card">
+<h4>🏆 2025 Yield Contest</h4>
+<p>State champion: Matthews Family Farms, Yadkin County — 100.9 bu/A. Dryland champion: Carawan Farms, Hyde County — 97.7 bu/A.</p>
+<a href="https://www.ncsoy.org/news/2025-soybean-yield-contest-awards" target="_blank">View results →</a>
+</div>
+<div class="resource-card">
+<h4>📊 Are NC Yields Increasing?</h4>
+<p>Top producing counties: Beaufort (3.3M bu), Robeson (3.1M bu), Union (2.8M bu). Yield trends and analysis.</p>
+<a href="https://www.ncsoy.org/news/article/nc-soybean-yields-increasing" target="_blank">Read analysis →</a>
+</div>
+<div class="resource-card">
+<h4>🏫 2026 Soybean Schools</h4>
+<p>Regional research-based soybean schools around the state, co-hosted with NC Cooperative Extension.</p>
+<a href="https://www.ncsoy.org/soybean-schools" target="_blank">Learn more →</a>
+</div>
+</div>
+</div>
+
+<!-- ═══ COUNTY MAP ═══════════════════════════════════════════════════════ -->
+<div class="section" id="map">
+<h2>NC Soybean Production Map</h2>
 <p style="font-size:13px; color:#555; margin-bottom:12px;">
-North Carolina's 100 counties each have a Cooperative Extension office. The map below highlights
-the top producing counties for soybean and sweetpotato — the two crops NCBench targets.
-Click any county to visit its Extension page.
+Top soybean-producing counties in North Carolina. Click any county to visit its Extension page.
 </p>
-
-<!-- Toggle + Legend -->
-<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin:8px 0 12px; font-size:12px;">
-<span class="toggle-wrap">
-  <button id="map-both" class="active" onclick="setMapFilter('both')">Both</button>
-  <button id="map-soy" onclick="setMapFilter('soybean')">Soybean</button>
-  <button id="map-sp" onclick="setMapFilter('sweetpotato')">Sweetpotato</button>
-</span>
-<span style="display:inline-flex; align-items:center; gap:5px;">
-  <span style="width:12px;height:12px;border-radius:3px;background:#d4a72c;display:inline-block;"></span> Soybean
-</span>
-<span style="display:inline-flex; align-items:center; gap:5px;">
-  <span style="width:12px;height:12px;border-radius:3px;background:#e67e22;display:inline-block;"></span> Sweetpotato
-</span>
-<span style="display:inline-flex; align-items:center; gap:5px;">
-  <span style="width:12px;height:12px;border-radius:3px;background:#8e44ad;display:inline-block;"></span> Both
-</span>
-<span style="display:inline-flex; align-items:center; gap:5px;">
-  <span style="width:12px;height:12px;border-radius:2px;background:none;display:inline-block;border:2px solid #e74c3c;"></span> NC A&amp;T
-</span>
-</div>
-
-<div id="nc-map" style="width:100%; max-width:700px; margin:0 auto;"></div>
+<div id="nc-soy-map"></div>
 <p style="font-size:10px; color:#aaa; margin-top:6px; text-align:center;">
-Data: USDA NASS, NC Soybean Producers Association, US Sweetpotato Council. Click a county to visit its Extension page.
+Data: USDA NASS, NC Soybean Producers Association. Hover for production data.
 </p>
+</div>
 
-<h3>Data Sources — Document Inventory</h3>
+<!-- ═══ CROP EXPLORER (Corn topics — closest analog to soybean) ═══════════ -->
+<div class="section" id="crop-explorer">
+<h2>CROP Dataset — Corn Topics (Soybean Analog)</h2>
 <p style="font-size:13px; color:#555; margin-bottom:12px;">
-We crawled all 17 highlighted county Extension websites and the statewide crop portals
-to inventory available source documents. Documents appearing on 3+ county sites
-(statewide publications) are deduplicated.
+The CROP dataset's <b>corn topics</b> are the closest analog to what NCBench will produce for soybean.
+Both are field crops with similar agronomic concerns — genetics, pest management, soil health,
+production practices. Click a topic to see sample QA pairs from the CROP dataset.
 </p>
 
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #d4a72c;">
-<div style="font-size:28px; font-weight:bold; color:#d4a72c;">~100</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Soybean Documents</div>
-<div style="font-size:10px; color:#999;">Tier 1 — crop-specific</div>
+<div style="display:flex; gap:15px; flex-wrap:wrap; margin:15px 0;" id="corn-topics"></div>
+<div id="corn-qa-panel" style="margin-top:15px; display:none;">
+<div style="background:#fdf8ec; border:1px solid #e8dbb0; border-radius:8px; padding:15px;">
+<div id="corn-qa-title" style="font-weight:700; font-size:14px; color:#8c6d00; margin-bottom:10px;"></div>
+<div id="corn-qa-list"></div>
 </div>
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #e67e22;">
-<div style="font-size:28px; font-weight:bold; color:#e67e22;">~59</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Sweetpotato Documents</div>
-<div style="font-size:10px; color:#999;">Tier 1 — crop-specific</div>
-</div>
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #555;">
-<div style="font-size:28px; font-weight:bold; color:#333;">2,911</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">County News Articles</div>
-<div style="font-size:10px; color:#999;">Tier 2 — general agriculture</div>
-</div>
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #2e7d32;">
-<div style="font-size:28px; font-weight:bold; color:#2e7d32;">~3,018</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Total Sources</div>
-<div style="font-size:10px; color:#999;">Publications + news across 17 counties</div>
 </div>
 </div>
 
-<div style="display:flex; gap:12px; flex-wrap:wrap; margin:15px 0;">
-<div class="card" style="flex:1; min-width:200px; border-left:3px solid #d4a72c; padding:10px 14px;">
-<div style="font-weight:700; font-size:12px;">NC Soybean Production Guide</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">12 chapters covering variety selection, planting, weed management, diseases, nematodes, insects, water, harvest, and marketing. Highest-value source material.</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:3px solid #d4a72c; padding:10px 14px;">
-<div style="font-weight:700; font-size:12px;">Soybean Portal News</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">46 articles from soybeans.ces.ncsu.edu — seasonal alerts, pest updates, planting decisions, drought guidance.</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:3px solid #e67e22; padding:10px 14px;">
-<div style="font-weight:700; font-size:12px;">Sweetpotato Publications</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">52 publications from content.ces.ncsu.edu + 7 disease factsheets from the Plant Pathology portal + production guide chapter.</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:3px solid #2e7d32; padding:10px 14px;">
-<div style="font-weight:700; font-size:12px;">County Extension News</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">2,947 unique local news articles across 17 counties (Robeson: 434, Sampson: 329, Lenoir: 307, Bertie: 282, and more).</p>
-</div>
-</div>
-
-<h3 style="margin-top:20px;">County Extension News Crawl Results</h3>
-<p style="font-size:12px; color:#888; margin-bottom:10px;">
-News articles from each county's Extension website (<code>/news/</code> pages). All pages crawled via <code>?page=</code> pagination. Tier 1 = mentions soybean/sweetpotato. Statewide duplicates excluded.
-</p>
-<div style="overflow-x:auto;">
-<table style="width:100%; border-collapse:collapse; font-size:12px; line-height:1.6;">
-<thead>
-<tr style="background:#f4f4f4; border-bottom:2px solid #ddd;">
-<th style="text-align:left; padding:6px 10px;">County</th>
-<th style="text-align:center; padding:6px 8px;">Crop</th>
-<th style="text-align:center; padding:6px 8px;">Total</th>
-<th style="text-align:center; padding:6px 8px;">Local</th>
-<th style="text-align:center; padding:6px 8px; color:#d4a72c;">Soy News</th>
-<th style="text-align:center; padding:6px 8px; color:#e67e22;">SP News</th>
-<th style="text-align:center; padding:6px 8px;">Other News</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Robeson</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">440</td><td style="text-align:center;">436</td><td style="text-align:center;">2</td><td style="text-align:center;">0</td><td style="text-align:center;">434</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Union</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">350</td><td style="text-align:center;">316</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center;">315</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Sampson</td><td style="text-align:center;">🫘🍠 Both</td><td style="text-align:center;">344</td><td style="text-align:center;">333</td><td style="text-align:center;">1</td><td style="text-align:center;">3</td><td style="text-align:center;">329</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Bertie</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">323</td><td style="text-align:center;">290</td><td style="text-align:center;">8</td><td style="text-align:center;">0</td><td style="text-align:center;">282</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Lenoir</td><td style="text-align:center;">🍠 Sweetpotato</td><td style="text-align:center;">312</td><td style="text-align:center;">307</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">307</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Beaufort</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">244</td><td style="text-align:center;">234</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">234</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Nash</td><td style="text-align:center;">🍠 Sweetpotato</td><td style="text-align:center;">218</td><td style="text-align:center;">198</td><td style="text-align:center;">1</td><td style="text-align:center;">2</td><td style="text-align:center;">195</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Wayne</td><td style="text-align:center;">🫘🍠 Both</td><td style="text-align:center;">180</td><td style="text-align:center;">171</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">171</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Pitt</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">171</td><td style="text-align:center;">165</td><td style="text-align:center;">1</td><td style="text-align:center;">1</td><td style="text-align:center;">163</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Hyde</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">112</td><td style="text-align:center;">78</td><td style="text-align:center;">1</td><td style="text-align:center;">0</td><td style="text-align:center;">77</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Edgecombe</td><td style="text-align:center;">🍠 Sweetpotato</td><td style="text-align:center;">108</td><td style="text-align:center;">85</td><td style="text-align:center;">2</td><td style="text-align:center;">0</td><td style="text-align:center;">83</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Wilson</td><td style="text-align:center;">🍠 Sweetpotato</td><td style="text-align:center;">104</td><td style="text-align:center;">90</td><td style="text-align:center;">0</td><td style="text-align:center;">1</td><td style="text-align:center;">89</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Johnston</td><td style="text-align:center;">🫘🍠 Both</td><td style="text-align:center;">87</td><td style="text-align:center;">65</td><td style="text-align:center;">9</td><td style="text-align:center;">0</td><td style="text-align:center;">56</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Greene</td><td style="text-align:center;">🍠 Sweetpotato</td><td style="text-align:center;">66</td><td style="text-align:center;">62</td><td style="text-align:center;">1</td><td style="text-align:center;">0</td><td style="text-align:center;">61</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Northampton</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">63</td><td style="text-align:center;">56</td><td style="text-align:center;">2</td><td style="text-align:center;">0</td><td style="text-align:center;">54</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:5px 10px;">Duplin</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">61</td><td style="text-align:center;">54</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">54</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:5px 10px;">Pasquotank</td><td style="text-align:center;">🫘 Soybean</td><td style="text-align:center;">24</td><td style="text-align:center;">7</td><td style="text-align:center;">0</td><td style="text-align:center;">0</td><td style="text-align:center;">7</td>
-</tr>
-<tr style="border-top:2px solid #ddd; font-weight:700;">
-<td style="padding:6px 10px;">TOTAL</td><td></td><td style="text-align:center;">3,207</td><td style="text-align:center;">2,947</td><td style="text-align:center;">28</td><td style="text-align:center;">8</td><td style="text-align:center;">2,911</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<h3>What Makes NCBench Different from CROP</h3>
-<div style="overflow-x:auto; margin:15px 0;">
-<table style="width:100%; border-collapse:collapse; font-size:12px; line-height:1.6;">
-<thead>
-<tr style="background:#f4f4f4; border-bottom:2px solid #ddd;">
-<th style="text-align:left; padding:8px 12px;"></th>
-<th style="text-align:center; padding:8px 12px;">CROP</th>
-<th style="text-align:center; padding:8px 12px;">NCBench</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 12px; font-weight:600;">Crops</td>
-<td style="text-align:center;">Rice, Corn</td>
-<td style="text-align:center;">Soybean, Sweetpotato</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:6px 12px; font-weight:600;">Region</td>
-<td style="text-align:center;">China (multi-province)</td>
-<td style="text-align:center;">US (North Carolina / Southeast)</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 12px; font-weight:600;">Language</td>
-<td style="text-align:center;">Chinese + English</td>
-<td style="text-align:center;">English only</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:6px 12px; font-weight:600;">Farming Context</td>
-<td style="text-align:center;">Large-scale, paddy/field</td>
-<td style="text-align:center;">Family farms, row crop / specialty crop</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 12px; font-weight:600;">Pest / Disease Profile</td>
-<td style="text-align:center;">Rice blast, stem borer, etc.</td>
-<td style="text-align:center;">Soybean cyst nematode, wireworm, flea beetle, etc.</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td style="padding:6px 12px; font-weight:600;">Climate</td>
-<td style="text-align:center;">Tropical / subtropical monsoon</td>
-<td style="text-align:center;">Humid subtropical (Southeast US)</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 12px; font-weight:600;">Pipeline</td>
-<td style="text-align:center;" colspan="2">Same — prompt-based generation, multi-turn synthesis, LLM filtering</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<h3>Project Status</h3>
-<div style="display:flex; gap:0; flex-wrap:wrap; margin:15px 0;">
-<div style="flex:1; min-width:150px; padding:12px 16px; background:#e8f5e9; border-left:4px solid #4caf50;">
-<div style="font-weight:700; font-size:12px; color:#2e7d32;">✅ Completed</div>
-<ul style="font-size:11px; color:#555; margin:6px 0 0; padding-left:16px; line-height:1.6;">
-<li>CROP dataset analysis &amp; exploration</li>
-<li>Pipeline methodology review</li>
-<li>Interactive demo (this page)</li>
-<li>Topic taxonomy definition</li>
-</ul>
-</div>
-<div style="flex:1; min-width:150px; padding:12px 16px; background:#fff3e0; border-left:4px solid #ff9800;">
-<div style="font-weight:700; font-size:12px; color:#e65100;">🔄 In Progress</div>
-<ul style="font-size:11px; color:#555; margin:6px 0 0; padding-left:16px; line-height:1.6;">
-<li>Source document collection</li>
-<li>Prompt template adaptation</li>
-<li>Initial QA generation runs</li>
-</ul>
-</div>
-<div style="flex:1; min-width:150px; padding:12px 16px; background:#f3f3f3; border-left:4px solid #999;">
-<div style="font-weight:700; font-size:12px; color:#555;">⏳ Planned</div>
-<ul style="font-size:11px; color:#555; margin:6px 0 0; padding-left:16px; line-height:1.6;">
-<li>Full dataset generation</li>
-<li>Multi-turn dialogue creation</li>
-<li>Benchmark construction</li>
-<li>LLM fine-tuning &amp; evaluation</li>
-</ul>
-</div>
-</div>
-
-</div>
-
-<div class="section" id="explorer">
-<h2>Crop Dataset Overview &amp; Interactive Explorer</h2>
-<p>
-The interactive exploration below is based on the <b>CROP dataset</b>,
-which serves as the foundation for this work.
-</p>
-<p>
-The dataset consists of <b>68,210</b> structured question-answer pairs spanning
-<b>24 topic categories</b> across two crops. Each entry was exclusively assigned
-to its best-matching topic using weighted lexical scoring.
+<!-- ═══ DATA SOURCES ════════════════════════════════════════════════════ -->
+<div class="section" id="data">
+<h2>Data Sources for NCBench — Soybean</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+These are the source documents that will feed the NCBench QA generation pipeline for soybean.
 </p>
 
-<!-- Legend -->
-<div style="display:flex; gap:20px; align-items:center; flex-wrap:wrap; margin:12px 0 8px;">
-<span style="display:inline-flex; align-items:center; gap:6px; font-size:13px;">
-  <span style="width:12px;height:12px;border-radius:50%;background:#d4a72c;display:inline-block;"></span> Corn (25,259 pairs · 12 topics)
-</span>
-<span style="display:inline-flex; align-items:center; gap:6px; font-size:13px;">
-  <span style="width:12px;height:12px;border-radius:50%;background:#6a994e;display:inline-block;"></span> Rice (42,951 pairs · 12 topics)
-</span>
-<span class="toggle-wrap">
-  <button id="btn-closed" class="active" onclick="switchBook('closed')">Closed-Book</button>
-  <button id="btn-open" onclick="switchBook('open')">Open-Book</button>
-</span>
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">12</div>
+<div class="stat-label">Guide Chapters</div>
+<div class="stat-sub">NC Soybean Production Guide</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">46</div>
+<div class="stat-label">Portal Articles</div>
+<div class="stat-sub">soybeans.ces.ncsu.edu</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">~52</div>
+<div class="stat-label">Publications</div>
+<div class="stat-sub">content.ces.ncsu.edu</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">28</div>
+<div class="stat-label">County News</div>
+<div class="stat-sub">Soybean-specific articles</div>
+</div>
 </div>
 
-<p style="font-size:13px; color:#555; margin-bottom:18px;">
-Click the <b>inner ring</b> to zoom into a crop, or click an <b>outer segment</b> to explore a specific topic.
-The selected segment expands toward the panel and its top-ranked questions appear on the right.
+<div class="resource-grid" style="margin-top:15px;">
+<div class="resource-card">
+<h4>NC Soybean Production Guide</h4>
+<p>12 chapters — the authoritative reference. Highest-value source for QA generation.</p>
+<a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">View guide →</a>
+</div>
+<div class="resource-card">
+<h4>NC Extension Soybean Portal</h4>
+<p>46 news articles — seasonal alerts, pest updates, planting decisions, drought guidance.</p>
+<a href="https://soybeans.ces.ncsu.edu/news/" target="_blank">View portal →</a>
+</div>
+<div class="resource-card">
+<h4>NCSoy.org Grower Resources</h4>
+<p>Research-backed articles on yield optimization, fertility, weed control, and marketing.</p>
+<a href="https://www.ncsoy.org" target="_blank">Visit NCSoy.org →</a>
+</div>
+<div class="resource-card">
+<h4>NC Extension Publications</h4>
+<p>~52 formal publications tagged with "soybean" keyword in the Extension catalog.</p>
+<a href="https://content.ces.ncsu.edu/catalog" target="_blank">Browse catalog →</a>
+</div>
+</div>
+</div>
+
+<!-- ═══ GENERATED QA EXPLORER ═════════════════════════════════════════════ -->
+<div class="section" id="generated">
+<h2>Generated NCBench QA Explorer — 736 Pairs</h2>
+<p style="font-size:13px; color:#555; margin-bottom:5px;">
+Browse the <b>736 real QA pairs</b> generated from the 12 NC Soybean Production Guide chapters.
+Click a chapter to see its questions. Click a question to reveal the answer.
 </p>
 
-<div class="explorer-wrapper">
-<div class="explorer-inner">
-
-<div class="chart-area">
-<svg id="svg" width="550" height="550"></svg>
+<div class="stat-row" style="margin-bottom:20px;">
+<div class="stat-card" id="explorer-total"><div class="stat-num">—</div><div class="stat-label">Total Pairs</div></div>
+<div class="stat-card" id="explorer-chapters"><div class="stat-num">12</div><div class="stat-label">Source Chapters</div></div>
+<div class="stat-card"><div class="stat-num">GPT-4o</div><div class="stat-label">Generation Model</div></div>
+<div class="stat-card"><div class="stat-num">454K</div><div class="stat-label">Source Characters</div></div>
 </div>
 
-<div class="panel" id="qa-panel">
-<h3>Dataset Explorer</h3>
-<div id="qa-list"><span style="color:#aaa; font-size:13px;">← Select a topic from the chart</span></div>
+<!-- Chapter buttons -->
+<div id="soy-chapter-btns" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+
+<!-- QA display panel -->
+<div id="soy-qa-panel" style="display:none; background:#fdf8ec; border:1px solid #e8dbb0; border-radius:8px; padding:15px; max-height:500px; overflow-y:auto;">
+<div id="soy-qa-title" style="font-weight:700; font-size:14px; color:#8c6d00; margin-bottom:4px;"></div>
+<div id="soy-qa-count" style="font-size:11px; color:#999; margin-bottom:12px;"></div>
+<div id="soy-qa-list"></div>
 </div>
 
-</div>
-</div>
-
-<p style="font-size:13px; color:#666; margin-top:18px;">
-The explorer above shows the top-ranked questions per topic from a total of 68,210 pairs.
-By interacting with this dataset, collaborators can understand both the
-structure and diversity of questions that the methodology produces.
-</p>
-
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:20px;">
-<div class="card" style="flex:1; min-width:120px; text-align:center;">
-<div style="font-size:28px; font-weight:bold; color:#d4a72c;">25,259</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Corn Q&amp;A Pairs</div>
-</div>
-<div class="card" style="flex:1; min-width:120px; text-align:center;">
-<div style="font-size:28px; font-weight:bold; color:#6a994e;">42,951</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Rice Q&amp;A Pairs</div>
-</div>
-<div class="card" style="flex:1; min-width:120px; text-align:center;">
-<div style="font-size:28px; font-weight:bold; color:#333;">68,210</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Total Q&amp;A Pairs</div>
-</div>
-<div class="card" style="flex:1; min-width:120px; text-align:center;">
-<div style="font-size:28px; font-weight:bold; color:#333;">24</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">Topic Categories</div>
-</div>
-</div>
-
-<p style="margin-top:12px; font-size:12px; color:#999;">
-Corn spans 12 topics — from Plant Stress Response (2,285) to Corn Variety (471).
-Rice spans 12 topics — from Rice Cultivation (4,234) to Rice Farming (398).
-Each entry is exclusively assigned to its best-matching topic via weighted lexical scoring.
+<p style="font-size:11px; color:#999; margin-top:10px;">
+Data: <code>soybean_qa.json</code> (409 KB). Generated using <code>scripts/generate_qa.py</code> with the CROP prompt template.
 </p>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="full-dataset">
-<h2>Full CROP Dataset</h2>
-<p>
-The interactive explorer above focuses on closed-book QA, but the complete CROP dataset
-is substantially larger and covers multiple task types beyond simple question-answering.
-It also includes <b>open-book QA</b> — 2,430 pairs for rice and 3,202 pairs for corn —
-where questions are paired with source passages for retrieval-augmented evaluation.
-</p>
-
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin:20px 0;">
-<div class="card" style="flex:1; min-width:180px; text-align:center; border-top:3px solid #6a994e;">
-<div style="font-size:32px; font-weight:bold; color:#2d6a4f;">210,038</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Single-Turn Dialogues</div>
-<div style="font-size:11px; color:#999; margin-top:2px;">140,056 rice · 69,482 corn</div>
-</div>
-<div class="card" style="flex:1; min-width:180px; text-align:center; border-top:3px solid #d4a72c;">
-<div style="font-size:32px; font-weight:bold; color:#8c6d00;">1,871</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Multi-Turn Dialogues</div>
-<div style="font-size:11px; color:#999; margin-top:2px;">80+ samples per task · 3–5 turns each</div>
-</div>
-<div class="card" style="flex:1; min-width:180px; text-align:center; border-top:3px solid #555;">
-<div style="font-size:32px; font-weight:bold; color:#333;">6</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Task Types</div>
-<div style="font-size:11px; color:#999; margin-top:2px;">QA · NER · Summary · Event Extraction · Open-book · Multi-turn</div>
-</div>
-</div>
-
-<h3>Task Type Breakdown</h3>
-<div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;">
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #2d6a4f; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Closed-Book QA</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Questions answered from model knowledge alone, without reference documents.</p>
-</div>
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #2d6a4f; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Open-Book QA</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Questions paired with source passages for retrieval-augmented evaluation.</p>
-</div>
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #2d6a4f; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Summarization</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Condensing agricultural documents into concise, accurate summaries.</p>
-</div>
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #d4a72c; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Named Entity Recognition</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Identifying crop names, chemicals, diseases, and agronomic terms in text.</p>
-</div>
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #d4a72c; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Event Extraction</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Detecting agricultural events like planting, disease outbreaks, and harvests.</p>
-</div>
-<div class="card" style="flex:1; min-width:130px; border-left:3px solid #d4a72c; padding:10px 12px;">
-<div style="font-weight:700; font-size:12px;">Multi-Turn Dialogue</div>
-<p style="font-size:11px; color:#666; margin:4px 0 0;">Extended farmer–expert conversations with follow-up questions and context.</p>
-</div>
-</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="dialogue">
-<h2>Multi-Turn Dialogue Example</h2>
-<p style="font-size:13px; color:#555; margin-bottom:8px;">
-In the multi-turn pipeline, an LLM creates tasks under domain expert guidance and assigns roles
-to two agents. Using task-dependent prompts and RAG, the LLM generates realistic consultations.
-Below is an actual example from the CROP dataset — a <b>problem-solving pest control</b> scenario.
-</p>
-<p style="font-size:12px; color:#999; margin-bottom:18px;">Figure adapted from the CROP paper (Figure 24).</p>
-
-<div style="max-width:640px; margin:0 auto;">
-
-<!-- Turn 1: Farmer Q1 -->
-<div style="display:flex; gap:10px; margin-bottom:16px;">
-<div style="flex-shrink:0; text-align:center; width:50px;">
-<div style="width:40px; height:40px; border-radius:50%; background:#d4a72c; display:flex; align-items:center; justify-content:center; font-size:18px; margin:0 auto;">🧑‍🌾</div>
-<div style="font-size:9px; color:#888; margin-top:3px;">AI User:<br>Farmer</div>
-</div>
-<div style="background:#fdf6e3; border:1px solid #e8d9a0; border-radius:14px 14px 14px 2px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>Q1:</b> I've been noticing some of my rice plants are stunted and the leaves are turning yellow. What could be causing this issue?
-</div>
-</div>
-
-<!-- Turn 1: Expert A1 -->
-<div style="display:flex; gap:10px; margin-bottom:16px; flex-direction:row-reverse;">
-<div style="flex-shrink:0; text-align:center; width:50px;">
-<div style="width:40px; height:40px; border-radius:50%; background:#2d6a4f; display:flex; align-items:center; justify-content:center; font-size:18px; margin:0 auto;">👨‍🔬</div>
-<div style="font-size:9px; color:#888; margin-top:3px;">AI Assistant:<br>Crop Pestologist</div>
-</div>
-<div style="background:#eef6ee; border:1px solid #b5d4b5; border-radius:14px 14px 2px 14px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>A1:</b> Yellowing and stunting in rice can be symptoms of several issues including nutrient deficiencies, water stress, or pest infestations such as stem borers or leaf folders. Have you noticed any visible insects on the plants or any other unusual signs?
-</div>
-</div>
-
-<!-- Turn 2: Farmer Q2 -->
-<div style="display:flex; gap:10px; margin-bottom:16px;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#fdf6e3; border:1px solid #e8d9a0; border-radius:14px 14px 14px 2px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>Q2:</b> Yes, I've seen some moths around the plants in the evening and there are holes in the leaves. Could this be related to the yellowing?
-</div>
-</div>
-
-<!-- Turn 2: Expert A2 -->
-<div style="display:flex; gap:10px; margin-bottom:16px; flex-direction:row-reverse;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#eef6ee; border:1px solid #b5d4b5; border-radius:14px 14px 2px 14px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>A2:</b> It sounds like your rice crop might be infested with stem borers or leaf folders. These pests can cause the symptoms you're describing as they damage the plant's ability to transport nutrients and water by boring into the stems or folding the leaves.
-</div>
-</div>
-
-<!-- Turn 3: Farmer Q3 -->
-<div style="display:flex; gap:10px; margin-bottom:16px;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#fdf6e3; border:1px solid #e8d9a0; border-radius:14px 14px 14px 2px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>Q3:</b> What can I do to manage these pests and protect my crop?
-</div>
-</div>
-
-<!-- Turn 3: Expert A3 -->
-<div style="display:flex; gap:10px; margin-bottom:16px; flex-direction:row-reverse;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#eef6ee; border:1px solid #b5d4b5; border-radius:14px 14px 2px 14px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>A3:</b> Considering the infestation, it would be wise to apply integrated pest management practices. This includes using pheromone traps to monitor and reduce moth populations and possibly applying biological control agents like <i>Trichogramma</i> wasps, which are natural enemies of stem borers. Also, ensure that your crop is healthy with proper nutrition and water management to resist pest damage more effectively.
-</div>
-</div>
-
-<!-- Turn 4: Farmer Q4 -->
-<div style="display:flex; gap:10px; margin-bottom:16px;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#fdf6e3; border:1px solid #e8d9a0; border-radius:14px 14px 14px 2px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>Q4:</b> Thank you for the advice. I'll look into these options. Is there a specific time or method for applying these biological controls?
-</div>
-</div>
-
-<!-- Turn 4: Expert A4 -->
-<div style="display:flex; gap:10px; margin-bottom:4px; flex-direction:row-reverse;">
-<div style="flex-shrink:0; width:50px;"></div>
-<div style="background:#eef6ee; border:1px solid #b5d4b5; border-radius:14px 14px 2px 14px; padding:11px 15px; font-size:13px; line-height:1.55; color:#333; flex:1;">
-<b>A4:</b> For biological controls like <i>Trichogramma</i> wasps, it's best to release them early in the season before the pest population peaks. Local agricultural extension services or a professional pest management expert can provide guidance on timing and application methods specific to your area to ensure the best results.
-</div>
-</div>
-
-</div>
-
-<p style="font-size:11px; color:#aaa; text-align:center; margin-top:14px;">
-Problem-solving scenario: Pest Control — from the CROP multi-turn dialogue dataset (Figure 24).
-</p>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="benchmark">
-<h2>CROP Benchmark</h2>
-<p>
-Beyond the instruction tuning dataset, CROP includes a dedicated evaluation benchmark
-of <b>5,045 multiple-choice questions</b> across three difficulty levels, covering
-22 countries and six continents in both Chinese and English.
-</p>
-
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin:20px 0;">
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #4caf50;">
-<div style="font-size:28px; font-weight:bold; color:#4caf50;">1,613</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Easy</div>
-<div style="font-size:11px; color:#999;">31.97%</div>
-</div>
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #ff9800;">
-<div style="font-size:28px; font-weight:bold; color:#ff9800;">2,754</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Moderate</div>
-<div style="font-size:11px; color:#999;">53.72%</div>
-</div>
-<div class="card" style="flex:1; min-width:150px; text-align:center; border-top:3px solid #e53935;">
-<div style="font-size:28px; font-weight:bold; color:#e53935;">722</div>
-<div style="font-size:13px; color:#666; margin-top:4px;">Difficult</div>
-<div style="font-size:11px; color:#999;">14.31%</div>
-</div>
-</div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="results">
-<h2>Experiment Results</h2>
-<p>
-Fine-tuning with the CROP dataset consistently improves LLM performance on the agricultural benchmark.
-The table below shows accuracy on the CROP benchmark across commercial and open-source models.
-Values in parentheses indicate improvement over the base model.
-</p>
-
-<div style="overflow-x:auto; margin-top:15px;">
-<table style="width:100%; border-collapse:collapse; font-size:12px; line-height:1.6;">
-<thead>
-<tr style="background:#f4f4f4; border-bottom:2px solid #ddd;">
-<th style="text-align:left; padding:8px 10px;">Model</th>
-<th style="text-align:center; padding:8px 6px;">Access</th>
-<th style="text-align:center; padding:8px 6px;">Size</th>
-<th style="text-align:center; padding:8px 6px;">Overall ↑</th>
-<th style="text-align:center; padding:8px 6px; color:#4caf50;">Easy ↑</th>
-<th style="text-align:center; padding:8px 6px; color:#ff9800;">Moderate ↑</th>
-<th style="text-align:center; padding:8px 6px; color:#e53935;">Difficult ↑</th>
-</tr>
-</thead>
-<tbody>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td colspan="7" style="padding:6px 10px; font-weight:700; color:#555;">Commercial LLMs</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">GPT-4</td>
-<td style="text-align:center;">API</td>
-<td style="text-align:center;">N/A</td>
-<td style="text-align:center; font-weight:700;">0.856</td>
-<td style="text-align:center;">1.000</td>
-<td style="text-align:center;">1.000</td>
-<td style="text-align:center;">0.000</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">GPT-3.5</td>
-<td style="text-align:center;">API</td>
-<td style="text-align:center;">N/A</td>
-<td class="bar-cell" style="text-align:center;"><span class="bar-bg" style="width:32.8%;background:#ff9800;"></span><span class="bar-val">0.328</span></td>
-<td style="text-align:center;">1.000</td>
-<td style="text-align:center;">0.000</td>
-<td style="text-align:center;">0.061</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">Claude-3</td>
-<td style="text-align:center;">API</td>
-<td style="text-align:center;">N/A</td>
-<td class="bar-cell" style="text-align:center;"><span class="bar-bg" style="width:90%;background:#4caf50;"></span><span class="bar-val">0.900</span></td>
-<td style="text-align:center;">0.982</td>
-<td style="text-align:center;">0.968</td>
-<td style="text-align:center;">0.438</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">Qwen</td>
-<td style="text-align:center;">API</td>
-<td style="text-align:center;">N/A</td>
-<td style="text-align:center;">0.866</td>
-<td style="text-align:center;">0.987</td>
-<td style="text-align:center;">0.945</td>
-<td style="text-align:center;">0.301</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td colspan="7" style="padding:6px 10px; font-weight:700; color:#555;">Open-Source LLMs (8B)</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">LLaMA3-Base</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">8B</td>
-<td style="text-align:center;">0.348</td>
-<td style="text-align:center;">0.341</td>
-<td style="text-align:center;">0.343</td>
-<td style="text-align:center;">0.341</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">  + CQA</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">8B</td>
-<td style="text-align:center;">0.643 <span style="color:#4caf50;">(+0.295)</span></td>
-<td style="text-align:center;">0.791</td>
-<td style="text-align:center;">0.651</td>
-<td style="text-align:center;">0.281</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">  + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">8B</td>
-<td style="text-align:center;">0.752 <span style="color:#4caf50;">(+0.404)</span></td>
-<td style="text-align:center;">0.866</td>
-<td style="text-align:center;">0.772</td>
-<td style="text-align:center;">0.378</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#f0f8f0;">
-<td style="padding:6px 10px; font-weight:600;">  + CQA + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">8B</td>
-<td style="text-align:center; font-weight:700;">0.758 <span style="color:#4caf50;">(+0.410)</span></td>
-<td style="text-align:center;">0.858</td>
-<td style="text-align:center;">0.779</td>
-<td style="text-align:center;">0.389</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#fafafa;">
-<td colspan="7" style="padding:6px 10px; font-weight:700; color:#555;">Open-Source LLMs (7B)</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">Qwen1.5-Base</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center;">0.646</td>
-<td style="text-align:center;">0.799</td>
-<td style="text-align:center;">0.646</td>
-<td style="text-align:center;">0.302</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">  + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center;">0.688 <span style="color:#4caf50;">(+0.042)</span></td>
-<td style="text-align:center;">0.880</td>
-<td style="text-align:center;">0.688</td>
-<td style="text-align:center;">0.258</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#f0f8f0;">
-<td style="padding:6px 10px; font-weight:600;">  + CQA + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center; font-weight:700;">0.709 <span style="color:#4caf50;">(+0.063)</span></td>
-<td style="text-align:center;">0.910</td>
-<td style="text-align:center;">0.704</td>
-<td style="text-align:center;">0.227</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">InternLM2-Base</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center;">0.368</td>
-<td style="text-align:center;">0.445</td>
-<td style="text-align:center;">0.381</td>
-<td style="text-align:center;">0.148</td>
-</tr>
-<tr style="border-bottom:1px solid #eee;">
-<td style="padding:6px 10px;">  + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center;">0.748 <span style="color:#4caf50;">(+0.380)</span></td>
-<td style="text-align:center;">0.861</td>
-<td style="text-align:center;">0.761</td>
-<td style="text-align:center;">0.317</td>
-</tr>
-<tr style="border-bottom:1px solid #eee; background:#f0f8f0;">
-<td style="padding:6px 10px; font-weight:600;">  + CQA + CROP</td>
-<td style="text-align:center;">Weights</td>
-<td style="text-align:center;">7B</td>
-<td style="text-align:center; font-weight:700;">0.768 <span style="color:#4caf50;">(+0.400)</span></td>
-<td style="text-align:center;">0.939</td>
-<td style="text-align:center;">0.794</td>
-<td style="text-align:center;">0.285</td>
-</tr>
-</tbody>
-</table>
-</div>
-
-<p style="margin-top:15px; font-size:13px; color:#555;">
-Key takeaway: fine-tuning with CROP data yields up to <b>+0.41 accuracy improvement</b>
-on LLaMA3-8B and <b>+0.40 on InternLM2-7B</b>, demonstrating that domain-specific
-instruction tuning data has a substantial impact on agricultural reasoning.
-This validates the approach NCBench will replicate for soybean and sweetpotato.
-</p>
-</div>
-
-<div class="section" id="methodology">
-<h2>Methodology Adaptation (Why This Is Feasible)</h2>
-<p>
-This project builds directly on the methodology introduced in the CROP dataset.
-The pipeline — prompt-based QA generation, task decomposition, multi-turn dialogue synthesis,
-and LLM-based filtering — is <b>crop-agnostic</b> and transfers directly to new domains.
-Our prior experience with the CROP dataset (rice + corn) means the task taxonomy,
-generation framework, and grading strategy are already validated and ready to reuse.
-</p>
-
-<h3>CROP → NCBench: What Stays, What Changes</h3>
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
-<div class="card" style="flex:1; min-width:250px; border-left:4px solid #6a994e;">
-<div style="font-weight:700; margin-bottom:8px; color:#2d6a4f;">Transfers Directly</div>
-<ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.7; color:#444;">
-<li>Task taxonomy (QA, NER, Summary, Event Extraction)</li>
-<li>Single-turn &amp; multi-turn generation pipelines</li>
-<li>LLM-based filtering and quality grading</li>
-<li>Prompt template structure and format</li>
-</ul>
-</div>
-<div class="card" style="flex:1; min-width:250px; border-left:4px solid #d4a72c;">
-<div style="font-weight:700; margin-bottom:8px; color:#8c6d00;">Changes for NCBench</div>
-<ul style="margin:0; padding-left:18px; font-size:13px; line-height:1.7; color:#444;">
-<li>Crop domain → soybean &amp; sweetpotato</li>
-<li>Data sources → US/NC extension docs, English-only</li>
-<li>Regional grounding → North Carolina / Midwest</li>
-<li>Literature base → US agricultural practices</li>
-</ul>
-</div>
-</div>
-
-<h3>Prompt Template — Closed-Book Q&amp;A (English)</h3>
-<p style="font-size:12px; color:#999; margin-bottom:12px;">Adapted from the CROP paper (Figure 12). This is the actual prompt structure used to generate QA pairs.</p>
-
-<!-- Topic Description -->
-<div style="background:#fff8e1; border:1px solid #ffe082; border-radius:8px; padding:12px 15px; margin-bottom:10px;">
-<div style="font-weight:700; font-size:12px; color:#f57f17; margin-bottom:4px;">Topic Description</div>
-<div style="font-size:12px; color:#555; line-height:1.5;">
-Instruct the model to return professional knowledge Q&amp;A. There are no external reference materials provided in the produced question.
-</div>
-</div>
-
-<!-- System Prompt -->
-<div style="background:#f8faf6; border:1px solid #c8e6c9; border-radius:8px; padding:12px 15px; margin-bottom:10px;">
-<div style="font-weight:700; font-size:12px; color:#2e7d32; margin-bottom:6px;">System Prompt</div>
-
-<div style="background:#fff; border:1px dashed #a5d6a7; border-radius:6px; padding:10px 12px; margin-bottom:8px;">
-<div style="font-size:10px; font-weight:700; color:#888; text-transform:uppercase; margin-bottom:4px;">Role Description</div>
-<div style="font-size:12px; color:#444; line-height:1.5;">
-You are an expert in the field of study relevant to the academic paper enclosed within the &lt;doc&gt;&lt;/doc&gt; tags. Please generate a set of question-answer pairs that reflect the key findings and discussions in the paper.
-</div>
-</div>
-
-<div style="background:#fff; border:1px dashed #a5d6a7; border-radius:6px; padding:10px 12px; margin-bottom:8px;">
-<div style="font-size:10px; font-weight:700; color:#888; text-transform:uppercase; margin-bottom:4px;">Reference Text</div>
-<div style="font-size:12px; color:#444; line-height:1.5; font-style:italic;">
-&lt;doc&gt; In the recent past, population explosion has augmented urbanization…… &lt;/doc&gt;
-</div>
-</div>
-
-<div style="background:#fff; border:1px dashed #a5d6a7; border-radius:6px; padding:10px 12px; margin-bottom:8px;">
-<div style="font-size:10px; font-weight:700; color:#888; text-transform:uppercase; margin-bottom:4px;">Guidelines</div>
-<ol style="font-size:12px; color:#444; line-height:1.6; margin:4px 0 0; padding-left:18px;">
-<li>The number of QA pairs should be determined by the depth and breadth of the paper, with a minimum of <i>N_min</i> and a maximum of <i>N_max</i>.</li>
-<li>Questions should cover various aspects of the paper, avoid focusing solely on numerical data, and refrain from yes/no questions or questions with obvious answers.</li>
-<li>Ensure QA pairs cover: Stress Resistance, Pests and Diseases, Cultivation Techniques, Breeding, Characteristics, Suitable Planting Area, etc.</li>
-<li>Ensure that the answers follow a logical sequence and are supported by information in the paper.</li>
-<li>You may refer to the example provided within the &lt;example&gt; tags, but ensure the output strictly follows the format.</li>
-</ol>
-</div>
-
-<div style="background:#fff; border:1px dashed #a5d6a7; border-radius:6px; padding:10px 12px;">
-<div style="font-size:10px; font-weight:700; color:#888; text-transform:uppercase; margin-bottom:4px;">Example Dialogue</div>
-<div style="font-size:12px; color:#444; line-height:1.5;">
-<b>Question:</b> How to achieve a high yield in the cultivation of Y302 through fertilizer management?<br>
-<b>Answer:</b> In the cultivation of Y302, high yield is achieved through the scientific ratio and timely application of base fertilizer, topdressing, ear fertilizer, and grain fertilizer. Considering the longer growth time and high yield potential of Y302, organic fertilizer needs to be added.
-</div>
-</div>
-</div>
-
-<!-- LLM Output Example -->
-<div style="background:#f3f3f3; border:1px solid #ddd; border-radius:8px; padding:12px 15px; margin-top:10px;">
-<div style="font-weight:700; font-size:12px; color:#555; margin-bottom:6px;">📤 Example LLM Output</div>
-<div style="font-size:12px; color:#444; line-height:1.6;">
-<b>Q1:</b> What was the primary objective of the field research conducted on fourteen early genotypes of maize?<br>
-<b>A1:</b> The primary objective was to explore the roles of chlorophyll content and its relation with other yield attributing traits in maize.<br><br>
-<b>Q2:</b> What were the specific findings regarding aflatoxin levels in maize using different drying methods?<br>
-<b>A2:</b> The research found significant differences in aflatoxin levels among the three drying methods tested. Kitchen drying resulted in the lowest aflatoxin contamination (1.4 ppb), followed by sun drying (1.6 ppb) and dry shelter drying (2.2 ppb).
-</div>
-</div>
-
-<p style="margin:10px 0 0; font-size:12px; color:#888;">
-This template is not crop-specific — it applies to soybean and sweetpotato with no structural changes.
-</p>
-
-<p style="margin-top:20px;">
-Because the pipeline is already validated, there is no need to redesign the methodology.
-The focus shifts entirely to <b>data collection and coverage</b> for the new crop domains.
-Templates, task structures, and quality controls are reused as-is — making this project
-an <b>extension of a proven framework</b> rather than a build from scratch.
-</p>
-</div>
-
-<div class="section" id="pipeline">
-<h2>Data Creation Pipeline</h2>
-<p>
-The CROP dataset is produced through two parallel pipelines — one for single-turn QA
-and one for multi-turn dialogues. Both start from raw agricultural documents and end
-with LLM + human quality filtering. The diagram below reflects the architecture
-described in the original CROP paper.
-</p>
-
-<!-- ── SINGLE-TURN PIPELINE ──────────────────────────────────────────────── -->
-<h3 style="margin-top:30px; margin-bottom:4px;">Single-Turn Dialogue Pipeline</h3>
-<p style="font-size:12px; color:#888; margin-bottom:15px;">Raw documents → format conversion → LLM generation → grading &amp; cleaning → structured dataset</p>
-
-<div style="position:relative; display:flex; align-items:flex-start; gap:0; flex-wrap:nowrap; overflow-x:auto; padding:10px 0 20px;">
-
-<!-- Step 1: Raw Data -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9); border:2px solid #81c784; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">📚</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Raw Data</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-PDF / DOCX / HTML<br>
-Research papers<br>
-Extension reports<br>
-Structured tables
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#81c784; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 2: Format Conversion -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#e3f2fd,#bbdefb); border:2px solid #64b5f6; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🔄</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Format Conversion</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-PDF → TXT (OCR)<br>
-DOCX → TXT (python-docx)<br>
-HTML → TXT (BeautifulSoup)<br>
-Tables → XLS templates
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#64b5f6; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 3: LLM Prompting -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#fff3e0,#ffe0b2); border:2px solid #ffb74d; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🤖</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">LLM Generation</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-Prompt templates →<br>
-Closed-book QA<br>
-Open-book QA<br>
-Summary · NER<br>
-Event Extraction
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#ffb74d; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 4: Grading & Cleaning -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#fce4ec,#f8bbd0); border:2px solid #f06292; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🔍</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Grading &amp; Cleaning</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-LLM scoring pass<br>
-Human review<br>
-Deduplication<br>
-Low-quality removal
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#f06292; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 5: Output -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#e8f5e9,#a5d6a7); border:2px solid #4caf50; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">📦</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">CROP Dataset (.json)</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-210,038 single-turn<br>
-Closed &amp; Open-book QA<br>
-Summary · NER<br>
-Event Extraction
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- ── MULTI-TURN PIPELINE ───────────────────────────────────────────────── -->
-<h3 style="margin-top:30px; margin-bottom:4px;">Multi-Turn Dialogue Pipeline</h3>
-<p style="font-size:12px; color:#888; margin-bottom:15px;">Task generation → role assignment → RAG-augmented conversation → filtering → dialogue dataset</p>
-
-<div style="position:relative; display:flex; align-items:flex-start; gap:0; flex-wrap:nowrap; overflow-x:auto; padding:10px 0 20px;">
-
-<!-- Step 1: Task Generation -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#ede7f6,#d1c4e9); border:2px solid #9575cd; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🎯</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Task Generation</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-LLM creates tasks<br>
-guided by domain<br>
-experts &amp; researchers
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#9575cd; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 2: Role Assignment -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#fff8e1,#ffecb3); border:2px solid #ffd54f; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🎭</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Role Assignment</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-🧑‍🌾 AI User: Farmer<br>
-👨‍🔬 AI Assistant: Expert<br>
-Task-dependent prompts
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#ffd54f; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 3: RAG Conversation -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#e0f7fa,#b2ebf2); border:2px solid #4dd0e1; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">💬</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">RAG Conversation</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-3–5 turns per dialogue<br>
-Retrieval-augmented<br>
-generation with<br>
-conversation history
-</div>
+<!-- ═══ CROSS-LINKS ═══════════════════════════════════════════════════════ -->
+<div class="section" id="compare">
+<h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:28px;">🍠</div>
+<h3 style="color:#a04000; margin:8px 0 4px;">NC Sweetpotato</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">NC's #1 vegetable crop. Curing &amp; storage, disease management, scattered sources that NCBench will consolidate.</p>
+<a href="sweetpotato.html" style="font-size:13px; font-weight:600;">View Sweetpotato Page →</a>
 </div>
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #2e7d32; text-align:center;">
+<div style="font-size:28px;">🌾</div>
+<h3 style="color:#2e7d32; margin:8px 0 4px;">NCBench Project</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">The full project — CROP dataset explorer, methodology, benchmark results, and pipeline.</p>
+<a href="index.html" style="font-size:13px; font-weight:600;">View NCBench →</a>
 </div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#4dd0e1; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 4: Filtering -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#fce4ec,#f8bbd0); border:2px solid #f06292; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">🔍</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Filtering</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-LLM + human grading<br>
-Coherence check<br>
-Factual verification<br>
-Quality threshold
-</div>
-</div>
-</div>
-
-<div style="flex:0 0 30px; display:flex; align-items:center; justify-content:center; padding-top:40px; color:#f06292; font-size:22px; font-weight:bold;">→</div>
-
-<!-- Step 5: Output -->
-<div style="flex:0 0 150px; text-align:center;">
-<div style="background:linear-gradient(135deg,#e8f5e9,#a5d6a7); border:2px solid #4caf50; border-radius:12px; padding:14px 10px; min-height:100px;">
-<div style="font-size:24px;">📦</div>
-<div style="font-weight:700; font-size:11px; margin-top:6px;">Multi-Turn Dataset</div>
-<div style="font-size:10px; color:#555; margin-top:6px; line-height:1.4;">
-1,871 dialogues<br>
-80+ samples per task<br>
-Farmer ↔ Expert format
-</div>
-</div>
-</div>
-
-</div>
-
-<!-- ── EXPECTED OUTPUTS ──────────────────────────────────────────────────── -->
-<h3 style="margin-top:25px;">Expected NCBench Outputs</h3>
-<p style="font-size:13px; color:#555; margin-bottom:12px;">
-Applying these same pipelines to soybean and sweetpotato source documents will produce:
-</p>
-<div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:10px;">
-<div class="card" style="flex:1; min-width:200px; border-left:4px solid #2e7d32;">
-<div style="font-weight:700; font-size:13px;">Instruction Tuning Dataset</div>
-<p style="font-size:12px; color:#555; margin-top:4px;">
-Structured QA pairs formatted for fine-tuning agricultural LLMs on soybean and sweetpotato.
-</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:4px solid #2e7d32;">
-<div style="font-weight:700; font-size:13px;">Single-Turn QA Corpus</div>
-<p style="font-size:12px; color:#555; margin-top:4px;">
-Standalone question-answer pairs covering agronomic topics, suitable for RAG and evaluation.
-</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:4px solid #2e7d32;">
-<div style="font-weight:700; font-size:13px;">Multi-Turn Dialogues</div>
-<p style="font-size:12px; color:#555; margin-top:4px;">
-Farmer–expert conversations with follow-ups, useful for training dialogue-capable models.
-</p>
-</div>
-<div class="card" style="flex:1; min-width:200px; border-left:4px solid #2e7d32;">
-<div style="font-weight:700; font-size:13px;">Interactive Demo</div>
-<p style="font-size:12px; color:#555; margin-top:4px;">
-This page — a live explorer for browsing the dataset by crop and topic.
-</p>
-</div>
-</div>
-
-<h3 style="margin-top:30px;">NCBench Preview — Sample QA Pairs</h3>
-<p style="font-size:13px; color:#555; margin-bottom:12px;">
-Below are representative examples of the type of QA pairs NCBench will produce.
-These illustrate the target format, depth, and regional specificity.
-</p>
-
-<div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:10px;">
-<div class="card" style="flex:1; min-width:280px; border-left:4px solid #d4a72c;">
-<div style="font-size:10px; font-weight:700; color:#8c6d00; text-transform:uppercase; margin-bottom:8px;">🫘 Soybean — Pest Management</div>
-<div style="font-size:12px; color:#333; line-height:1.6;">
-<b>Q:</b> What is the most economically damaging pest of soybean in the southeastern United States, and what management strategies are recommended?<br><br>
-<b>A:</b> The soybean cyst nematode (<i>Heterodera glycines</i>) is the most economically damaging pest of soybean in the Southeast. Management strategies include planting resistant varieties, rotating with non-host crops such as corn or cotton, and monitoring soil nematode populations through fall sampling. In North Carolina, the NC Cooperative Extension recommends a minimum 2-year rotation away from soybean in heavily infested fields.
-</div>
 </div>
-<div class="card" style="flex:1; min-width:280px; border-left:4px solid #e67e22;">
-<div style="font-size:10px; font-weight:700; color:#a04000; text-transform:uppercase; margin-bottom:8px;">🍠 Sweetpotato — Curing &amp; Storage</div>
-<div style="font-size:12px; color:#333; line-height:1.6;">
-<b>Q:</b> Why is curing important for sweetpotatoes after harvest, and what are the recommended conditions?<br><br>
-<b>A:</b> Curing heals harvest wounds, reduces decay during storage, and converts starches to sugars which improves flavor. The recommended conditions are 85°F (29°C) and 85–90% relative humidity for 4–7 days. In North Carolina, curing facilities are typically maintained immediately after harvest in September–October. Proper curing can extend storage life to 6–12 months at 55–60°F.
 </div>
-</div>
-</div>
-
-<div style="display:flex; gap:15px; flex-wrap:wrap; margin-top:15px;">
-<div class="card" style="flex:1; min-width:280px; border-left:4px solid #d4a72c;">
-<div style="font-size:10px; font-weight:700; color:#8c6d00; text-transform:uppercase; margin-bottom:8px;">🫘 Soybean — Planting</div>
-<div style="font-size:12px; color:#333; line-height:1.6;">
-<b>Q:</b> What is the optimal planting window for soybean in the North Carolina Piedmont region?<br><br>
-<b>A:</b> The optimal planting window for full-season soybean in the NC Piedmont is mid-April through mid-May. Planting within this window maximizes vegetative growth before the critical reproductive stages coincide with peak summer rainfall. Late planting (after June 15) typically results in 15–25% yield reduction due to shortened growing season and increased drought risk during pod fill.
-</div>
-</div>
-<div class="card" style="flex:1; min-width:280px; border-left:4px solid #e67e22;">
-<div style="font-size:10px; font-weight:700; color:#a04000; text-transform:uppercase; margin-bottom:8px;">🍠 Sweetpotato — Variety Selection</div>
-<div style="font-size:12px; color:#333; line-height:1.6;">
-<b>Q:</b> What sweetpotato varieties are recommended for commercial production in North Carolina?<br><br>
-<b>A:</b> The primary commercial variety is 'Covington', developed by NC State University, which accounts for over 80% of NC production due to its consistent yield, disease resistance, and excellent eating quality. 'Beauregard' remains popular for early-season harvest. For organic systems, 'Orleans' and 'Bayou Belle' show improved resistance to soil-borne diseases common in NC sandy loam soils.
-</div>
-</div>
-</div>
-
-<p style="font-size:11px; color:#999; margin-top:12px;">
-These are illustrative examples of the target format. Actual NCBench entries will be generated from NC Extension documents and peer-reviewed literature using the CROP pipeline.
-</p>
-
-</div>
 
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<div class="section" id="cite">
-<h2>Citation &amp; Contact</h2>
-<p>If you use NCBench or the CROP dataset in your research, please cite:</p>
-
-<h3>NCBench</h3>
-<div style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:14px 16px; font-family:monospace; font-size:11px; line-height:1.7; overflow-x:auto; white-space:pre;">@article{ncbench2026,
-  title   = {NCBench: A Domain-Specific Instruction Tuning
-             Benchmark for Agricultural LLMs},
-  author  = {Zhang, Shaohu and Fanuel, Mesafint
-             and Marshall, Crystal Cook
-             and Mahmoud, Mahmoud Nabile},
-  year    = {2026},
-  note    = {North Carolina A\&amp;T State University,
-             University of Alabama}
-}</div>
-
-<h3 style="margin-top:20px;">CROP Dataset (Foundation)</h3>
-<div style="background:#f8f8f8; border:1px solid #e0e0e0; border-radius:6px; padding:14px 16px; font-family:monospace; font-size:11px; line-height:1.7; overflow-x:auto; white-space:pre;">@article{zhang2024crop,
-  title   = {Empowering and Assessing the Utility of Large
-             Language Models in Crop Science},
-  author  = {Zhang, Hang and Sun, Jiawei and Chen, Renqi
-             and Liu, Wei and Yuan, Zhonghang and Zheng, Xinzhe
-             and Wang, Zhefan and Yang, Zhiyuan and Yan, Hang
-             and Zhong, Hansen and Wang, Xiqing and Ouyang, Wanli
-             and Yang, Fan and Dong, Nanqing},
-  year    = {2024},
-  note    = {Shanghai AI Laboratory, Yazhouwan National Laboratory,
-             China Agricultural University, Hangzhou Dianzi University}
-}</div>
-
-<h3 style="margin-top:25px;">Contact</h3>
-<div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:10px;">
-<div class="card" style="flex:1; min-width:200px; padding:12px 15px;">
-<div style="font-weight:700; font-size:13px;">Dr. Shaohu Zhang</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">North Carolina A&amp;T State University</div>
-</div>
-<div class="card" style="flex:1; min-width:200px; padding:12px 15px;">
-<div style="font-weight:700; font-size:13px;">Dr. Mesafint Fanuel</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">North Carolina A&amp;T State University</div>
-</div>
-<div class="card" style="flex:1; min-width:200px; padding:12px 15px;">
-<div style="font-weight:700; font-size:13px;">Dr. Crystal Cook Marshall</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">North Carolina A&amp;T State University</div>
-</div>
-<div class="card" style="flex:1; min-width:200px; padding:12px 15px;">
-<div style="font-weight:700; font-size:13px;">Dr. Mahmoud Nabile Mahmoud</div>
-<div style="font-size:12px; color:#666; margin-top:4px;">University of Alabama</div>
-</div>
-</div>
-</div>
+</div><!-- end container -->
 
 <div class="footer">
-<p style="margin-bottom:4px;">NCBench &copy; 2026</p>
-<p style="font-size:12px; color:#aaa; margin:0;">
+<p>NC Soybean — part of <a href="index.html">NCBench</a></p>
+<p style="font-size:12px; color:#aaa;">
 North Carolina A&amp;T State University · University of Alabama
 </p>
 <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;"
-   style="display:inline-block; margin-top:10px; font-size:12px; color:#999; text-decoration:none;">
-↑ Back to top
-</a>
-<p style="font-size:11px; color:#ccc; margin-top:8px;">Last updated: May 2026</p>
-</div>
-
+   style="font-size:12px; color:#999; text-decoration:none;">↑ Back to top</a>
 </div>
 
 <script>
 
-// ── DATA LOADING ──────────────────────────────────────────────────────────────
-let topicIndex = {};   // "Crop/Topic" → [top-20 items], populated after load
-let indexReady = false;
-
-d3.json("topic_index.json").then(data => {
-  topicIndex = data;
-  indexReady = true;
-  console.log("Index loaded:", Object.keys(topicIndex).length, "topics");
-}).catch(err => {
-  console.error("Index load error:", err);
-  document.getElementById("qa-list").innerHTML =
-    `<p style="color:#c00;font-size:13px;">Failed to load topic index.</p>`;
+// ── CHAPTER ACCORDION ────────────────────────────────────────────────────────
+document.querySelectorAll(".chapter-header").forEach(header => {
+  header.addEventListener("click", () => {
+    const item = header.parentElement;
+    const wasOpen = item.classList.contains("open");
+    // Close all
+    document.querySelectorAll(".chapter-item").forEach(i => i.classList.remove("open"));
+    if (!wasOpen) item.classList.add("open");
+  });
 });
 
-// ── CHART DATA ────────────────────────────────────────────────────────────────
-const data = {
-  name: "Crops",
-  children: [
-    {
-      name: "Corn",
-      children: [
-        { name: "Corn Variety", value: 5 },
-        { name: "Biological Characteristics", value: 3 },
-        { name: "Genetics of Corn", value: 4 },
-        { name: "Preventing Diseases", value: 3 },
-        { name: "Corn Production", value: 6 },
-        { name: "Resource Management", value: 5 },
-        { name: "Agricultural Planning", value: 4 },
-        { name: "Climate Change Strategies", value: 3 },
-        { name: "Plant Stress Response", value: 3 },
-        { name: "Infections", value: 2 },
-        { name: "Soil Situations", value: 2 },
-        { name: "Others (Corn)", value: 1 }
-      ]
-    },
-    {
-      name: "Rice",
-      children: [
-        { name: "Hybrid Rice", value: 5 },
-        { name: "Rice Characteristics", value: 4 },
-        { name: "Pests and Diseases", value: 5 },
-        { name: "Rice Cultivation", value: 6 },
-        { name: "Rice Quality Analysis", value: 4 },
-        { name: "Fertility and Yield of Crops", value: 5 },
-        { name: "Genetics", value: 4 },
-        { name: "Rice Farming", value: 5 },
-        { name: "Health Benefits of Rice", value: 3 },
-        { name: "Promotion of Rice Breeding", value: 4 },
-        { name: "Crop Management", value: 4 },
-        { name: "Others (Rice)", value: 1 }
-      ]
-    }
-  ]
-};
-
-// ── SETUP ─────────────────────────────────────────────────────────────────────
-const width = 750;
-const radius = width / 6;
-
-const svg = d3.select("svg")
-  .attr("viewBox", [-width / 2, -width / 2, width, width]);
-
-const partition = d => {
-  const root = d3.hierarchy(d)
-    .sum(d => d.value)
-    .sort((a, b) => b.value - a.value);
-  return d3.partition().size([2 * Math.PI, root.height + 1])(root);
-};
-
-const root = partition(data);
-root.each(d => d.current = d);
-
-// ── COLORS ────────────────────────────────────────────────────────────────────
-const cornColor = d3.scaleSequential()
-  .domain([1, 6])
-  .interpolator(d3.interpolateHcl("#f6e8b1", "#8c6d00"));
-
-const riceColor = d3.scaleSequential()
-  .domain([1, 6])
-  .interpolator(d3.interpolateHcl("#dce7d3", "#2d6a4f"));
-
-// ── ARC ───────────────────────────────────────────────────────────────────────
-const arc = d3.arc()
-  .startAngle(d => d.x0)
-  .endAngle(d => d.x1)
-  .padAngle(0.005)
-  .innerRadius(d => d.y0 * radius)
-  .outerRadius(d => d.y1 * radius - 1);
-
-// expanded arc — outer radius pushed out by 40px with a bounce feel
-const arcExpanded = d3.arc()
-  .startAngle(d => d.x0)
-  .endAngle(d => d.x1)
-  .padAngle(0.002)
-  .innerRadius(d => d.y0 * radius)
-  .outerRadius(d => d.y1 * radius - 1 + 40);
-
-// ── GROUPS ────────────────────────────────────────────────────────────────────
-const g = svg.append("g");
-const gOuter = svg.append("g").attr("transform", "translate(0,0)");
-const gConnector = svg.append("g").attr("pointer-events", "none");
-let currentRotationDeg = 0;
-let activeSegment = null;
-let activeData    = null;
-
-// ── LAYER 1 (inner — Corn / Rice) ─────────────────────────────────────────────
-const innerpath = g.append("g")
-  .selectAll("path")
-  .data(root.descendants().filter(d => d.depth === 1))
-  .join("path")
-  .attr("fill", d => d.data.name === "Corn" ? "#d4a72c" : "#6a994e")
-  .attr("fill-opacity", 0.7)
-  .attr("stroke", "#ffffff")
-  .attr("stroke-width", 1.2)
-  .attr("d", d => arc(d.current));
-
-// (inner click handler is re-bound below after idle animation setup)
-
-// ── LAYER 2 (outer — topics) ──────────────────────────────────────────────────
-const outerPath = gOuter.append("g")
-  .selectAll("path")
-  .data(root.descendants().filter(d => d.depth === 2))
-  .join("path")
-  .attr("fill", d => {
-    let r = d; while (r.depth > 1) r = r.parent;
-    return r.data.name === "Corn" ? cornColor(d.value) : riceColor(d.value);
-  })
-  .attr("fill-opacity", 0.5)
-  .attr("stroke", "#fff")
-  .attr("cursor", "pointer")
-  .attr("d", d => arc(d.current))
-  .on("mouseover", function(event, d) {
-    if (activeSegment && activeSegment.node() === this) return;
-    d3.select(this).transition().duration(150)
-      .attr("fill-opacity", 0.85);
-  })
-  .on("mouseout", function(event, d) {
-    if (activeSegment && activeSegment.node() === this) return;
-    d3.select(this).transition().duration(150)
-      .attr("fill-opacity", 0.5);
-  });
-
-// ── LABELS ────────────────────────────────────────────────────────────────────
-const innerLabel = g.append("g")
-  .attr("pointer-events", "none")
-  .attr("text-anchor", "middle")
-  .selectAll("text")
-  .data(root.descendants().filter(d => d.depth === 1))
-  .join("text")
-  .attr("dy", "0.35em")
-  .text(d => d.data.name)
-  .style("font-size", "26px")
-  .style("font-weight", "bold")
-  .style("fill", "#fff")
-  .attr("transform", d => labelTransform(d.current));
-
-const outerLabel = gOuter.append("g")
-  .attr("pointer-events", "none")
-  .attr("text-anchor", "middle")
-  .selectAll("text")
-  .data(root.descendants().filter(d => d.depth === 2))
-  .join("text")
-  .attr("dy", "0.35em")
-  .style("font-size", "10px")
-  .style("fill", "#fff")
-  .text(d => d.data.name)
-  .attr("transform", d => outerlabelTransform(d.current));
-
-// ── OUTER CLICK ───────────────────────────────────────────────────────────────
-
-function segColorFor(d) {
-  let r = d; while (r.depth > 1) r = r.parent;
-  return r.data.name === "Corn" ? cornColor(d.value) : riceColor(d.value);
-}
-
-function handleOuterClick(event, d) {
-  console.log("handleOuterClick called:", d.data.name);
-  // reset previous active segment
-  if (activeSegment && activeData) {
-    activeSegment.transition().duration(300)
-      .attr("d", arc(activeData.current))
-      .attr("fill-opacity", 0.5)
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 1);
-  }
-
-  // clear old connector
-  gConnector.selectAll("*").remove();
-  gConnector.style("opacity", 1);
-
-  // expand clicked segment with bounce
-  const el = d3.select(event.currentTarget);
-  el.transition().duration(450)
-    .ease(d3.easeBackOut.overshoot(1.8))
-    .attr("d", arcExpanded(d.current))
-    .attr("fill-opacity", 1)
-    .attr("stroke", "#fff")
-    .attr("stroke-width", 2);
-
-  activeSegment = el;
-  activeData    = d;
-
-  // rotate to 3 o'clock
-  const midAngle = (d.x0 + d.x1) / 2;
-  const targetDeg = (Math.PI / 2 - midAngle) * 180 / Math.PI;
-  currentRotationDeg = targetDeg;
-  gOuter.transition().duration(750).attr("transform", `rotate(${targetDeg})`);
-
-  // after rotation settles, draw connector line from segment tip to SVG edge
-  setTimeout(() => {
-    gConnector.selectAll("*").remove();
-    const outerR = d.y1 * radius - 1 + 40;
-    const tipX   = outerR;        // segment is at 3 o'clock → tip is at (outerR, 0)
-    const edgeX  = width / 2;     // right edge of SVG viewBox
-    const color  = segColorFor(d);
-
-    // animated dashed line
-    const line = gConnector.append("line")
-      .attr("x1", tipX).attr("y1", 0)
-      .attr("x2", tipX).attr("y2", 0)
-      .attr("stroke", color)
-      .attr("stroke-width", 2)
-      .attr("stroke-dasharray", "6,4")
-      .attr("opacity", 0.8);
-
-    line.transition().duration(300).ease(d3.easeQuadOut)
-      .attr("x2", edgeX);
-
-    // arrowhead dot at edge
-    gConnector.append("circle")
-      .attr("cx", edgeX).attr("cy", 0).attr("r", 0)
-      .attr("fill", color).attr("opacity", 0.9)
-      .transition().delay(250).duration(200)
-      .attr("r", 5);
-
-    // fade connector out after 2s
-    gConnector.transition().delay(2000).duration(500)
-      .style("opacity", 0)
-      .on("end", () => gConnector.selectAll("*").remove());
-  }, 800);
-
-  // panel pulse flash
-  const segColor = segColorFor(d);
-  const panel = document.querySelector(".panel");
-  panel.style.transition = "none";
-  panel.style.boxShadow  = `0 0 0 4px ${segColor}`;
-  setTimeout(() => {
-    panel.style.transition = "box-shadow 0.7s ease";
-    panel.style.boxShadow  = "none";
-  }, 500);
-
-  // panel color
-  const c = d3.color(segColor);
-  const tint   = `rgba(${c.r},${c.g},${c.b},0.08)`;
-  const border = `rgba(${c.r},${c.g},${c.b},0.6)`;
-  const header = `rgba(${c.r},${c.g},${c.b},0.25)`;
-  panel.style.borderColor     = border;
-  panel.style.borderLeftColor = segColor;
-  panel.style.borderLeftWidth = "4px";
-  panel.style.background      = tint;
-  panel.querySelector("h3").style.background = header;
-  panel.style.setProperty("--thumb-color", border);
-
-  let rootNode = d; while (rootNode.depth > 1) rootNode = rootNode.parent;
-  const qaKey = `${rootNode.data.name}/${d.data.name}`;
-  console.log("Calling showQA with key:", qaKey, "indexReady:", indexReady, "topicIndex keys:", Object.keys(topicIndex).length);
-  showQA(qaKey, segColor);
-}
-
-outerPath.on("click", handleOuterClick);
-
-// ── IDLE HINT ANIMATION ───────────────────────────────────────────────────────
-// Sequentially highlights outer segments to invite interaction. Stops on first click.
-let idleActive = true;
-const outerNodes = outerPath.nodes();
-let idleIndex = 0;
-
-function idleStep() {
-  if (!idleActive || !outerNodes.length) return;
-
-  const prev = outerNodes[(idleIndex - 1 + outerNodes.length) % outerNodes.length];
-  d3.select(prev).transition("idle").duration(400)
-    .attr("fill-opacity", 0.5);
-
-  const curr = outerNodes[idleIndex % outerNodes.length];
-  d3.select(curr).transition("idle").duration(400)
-    .attr("fill-opacity", 0.9)
-    .transition("idle").delay(800).duration(400)
-    .attr("fill-opacity", 0.5);
-
-  idleIndex++;
-  setTimeout(idleStep, 1400);
-}
-
-// start after a short delay so the page settles
-setTimeout(idleStep, 1500);
-
-// gentle slow rotation to catch the eye
-const idleRotation = d3.timer(elapsed => {
-  if (!idleActive) { idleRotation.stop(); return; }
-  gOuter.attr("transform", `rotate(${elapsed * 0.003})`);
-});
-
-// stop all idle effects on interaction
-function stopIdle() {
-  if (!idleActive) return;
-  idleActive = false;
-  idleRotation.stop();
-  gOuter.attr("transform", "translate(0,0)");
-  outerPath.interrupt("idle").attr("fill-opacity", 0.5);
-}
-
-// re-bind clicks to stop idle first, then run handler
-outerPath.on("click", function(event, d) { stopIdle(); handleOuterClick(event, d); });
-innerpath.on("click", null); // clear old handler
-innerpath.on("click", function(event, p) {
-  stopIdle();
-  showQA(p.data.name, p.data.name === "Corn" ? "#d4a72c" : "#6a994e");
-
-  root.each(d => d.target = {
-    x0: Math.max(0, Math.min(1, (d.x0 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-    x1: Math.max(0, Math.min(1, (d.x1 - p.x0) / (p.x1 - p.x0))) * 2 * Math.PI,
-    y0: Math.max(0, d.y0 - p.depth),
-    y1: Math.max(0, d.y1 - p.depth)
-  });
-
-  const t = g.transition().duration(750);
-  innerpath.transition(t)
-    .tween("data", d => { const i = d3.interpolate(d.current, d.target); return t => d.current = i(t); })
-    .attrTween("d", d => () => arc(d.current));
-  innerLabel.transition(t).attr("transform", d => labelTransform(d.current));
-  outerLabel.transition(t)
-    .tween("data", d => { const i = d3.interpolate(d.current, d.target); return t => d.current = i(t); })
-    .attrTween("transform", d => () => outerlabelTransform(d.current));
-});
-
-// ── TRANSFORMS ────────────────────────────────────────────────────────────────
-function labelTransform(d) {
-  const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
-  const y = (d.y0 + d.y1) / 2 * radius;
-  return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
-}
-
-function outerlabelTransform(d) {
-  const angle  = (d.x0 + d.x1) / 2;
-  const rotate = angle * 180 / Math.PI - 90;
-  const r      = ((d.y0 * radius) + (d.y1 * radius - 1)) / 2;
-  const flip   = angle > Math.PI ? 180 : 0;
-  return `rotate(${rotate}) translate(${r},0) rotate(${flip})`;
-}
-
-// ── OPEN/CLOSED BOOK STATE ────────────────────────────────────────────────────
-let openBookIndex = null;
-let currentBook = "closed"; // "closed" or "open"
-
-// ── SHOW QA (consolidated — handles closed/open book + copy button) ──────────
-function showQA(key, accentColor) {
-  console.log("showQA called:", key, "currentBook:", currentBook);
-  const container = document.getElementById("qa-list");
-  container.innerHTML = "";
-
-  const label = key.includes("/") ? key.split("/").slice(1).join("/") : key;
-
-  // badge
-  const badge = document.createElement("div");
-  badge.className = "topic-badge";
-  badge.innerText = label + (currentBook === "open" ? " (Open-Book)" : "");
-  if (accentColor) {
-    const c = d3.color(accentColor);
-    badge.style.background = `rgba(${c.r},${c.g},${c.b},0.18)`;
-    badge.style.color = d3.color(accentColor).darker(1.2).formatHex();
-  }
-  container.appendChild(badge);
-
-  // pick the right index
-  const idx = currentBook === "open" ? openBookIndex : topicIndex;
-
-  if (!idx || !Object.keys(idx).length) {
-    const p = document.createElement("p");
-    p.style.cssText = "color:#aaa;font-size:13px;margin-top:8px;";
-    p.innerText = currentBook === "open" ? "Loading open-book data…" : "Loading index…";
-    container.appendChild(p);
-    return;
-  }
-
-  const items = idx[key] || [];
-
-  // count + copy button
-  const countRow = document.createElement("div");
-  countRow.className = "qa-count";
-  countRow.style.display = "flex";
-  countRow.style.justifyContent = "space-between";
-  countRow.style.alignItems = "center";
-
-  const countText = document.createElement("span");
-  countText.innerText = items.length
-    ? `${items.length} question${items.length > 1 ? "s" : ""}`
-    : "No questions found for this topic.";
-  countRow.appendChild(countText);
-
-  if (items.length) {
-    const btn = document.createElement("button");
-    btn.className = "copy-btn";
-    btn.innerHTML = "📋 Copy Q&A";
-    btn.onclick = () => {
-      let text = "";
-      items.forEach((item, i) => {
-        const q = item.instruction.replace(/^Question:\s*/i, "");
-        const a = item.output.replace(/^Answer:\s*/i, "");
-        text += `Q${i+1}: ${q}\nA${i+1}: ${a}\n\n`;
-      });
-      navigator.clipboard.writeText(text.trim()).then(() => {
-        btn.classList.add("copied");
-        btn.innerHTML = "✓ Copied";
-        setTimeout(() => { btn.classList.remove("copied"); btn.innerHTML = "📋 Copy Q&A"; }, 2000);
-      }).catch(() => {});
-    };
-    countRow.appendChild(btn);
-  }
-  container.appendChild(countRow);
-
-  if (!items.length) return;
-
-  items.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "qa-card";
-    if (accentColor) {
-      const c = d3.color(accentColor);
-      card.style.borderColor = `rgba(${c.r},${c.g},${c.b},0.35)`;
-    }
-
-    const qRow = document.createElement("div");
-    qRow.className = "qa-card-question";
-
-    const chevron = document.createElement("span");
-    chevron.className = "qa-card-chevron";
-    chevron.innerHTML = "&#9654;";
-
-    const qText = document.createElement("span");
-    qText.innerText = item.instruction.replace(/^Question:\s*/i, "");
-
-    qRow.appendChild(chevron);
-    qRow.appendChild(qText);
-
-    const aDiv = document.createElement("div");
-    aDiv.className = "qa-card-answer";
-    aDiv.innerText = item.output.replace(/^Answer:\s*/i, "");
-
-    qRow.onclick = () => card.classList.toggle("open");
-    card.appendChild(qRow);
-    card.appendChild(aDiv);
-    container.appendChild(card);
-  });
-}
-
-// ── 1. SCROLL PROGRESS BAR ──────────────────────────────────────────────────
+// ── PROGRESS BAR ─────────────────────────────────────────────────────────────
 window.addEventListener("scroll", () => {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  const pct = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
   document.getElementById("progress-bar").style.width = pct + "%";
 });
 
-// ── 5. ACTIVE NAV HIGHLIGHT (Intersection Observer) ─────────────────────────
-const navLinks = document.querySelectorAll(".topnav a");
-const sectionIds = Array.from(navLinks).map(a => a.getAttribute("href").slice(1));
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      navLinks.forEach(a => a.classList.remove("active"));
-      const link = document.querySelector(`.topnav a[href="#${entry.target.id}"]`);
-      if (link) link.classList.add("active");
-    }
-  });
-}, { rootMargin: "-40% 0px -55% 0px" });
-
-sectionIds.forEach(id => {
-  const el = document.getElementById(id);
-  if (el) observer.observe(el);
-});
-
-// ── 7. ANCHOR LINKS ON SECTION HEADINGS ─────────────────────────────────────
-document.querySelectorAll(".section[id] h2").forEach(h2 => {
-  const id = h2.closest(".section").id;
-  const a = document.createElement("a");
-  a.className = "anchor-link";
-  a.href = "#" + id;
-  a.textContent = "#";
-  a.title = "Copy link to this section";
-  a.onclick = (e) => {
-    e.preventDefault();
-    history.replaceState(null, "", "#" + id);
-    navigator.clipboard.writeText(window.location.href).catch(() => {});
-    h2.closest(".section").scrollIntoView({ behavior: "smooth" });
-  };
-  h2.appendChild(a);
-});
-
-// ── 6. OPEN-BOOK / CLOSED-BOOK TOGGLE ───────────────────────────────────────
-
-// Load open-book index on demand
-function loadOpenBook() {
-  if (openBookIndex) return Promise.resolve();
-  return Promise.all([
-    d3.json("Rice Open Book (2,430 Q&A pairs).json"),
-    d3.json("Corn Open Book (3,202 Q&A pairs).json")
-  ]).then(([rice, corn]) => {
-    openBookIndex = buildOpenBookIndex(rice, corn);
-    console.log("Open-book index built:", Object.keys(openBookIndex).length, "topics");
-  });
-}
-
-function switchBook(mode) {
-  currentBook = mode;
-  document.getElementById("btn-closed").classList.toggle("active", mode === "closed");
-  document.getElementById("btn-open").classList.toggle("active", mode === "open");
-
-  if (mode === "open") {
-    loadOpenBook().then(() => {
-      // If a topic is currently shown, refresh it
-      const badge = document.querySelector(".topic-badge");
-      if (badge && activeData) {
-        let rootNode = activeData;
-        while (rootNode.depth > 1) rootNode = rootNode.parent;
-        const key = `${rootNode.data.name}/${activeData.data.name}`;
-        showQA(key, segColorFor(activeData));
-      }
-    });
-  } else {
-    // Refresh with closed-book
-    const badge = document.querySelector(".topic-badge");
-    if (badge && activeData) {
-      let rootNode = activeData;
-      while (rootNode.depth > 1) rootNode = rootNode.parent;
-      const key = `${rootNode.data.name}/${activeData.data.name}`;
-      showQA(key, segColorFor(activeData));
-    }
-  }
-}
-
-// ── 2. INLINE BARS ON RESULTS TABLE ─────────────────────────────────────────
-// Add bar backgrounds to all Overall cells (column index 3)
-document.querySelectorAll("#results table tbody tr").forEach(tr => {
-  const cells = tr.querySelectorAll("td");
-  if (cells.length < 4) return; // skip section headers
-  const td = cells[3]; // Overall column
-  const text = td.textContent.trim();
-  const val = parseFloat(text);
-  if (isNaN(val)) return;
-
-  td.classList.add("bar-cell");
-  const pct = Math.round(val * 100);
-  const color = val >= 0.7 ? "#4caf50" : val >= 0.5 ? "#ff9800" : "#e53935";
-
-  const bg = document.createElement("span");
-  bg.className = "bar-bg";
-  bg.style.width = pct + "%";
-  bg.style.background = color;
-
-  const valSpan = document.createElement("span");
-  valSpan.className = "bar-val";
-  valSpan.innerHTML = td.innerHTML;
-
-  td.innerHTML = "";
-  td.appendChild(bg);
-  td.appendChild(valSpan);
-});
-
-// ── 2b. LOADING SKELETON IN PANEL ───────────────────────────────────────────
-// Show shimmer skeleton while index loads
-if (!indexReady) {
-  const list = document.getElementById("qa-list");
-  list.innerHTML = "";
-  for (let i = 0; i < 5; i++) {
-    const s = document.createElement("div");
-    s.className = "skeleton";
-    s.style.width = (60 + Math.random() * 35) + "%";
-    s.style.height = (i === 0 ? "18px" : "14px");
-    list.appendChild(s);
-  }
-}
-
-// ── 3. KEYBOARD NAVIGATION ──────────────────────────────────────────────────
-// Arrow keys cycle through outer segments, Enter selects
-let kbIndex = -1;
-
-document.addEventListener("keydown", (e) => {
-  if (!outerNodes.length) return;
-  // Only activate if explorer is in viewport
-  const svg = document.getElementById("svg");
-  const rect = svg.getBoundingClientRect();
-  if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-
-  if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-    e.preventDefault();
-    // Remove previous highlight
-    if (kbIndex >= 0) outerNodes[kbIndex].classList.remove("segment-focused");
-    kbIndex = (kbIndex + 1) % outerNodes.length;
-    outerNodes[kbIndex].classList.add("segment-focused");
-    outerNodes[kbIndex].scrollIntoView({ block: "nearest" });
-  } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-    e.preventDefault();
-    if (kbIndex >= 0) outerNodes[kbIndex].classList.remove("segment-focused");
-    kbIndex = (kbIndex - 1 + outerNodes.length) % outerNodes.length;
-    outerNodes[kbIndex].classList.add("segment-focused");
-  } else if (e.key === "Enter" && kbIndex >= 0) {
-    e.preventDefault();
-    outerNodes[kbIndex].classList.remove("segment-focused");
-    stopIdle();
-    const d = d3.select(outerNodes[kbIndex]).datum();
-    handleOuterClick({ currentTarget: outerNodes[kbIndex] }, d);
-  }
-});
-
-// ── 6b. BUILD OPEN-BOOK INDEX ───────────────────────────────────────────────
-// Pre-build open-book index using build_index.py style weighted scoring
-function buildOpenBookIndex(riceData, cornData) {
-  // Topic keyword definitions (same as build_index.py)
-  const TOPIC_TERMS = {
-    "Corn/Corn Variety": ["inbred line","hybrid seed","germplasm","cultivar","corn variety","maize variety","variety trial"],
-    "Corn/Biological Characteristics": ["leaf area","root","tassel","silk","ear development","growth stage","plant height","morphological"],
-    "Corn/Genetics of Corn": ["qtl","snp","gene expression","allelic","genomic selection","marker-assisted","heritability","maize genome"],
-    "Corn/Preventing Diseases": ["leaf blight","stalk rot","ear rot","smut","rust","fungicide","disease resistance","pathogen"],
-    "Corn/Corn Production": ["corn yield","maize yield","grain yield","planting density","seeding rate","harvest index","yield component"],
-    "Corn/Resource Management": ["nitrogen fertilizer","phosphorus","irrigation","water use efficiency","nutrient management","fertilizer rate"],
-    "Corn/Agricultural Planning": ["crop rotation","cropping system","intercropping","cover crop","farming system"],
-    "Corn/Climate Change Strategies": ["climate change","global warming","heat stress","drought stress","adaptation","carbon sequestration"],
-    "Corn/Plant Stress Response": ["abiotic stress","oxidative stress","stress tolerance","drought tolerance","stress response","defense mechanism"],
-    "Corn/Infections": ["corn rootworm","corn earworm","aphid","fall armyworm","insect pest","nematode","pest management"],
-    "Corn/Soil Situations": ["soil organic matter","soil ph","soil compaction","tillage","no-till","soil fertility","soil health"],
-    "Corn/Others (Corn)": ["maize","corn","zea mays"],
-    "Rice/Hybrid Rice": ["cytoplasmic male sterility","restorer","hybrid rice","heterosis","f1 hybrid","hybrid vigor"],
-    "Rice/Rice Characteristics": ["amylose","grain chalkiness","grain shape","milling quality","aromatic","grain appearance"],
-    "Rice/Pests and Diseases": ["rice blast","bacterial blight","sheath blight","brown planthopper","stem borer","tungro"],
-    "Rice/Rice Cultivation": ["transplanting","direct seeding","paddy","seedling","water management","rice cultivation"],
-    "Rice/Rice Quality Analysis": ["cooking quality","gel consistency","protein content","starch","eating quality","rice quality"],
-    "Rice/Fertility and Yield of Crops": ["grain yield","spikelet","panicle","tiller","harvest index","biomass","yield component"],
-    "Rice/Genetics": ["oryza sativa","qtl mapping","gene cloning","snp","marker-assisted","gwas","transcriptome","rice gene"],
-    "Rice/Rice Farming": ["rice farmer","farming practice","smallholder","agronomic","field management","paddy farming"],
-    "Rice/Health Benefits of Rice": ["glycemic","phenolic","antioxidant","dietary fiber","vitamin","mineral","health benefit","brown rice"],
-    "Rice/Promotion of Rice Breeding": ["breeding program","variety development","germplasm","cross breeding","backcross","improved variety"],
-    "Rice/Crop Management": ["weed management","integrated pest","fertilizer management","herbicide","crop management","water saving"],
-    "Rice/Others (Rice)": ["oryza","paddy","rice"]
-  };
-
-  const index = {};
-  const allData = { Corn: cornData, Rice: riceData };
-
-  Object.entries(TOPIC_TERMS).forEach(([key, terms]) => {
-    const crop = key.split("/")[0];
-    const dataset = allData[crop] || [];
-
-    index[key] = dataset
-      .map(item => {
-        const text = ((item.instruction||"")+" "+(item.input||"")+" "+(item.output||"")).toLowerCase();
-        const score = terms.reduce((s, t) => s + (text.includes(t) ? t.split(" ").length : 0), 0);
-        return { item, score };
-      })
-      .filter(d => d.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 20)
-      .map(d => d.item);
-  });
-
-  return index;
-}
-
-// ── NC COUNTY MAP (enhanced) ──────────────────────────────────────────────────
+// ── NC SOYBEAN MAP ───────────────────────────────────────────────────────────
 (function() {
-  // County classification + production data (relative scale for bubble sizing)
-  const countyData = {
-    // Soybean top counties (production in million bushels)
-    "Beaufort":  { soy: true, sp: false, soyProd: 3.3 },
-    "Robeson":   { soy: true, sp: false, soyProd: 3.1 },
-    "Union":     { soy: true, sp: false, soyProd: 2.8 },
-    "Pitt":      { soy: true, sp: false, soyProd: 2.5 },
-    "Pasquotank":{ soy: true, sp: false, soyProd: 2.2 },
-    "Duplin":    { soy: true, sp: false, soyProd: 2.0 },
-    "Hyde":      { soy: true, sp: false, soyProd: 1.9 },
-    "Northampton":{ soy: true, sp: false, soyProd: 1.8 },
-    "Bertie":    { soy: true, sp: false, soyProd: 1.7 },
-    // Sweetpotato top counties (production in million lbs)
-    "Nash":      { soy: false, sp: true, spProd: 250 },
-    "Wilson":    { soy: false, sp: true, spProd: 220 },
-    "Edgecombe": { soy: false, sp: true, spProd: 150 },
-    "Greene":    { soy: false, sp: true, spProd: 100 },
-    "Lenoir":    { soy: false, sp: true, spProd: 80 },
-    // Both crops
-    "Sampson":   { soy: true, sp: true, soyProd: 2.4, spProd: 180 },
-    "Johnston":  { soy: true, sp: true, soyProd: 2.1, spProd: 160 },
-    "Wayne":     { soy: true, sp: true, soyProd: 1.9, spProd: 120 },
+  const soyCounties = {
+    "Beaufort":    3.3, "Robeson":     3.1, "Union":       2.8,
+    "Pitt":        2.5, "Sampson":     2.4, "Pasquotank":  2.2,
+    "Johnston":    2.1, "Duplin":      2.0, "Wayne":       1.9,
+    "Hyde":        1.9, "Northampton": 1.8, "Bertie":      1.7
   };
-
-  let mapFilter = "both"; // "both", "soybean", "sweetpotato"
-
-  function getColor(name, filter) {
-    const d = countyData[name];
-    if (!d) return "#e8e8e8";
-    if (filter === "soybean")    return d.soy ? "#d4a72c" : "#e8e8e8";
-    if (filter === "sweetpotato") return d.sp  ? "#e67e22" : "#e8e8e8";
-    // both
-    if (d.soy && d.sp) return "#8e44ad";
-    if (d.soy) return "#d4a72c";
-    if (d.sp)  return "#e67e22";
-    return "#e8e8e8";
-  }
-
-  // NC A&T is in Guilford County (Greensboro)
-  const ncatCounty = "Guilford";
 
   const ncFips = {
     "37001":"Alamance","37003":"Alexander","37005":"Alleghany","37007":"Anson","37009":"Ashe",
@@ -2415,364 +656,199 @@ function buildOpenBookIndex(riceData, cornData) {
     "37191":"Wayne","37193":"Wilkes","37195":"Wilson","37197":"Yadkin","37199":"Yancey"
   };
 
-  Promise.all([
-    d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json")
-  ]).then(([us]) => {
+  const colorScale = d3.scaleSequential()
+    .domain([0, 3.5])
+    .interpolator(d3.interpolateHcl("#f6e8b1", "#8c6d00"));
+
+  d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json").then(us => {
     const counties = topojson.feature(us, us.objects.counties);
     const ncCounties = {
       type: "FeatureCollection",
       features: counties.features.filter(f => String(f.id).startsWith("37"))
     };
 
-    const mapWidth = 700, mapHeight = 420;
-    const projection = d3.geoMercator().fitSize([mapWidth, mapHeight], ncCounties);
-    const pathGen = d3.geoPath().projection(projection);
+    const w = 700, h = 420;
+    const proj = d3.geoMercator().fitSize([w, h], ncCounties);
+    const path = d3.geoPath().projection(proj);
 
-    d3.select("#nc-map").style("position", "relative");
+    d3.select("#nc-soy-map").style("position", "relative");
 
-    const mapSvg = d3.select("#nc-map")
-      .append("svg")
-      .attr("viewBox", `0 0 ${mapWidth} ${mapHeight}`)
-      .attr("width", "100%")
-      .style("max-width", mapWidth + "px");
+    const svg = d3.select("#nc-soy-map").append("svg")
+      .attr("viewBox", `0 0 ${w} ${h}`).attr("width", "100%").style("max-width", w + "px");
 
-    // Tooltip
-    const mapTip = d3.select("#nc-map")
-      .append("div")
+    const tip = d3.select("#nc-soy-map").append("div")
       .style("position","absolute").style("background","rgba(0,0,0,0.85)")
       .style("color","#fff").style("padding","6px 12px").style("border-radius","6px")
       .style("font-size","11px").style("pointer-events","none").style("opacity",0)
       .style("max-width","200px").style("line-height","1.5");
 
-    // Draw counties
-    const countyPaths = mapSvg.append("g")
-      .selectAll("path")
-      .data(ncCounties.features)
-      .join("path")
-      .attr("d", pathGen)
-      .attr("fill", d => getColor(ncFips[String(d.id).padStart(5,"0")] || "", mapFilter))
-      .attr("stroke", "#fff")
-      .attr("stroke-width", 0.8)
+    svg.selectAll("path")
+      .data(ncCounties.features).join("path")
+      .attr("d", path)
+      .attr("fill", d => {
+        const name = ncFips[String(d.id).padStart(5,"0")] || "";
+        return soyCounties[name] ? colorScale(soyCounties[name]) : "#eee";
+      })
+      .attr("stroke", "#fff").attr("stroke-width", 0.8)
       .style("cursor", "pointer")
-      .style("transition", "fill 0.4s, transform 0.2s")
       .on("mouseover", function(event, d) {
-        const name = ncFips[String(d.id).padStart(5,"0")] || "Unknown";
-        const cd = countyData[name];
-        d3.select(this).attr("stroke", "#333").attr("stroke-width", 2)
-          .style("filter", "drop-shadow(0 2px 4px rgba(0,0,0,0.3))");
-
+        const name = ncFips[String(d.id).padStart(5,"0")] || "";
+        d3.select(this).attr("stroke","#333").attr("stroke-width",2);
         let html = `<b>${name} County</b>`;
-        if (cd) {
-          if (cd.soy) html += `<br>🫘 Soybean: ~${cd.soyProd}M bu`;
-          if (cd.sp)  html += `<br>🍠 Sweetpotato: ~${cd.spProd}M lbs`;
-        }
-        if (name === ncatCounty) html += `<br>⭐ NC A&T State University`;
-        mapTip.style("opacity", 1).html(html);
+        if (soyCounties[name]) html += `<br>🫘 ~${soyCounties[name]}M bushels`;
+        tip.style("opacity",1).html(html);
       })
       .on("mousemove", function(event) {
-        const rect = document.getElementById("nc-map").getBoundingClientRect();
-        mapTip.style("left", (event.clientX - rect.left + 12) + "px")
-              .style("top", (event.clientY - rect.top - 30) + "px");
+        const r = document.getElementById("nc-soy-map").getBoundingClientRect();
+        tip.style("left",(event.clientX-r.left+12)+"px").style("top",(event.clientY-r.top-30)+"px");
       })
       .on("mouseout", function() {
-        d3.select(this).attr("stroke", "#fff").attr("stroke-width", 0.8)
-          .style("filter", "none");
-        mapTip.style("opacity", 0);
+        d3.select(this).attr("stroke","#fff").attr("stroke-width",0.8);
+        tip.style("opacity",0);
       })
       .on("click", function(event, d) {
         const name = ncFips[String(d.id).padStart(5,"0")] || "";
-        if (name) {
-          const slug = name.toLowerCase().replace(/[\s']+/g, "");
-          window.open(`https://${slug}.ces.ncsu.edu/`, "_blank");
-        }
+        if (name) window.open(`https://${name.toLowerCase().replace(/\s+/g,"")}.ces.ncsu.edu/`, "_blank");
       });
 
-    // County name labels on highlighted counties
-    const labelGroup = mapSvg.append("g").attr("pointer-events", "none");
+    // Labels on top counties
+    ncCounties.features.forEach(f => {
+      const name = ncFips[String(f.id).padStart(5,"0")] || "";
+      if (!soyCounties[name]) return;
+      const c = path.centroid(f);
+      if (isNaN(c[0])) return;
+      svg.append("text").attr("x",c[0]).attr("y",c[1])
+        .attr("text-anchor","middle").attr("dy","0.35em")
+        .style("font-size","8px").style("font-weight","700")
+        .style("fill","#333").style("text-shadow","0 0 3px #fff, 0 0 3px #fff")
+        .text(name);
+    });
 
-    function drawLabels() {
-      labelGroup.selectAll("*").remove();
-      ncCounties.features.forEach(f => {
-        const name = ncFips[String(f.id).padStart(5,"0")] || "";
-        const cd = countyData[name];
-        if (!cd) return;
-        // Check if visible under current filter
-        const color = getColor(name, mapFilter);
-        if (color === "#e8e8e8") return;
-
-        const centroid = pathGen.centroid(f);
-        if (isNaN(centroid[0])) return;
-
-        labelGroup.append("text")
-          .attr("x", centroid[0]).attr("y", centroid[1])
-          .attr("text-anchor", "middle").attr("dy", "0.35em")
-          .style("font-size", "8px").style("font-weight", "700")
-          .style("fill", "#333").style("text-shadow", "0 0 3px #fff, 0 0 3px #fff")
-          .text(name);
-      });
+    // NC A&T marker
+    const guilford = ncCounties.features.find(f => ncFips[String(f.id).padStart(5,"0")] === "Guilford");
+    if (guilford) {
+      const gc = path.centroid(guilford);
+      svg.append("circle").attr("cx",gc[0]).attr("cy",gc[1]).attr("r",8)
+        .attr("fill","none").attr("stroke","#e74c3c").attr("stroke-width",2).attr("stroke-dasharray","3,2");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]).attr("text-anchor","middle").attr("dy","0.35em")
+        .style("font-size","10px").text("⭐");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]+15).attr("text-anchor","middle")
+        .style("font-size","7px").style("font-weight","700").style("fill","#e74c3c")
+        .style("text-shadow","0 0 3px #fff").text("NC A&T");
     }
-    drawLabels();
+  });
+})();
 
-    // Production bubbles (proportional circles)
-    const bubbleGroup = mapSvg.append("g").attr("pointer-events", "none");
+// ── CROP EXPLORER (Corn topics) ───────────────────────────────────────────────
+d3.json("topic_index.json").then(index => {
+  const cornTopics = Object.entries(index).filter(([k]) => k.startsWith("Corn/") && !k.includes("Others"));
+  const container = document.getElementById("corn-topics");
 
-    const soyScale = d3.scaleSqrt().domain([0, 3.5]).range([0, 14]);
-    const spScale  = d3.scaleSqrt().domain([0, 260]).range([0, 14]);
-
-    function drawBubbles() {
-      bubbleGroup.selectAll("*").remove();
-      ncCounties.features.forEach(f => {
-        const name = ncFips[String(f.id).padStart(5,"0")] || "";
-        const cd = countyData[name];
-        if (!cd) return;
-
-        const centroid = pathGen.centroid(f);
-        if (isNaN(centroid[0])) return;
-
-        if (mapFilter === "soybean" || mapFilter === "both") {
-          if (cd.soy) {
-            bubbleGroup.append("circle")
-              .attr("cx", centroid[0]).attr("cy", centroid[1] - 8)
-              .attr("r", soyScale(cd.soyProd || 0))
-              .attr("fill", "#d4a72c").attr("fill-opacity", 0.4)
-              .attr("stroke", "#d4a72c").attr("stroke-width", 1);
-          }
-        }
-        if (mapFilter === "sweetpotato" || mapFilter === "both") {
-          if (cd.sp) {
-            const offset = (mapFilter === "both" && cd.soy) ? 8 : -8;
-            bubbleGroup.append("circle")
-              .attr("cx", centroid[0]).attr("cy", centroid[1] + offset)
-              .attr("r", spScale(cd.spProd || 0))
-              .attr("fill", "#e67e22").attr("fill-opacity", 0.4)
-              .attr("stroke", "#e67e22").attr("stroke-width", 1);
-          }
-        }
+  cornTopics.forEach(([key, items]) => {
+    const label = key.split("/")[1];
+    const btn = document.createElement("button");
+    btn.style.cssText = "padding:8px 14px; border:1px solid #e8dbb0; border-radius:20px; background:#fdf8ec; font-size:12px; font-weight:600; color:#8c6d00; cursor:pointer; transition:all 0.2s;";
+    btn.textContent = label + ` (${items.length})`;
+    btn.onmouseover = () => { btn.style.background = "#f6e8b1"; };
+    btn.onmouseout = () => { btn.style.background = "#fdf8ec"; };
+    btn.onclick = () => {
+      document.getElementById("corn-qa-panel").style.display = "block";
+      document.getElementById("corn-qa-title").textContent = label + " — Sample QA from CROP Dataset";
+      const list = document.getElementById("corn-qa-list");
+      list.innerHTML = "";
+      items.slice(0, 5).forEach((item, i) => {
+        const div = document.createElement("div");
+        div.style.cssText = "margin-bottom:12px; padding:10px; background:#fff; border-radius:6px; border-left:3px solid #d4a72c;";
+        div.innerHTML = `<div style="font-weight:600; font-size:12px; color:#333; margin-bottom:4px;">Q${i+1}: ${item.instruction.replace(/^Question:\\s*/i,"")}</div>
+          <div style="font-size:12px; color:#555; line-height:1.5;">${item.output.replace(/^Answer:\\s*/i,"")}</div>`;
+        list.appendChild(div);
       });
-    }
-    drawBubbles();
-
-    // NC A&T marker (Guilford County)
-    const guilfordFeature = ncCounties.features.find(f =>
-      ncFips[String(f.id).padStart(5,"0")] === ncatCounty
-    );
-    if (guilfordFeature) {
-      const gc = pathGen.centroid(guilfordFeature);
-      // Star marker
-      mapSvg.append("circle")
-        .attr("cx", gc[0]).attr("cy", gc[1])
-        .attr("r", 10)
-        .attr("fill", "none").attr("stroke", "#e74c3c").attr("stroke-width", 2.5)
-        .attr("stroke-dasharray", "4,2");
-      mapSvg.append("text")
-        .attr("x", gc[0]).attr("y", gc[1])
-        .attr("text-anchor", "middle").attr("dy", "0.35em")
-        .style("font-size", "12px")
-        .text("⭐");
-      mapSvg.append("text")
-        .attr("x", gc[0]).attr("y", gc[1] + 18)
-        .attr("text-anchor", "middle")
-        .style("font-size", "7px").style("font-weight", "700")
-        .style("fill", "#e74c3c").style("text-shadow", "0 0 3px #fff, 0 0 3px #fff")
-        .text("NC A&T");
-    }
-
-    // Animate on scroll — counties start invisible, fade in when map enters viewport
-    countyPaths.attr("opacity", 0);
-    const mapObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          countyPaths.transition()
-            .delay((d, i) => i * 15)
-            .duration(400)
-            .attr("opacity", 1);
-          mapObserver.disconnect();
-        }
-      });
-    }, { threshold: 0.2 });
-    mapObserver.observe(document.getElementById("nc-map"));
-
-    // Filter toggle function (called from HTML buttons)
-    window.setMapFilter = function(mode) {
-      mapFilter = mode;
-      document.getElementById("map-both").classList.toggle("active", mode === "both");
-      document.getElementById("map-soy").classList.toggle("active", mode === "soybean");
-      document.getElementById("map-sp").classList.toggle("active", mode === "sweetpotato");
-
-      countyPaths.transition().duration(400)
-        .attr("fill", d => getColor(ncFips[String(d.id).padStart(5,"0")] || "", mode));
-
-      drawLabels();
-      drawBubbles();
+      if (items.length > 5) {
+        const more = document.createElement("p");
+        more.style.cssText = "font-size:11px; color:#999; margin-top:8px;";
+        more.textContent = `...and ${items.length - 5} more in the full dataset.`;
+        list.appendChild(more);
+      }
     };
-
-  }).catch(err => {
-    console.error("Map load error:", err);
-    document.getElementById("nc-map").innerHTML =
-      '<p style="color:#999;font-size:12px;">Map failed to load.</p>';
+    container.appendChild(btn);
   });
-})();
+}).catch(err => console.error("Topic index load error:", err));
 
-// ── COUNTY TABLE ACCORDION ───────────────────────────────────────────────────
-// Load county_documents.json and make table rows expandable
-(function() {
-  let countyData = null;
+// ── SOYBEAN QA EXPLORER ──────────────────────────────────────────────────────
+fetch("soybean_qa.json").then(r => r.json()).then(data => {
+  document.querySelector("#explorer-total .stat-num").textContent = data.length;
 
-  d3.json("county_documents.json").then(data => {
-    countyData = data.counties;
-    console.log("County docs loaded:", Object.keys(countyData).length, "counties");
-    wireUpTable();
-  }).catch(err => console.error("County docs load error:", err));
+  // Group by approximate chapter (every ~60 pairs = 1 chapter, roughly)
+  const chapters = [
+    { name: "Ch.1 The Soybean Plant", start: 0, end: 13 },
+    { name: "Ch.2 Variety Selection", start: 13, end: 49 },
+    { name: "Ch.3 Fertilization", start: 49, end: 93 },
+    { name: "Ch.4 Soil Health", start: 93, end: 122 },
+    { name: "Ch.5 Planting Decisions", start: 122, end: 193 },
+    { name: "Ch.6 Weed Management", start: 193, end: 326 },
+    { name: "Ch.7 Diseases", start: 326, end: 400 },
+    { name: "Ch.8 Nematodes", start: 400, end: 436 },
+    { name: "Ch.9 Insect Mgmt", start: 436, end: 560 },
+    { name: "Ch.10 Water Mgmt", start: 560, end: 600 },
+    { name: "Ch.11 Harvest/Storage", start: 600, end: 680 },
+    { name: "Ch.12 Marketing", start: 680, end: data.length },
+  ];
 
-  function wireUpTable() {
-    // Find the county crawl table — it's the one with "Soy News" header
-    const tables = document.querySelectorAll("table");
-    let targetTable = null;
-    tables.forEach(t => {
-      if (t.innerHTML.includes("Soy News")) targetTable = t;
-    });
-    if (!targetTable) return;
+  const btnContainer = document.getElementById("soy-chapter-btns");
 
-    const tbody = targetTable.querySelector("tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"));
+  chapters.forEach(ch => {
+    const count = Math.min(ch.end, data.length) - ch.start;
+    if (count <= 0) return;
 
-    rows.forEach(row => {
-      const cells = row.querySelectorAll("td");
-      if (cells.length < 2) return; // skip total row
+    const btn = document.createElement("button");
+    btn.style.cssText = "padding:7px 12px; border:1px solid #e8dbb0; border-radius:20px; background:#fdf8ec; font-size:11px; font-weight:600; color:#8c6d00; cursor:pointer; transition:all 0.2s;";
+    btn.textContent = ch.name + " (" + count + ")";
+    btn.onmouseover = () => btn.style.background = "#f6e8b1";
+    btn.onmouseout = () => btn.style.background = "#fdf8ec";
+    btn.onclick = () => {
+      const panel = document.getElementById("soy-qa-panel");
+      panel.style.display = "block";
+      document.getElementById("soy-qa-title").textContent = ch.name;
+      document.getElementById("soy-qa-count").textContent = count + " QA pairs";
 
-      const countyName = cells[0]?.textContent?.trim();
-      if (!countyName || countyName === "TOTAL") return;
+      const list = document.getElementById("soy-qa-list");
+      list.innerHTML = "";
 
-      // Add class and cursor
-      row.classList.add("county-row");
+      const items = data.slice(ch.start, Math.min(ch.end, data.length));
+      items.forEach((item, i) => {
+        const card = document.createElement("div");
+        card.style.cssText = "margin-bottom:8px; border:1px solid #e8dbb0; border-radius:6px; overflow:hidden;";
 
-      // Create detail row (hidden by default)
-      const detailRow = document.createElement("tr");
-      detailRow.className = "county-detail";
-      detailRow.innerHTML = `<td colspan="7"></td>`;
-      row.after(detailRow);
+        const qRow = document.createElement("div");
+        qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start; user-select:none;";
+        qRow.innerHTML = '<span style="color:#d4a72c; flex-shrink:0;">▶</span><span>' + item.instruction + '</span>';
 
-      row.addEventListener("click", () => {
-        // Toggle
-        const isOpen = detailRow.style.display === "table-row";
-        // Close all others first
-        document.querySelectorAll(".county-detail").forEach(d => d.style.display = "none");
+        const aDiv = document.createElement("div");
+        aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#fdf8ec; padding:0 12px; border-top:0;";
+        aDiv.textContent = item.output;
 
-        if (isOpen) return;
+        qRow.onclick = () => {
+          const isOpen = aDiv.style.maxHeight !== "0px" && aDiv.style.maxHeight !== "";
+          if (isOpen) {
+            aDiv.style.maxHeight = "0"; aDiv.style.padding = "0 12px";
+            qRow.querySelector("span").textContent = "▶";
+          } else {
+            aDiv.style.maxHeight = "300px"; aDiv.style.padding = "10px 12px";
+            qRow.querySelector("span").textContent = "▼";
+          }
+        };
 
-        const cd = countyData[countyName];
-        if (!cd) {
-          detailRow.querySelector("td").innerHTML = '<span style="color:#999;font-size:12px;">No data available.</span>';
-          detailRow.style.display = "table-row";
-          return;
-        }
-
-        const t1 = cd.tier1_docs || [];
-        const t2 = cd.tier2_docs || [];
-
-        let html = '<div style="display:flex; gap:20px; flex-wrap:wrap;">';
-
-        // Soybean articles
-        const soyDocs = t1.filter(d => {
-          const txt = (d.title + ' ' + d.url).toLowerCase();
-          return ['soybean','soybeans','soy '].some(k => txt.includes(k));
-        });
-        // Sweetpotato articles
-        const spDocs = t1.filter(d => {
-          const txt = (d.title + ' ' + d.url).toLowerCase();
-          return ['sweetpotato','sweet potato','sweetpotatoes'].some(k => txt.includes(k));
-        });
-
-        html += '<div style="flex:1; min-width:220px;">';
-        html += `<div class="detail-label">🫘 Soybean Articles (${soyDocs.length})</div>`;
-        if (soyDocs.length) {
-          html += '<ul>';
-          soyDocs.forEach(d => {
-            html += `<li><a href="${d.url}" target="_blank">${d.title}</a></li>`;
-          });
-          html += '</ul>';
-        } else {
-          html += '<span style="font-size:11px;color:#aaa;">None found</span>';
-        }
-        html += '</div>';
-
-        html += '<div style="flex:1; min-width:220px;">';
-        html += `<div class="detail-label">🍠 Sweetpotato Articles (${spDocs.length})</div>`;
-        if (spDocs.length) {
-          html += '<ul>';
-          spDocs.forEach(d => {
-            html += `<li><a href="${d.url}" target="_blank">${d.title}</a></li>`;
-          });
-          html += '</ul>';
-        } else {
-          html += '<span style="font-size:11px;color:#aaa;">None found</span>';
-        }
-        html += '</div>';
-
-        // Sample of other articles (first 10)
-        html += '<div style="flex:1; min-width:250px;">';
-        html += `<div class="detail-label">📰 Other News (${t2.length} total, showing first 10)</div>`;
-        if (t2.length) {
-          html += '<ul>';
-          t2.slice(0, 10).forEach(d => {
-            html += `<li><a href="${d.url}" target="_blank">${d.title}</a></li>`;
-          });
-          if (t2.length > 10) html += `<li style="color:#999;">...and ${t2.length - 10} more</li>`;
-          html += '</ul>';
-        } else {
-          html += '<span style="font-size:11px;color:#aaa;">None found</span>';
-        }
-        html += '</div>';
-
-        html += '</div>';
-
-        detailRow.querySelector("td").innerHTML = html;
-        detailRow.style.display = "table-row";
+        card.appendChild(qRow);
+        card.appendChild(aDiv);
+        list.appendChild(card);
       });
-    });
-  }
-})();
 
-// ── 2. SCROLL FADE-IN ANIMATIONS ────────────────────────────────────────────
-const fadeObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-    }
+      panel.scrollTop = 0;
+    };
+    btnContainer.appendChild(btn);
   });
-}, { threshold: 0.08 });
-
-document.querySelectorAll(".section").forEach(s => fadeObserver.observe(s));
-
-// ── 5. SEARCH BOX IN PANEL ──────────────────────────────────────────────────
-// Inject a search input into the panel header area
-const panelEl = document.getElementById("qa-panel");
-const panelH3 = panelEl.querySelector("h3");
-const searchInput = document.createElement("input");
-searchInput.type = "text";
-searchInput.className = "panel-search";
-searchInput.placeholder = "Filter questions...";
-searchInput.style.display = "none"; // hidden until questions are shown
-panelH3.insertAdjacentElement("afterend", searchInput);
-
-searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase().trim();
-  const cards = panelEl.querySelectorAll(".qa-card");
-  cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-    card.style.display = text.includes(query) ? "" : "none";
-  });
-});
-
-// Show search box when questions are rendered
-const panelObserver = new MutationObserver(() => {
-  const hasCards = panelEl.querySelectorAll(".qa-card").length > 0;
-  searchInput.style.display = hasCards ? "" : "none";
-  if (!hasCards) searchInput.value = "";
-});
-panelObserver.observe(document.getElementById("qa-list"), { childList: true });
+}).catch(err => console.error("Soybean QA load error:", err));
 
 </script>
-
 </body>
 </html>
