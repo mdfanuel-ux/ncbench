@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NC Sweetpotato — NCBench</title>
+<meta name="description" content="NC Sweetpotato deep-dive: production resources, disease management, county data for agricultural LLM instruction tuning.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍠</text></svg>">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h1 { text-align: center; font-size: 32px; color: #a04000; }
+h2 { border-bottom: 2px solid #fde0cc; padding-bottom: 5px; color: #333; }
+h3 { color: #a04000; }
+a { color: #e67e22; }
+a:hover { color: #a04000; }
+.section { margin-bottom: 50px; }
+.card { background: #fef5ee; padding: 15px; border-radius: 8px; min-width: 150px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #fde0cc; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #a04000; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+.topnav a:hover { background: #fef5ee; }
+.topnav a.back { color: #999; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #fde0cc, #e67e22); z-index: 200; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #fef5ee; padding: 15px; border-radius: 8px; border-top: 3px solid #e67e22; }
+.stat-num { font-size: 28px; font-weight: bold; color: #a04000; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.stat-sub { font-size: 10px; color: #999; }
+.resource-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.resource-card { flex: 1; min-width: 250px; border-left: 3px solid #e67e22; padding: 10px 14px; background: #fef5ee; border-radius: 0 6px 6px 0; }
+.resource-card h4 { margin: 0 0 4px; font-size: 13px; color: #333; }
+.resource-card p { margin: 0; font-size: 11px; color: #777; }
+.resource-card a { font-size: 11px; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #fde0cc; }
+#nc-sp-map { width: 100%; max-width: 700px; margin: 0 auto; position: relative; }
+@media (max-width: 600px) { .stat-row { flex-direction: column; } .resource-grid { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#history">History</a>
+<a href="#production">Production</a>
+<a href="#curing">Curing</a>
+<a href="#challenges">Challenges</a>
+<a href="#map">County Map</a>
+<a href="#sources">Sources</a>
+</nav>
+<div class="container">
+
+<h1>🍠 NC Sweetpotato</h1>
+<p style="text-align:center; font-size:15px; color:#888; margin-top:-5px;">
+A deep-dive into North Carolina sweetpotato production — part of the <a href="index.html">NCBench</a> project
+</p>
+<hr style="border:none; border-top:2px solid #fde0cc; margin:30px 0;">
+
+<!-- ═══ OVERVIEW ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p>
+North Carolina is the <b>#1 sweetpotato producer</b> in the United States, accounting for
+over 60% of national production. With over 400 growers and approximately 95,000 harvested
+acres, sweetpotato is NC's top vegetable crop and the official state vegetable.
+</p>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">#1</div>
+<div class="stat-label">US Producer</div>
+<div class="stat-sub">60%+ of national supply</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">95K</div>
+<div class="stat-label">Acres Harvested</div>
+<div class="stat-sub">USDA NASS</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">400+</div>
+<div class="stat-label">Growers</div>
+<div class="stat-sub">Primarily eastern NC</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">Covington</div>
+<div class="stat-label">Dominant Variety</div>
+<div class="stat-sub">80%+ of NC production</div>
+</div>
+</div>
+
+<p style="font-size:13px; color:#555;">
+Sweetpotatoes are grown primarily in the <b>Coastal Plain</b> of eastern North Carolina,
+where the hot, moist climate and rich, fertile sandy loam soils create ideal growing conditions.
+They are planted in May or June from cuttings called <b>slips</b> and harvested in late August
+through October. Unlike soybean, which has a comprehensive 12-chapter production guide,
+sweetpotato knowledge in NC Extension is <b>scattered across multiple sources</b> — making it
+a prime candidate for NCBench's consolidation effort.
+</p>
+</div>
+
+<!-- ═══ HISTORY ════════════════════════════════════════════════════════════ -->
+<div class="section" id="history">
+<h2>History &amp; Significance</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+<div style="flex:2; min-width:300px;">
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Sweetpotatoes have been cultivated in the Americas for over <b>5,000 years</b>, originating in
+Central and South America. Spanish explorers brought them to Europe and Asia in the 1500s.
+In North Carolina, sweetpotato production has been commercially significant since the early 1900s.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+NC has maintained its <b>#1 ranking since 1971</b> — over 50 consecutive years as the nation's
+top producer. The state's dominance grew with the development of improved varieties at NC State
+University, particularly <b>'Covington'</b> (released 2005), which revolutionized the industry
+with its consistent shape, disease resistance, and superior eating quality.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Sweetpotato is the <b>official state vegetable</b> of North Carolina (designated 1995).
+Wilson County alone produces more sweetpotatoes than the entire state of Louisiana, the
+fourth-highest producing state.
+</p>
+</div>
+<div style="flex:1; min-width:200px;">
+<div class="card" style="border-left:3px solid #e67e22; margin-bottom:12px;">
+<div style="font-weight:700; font-size:12px; color:#a04000;">Key Milestones</div>
+<ul style="font-size:11px; color:#555; margin:8px 0 0; padding-left:16px; line-height:1.8;">
+<li><b>5000+ years</b> — cultivated in Americas</li>
+<li><b>1500s</b> — brought to Europe/Asia</li>
+<li><b>1900s</b> — commercial production in NC</li>
+<li><b>1971</b> — NC becomes #1 US producer</li>
+<li><b>1995</b> — official NC state vegetable</li>
+<li><b>2005</b> — 'Covington' variety released</li>
+<li><b>Today</b> — 60%+ of US supply from NC</li>
+</ul>
+</div>
+<div class="card" style="border-left:3px solid #e67e22;">
+<div style="font-weight:700; font-size:12px; color:#a04000;">Compare with Soybean</div>
+<p style="font-size:11px; color:#555; margin:6px 0 0; line-height:1.6;">
+While soybean is NC's #1 crop by acreage (1.6M acres), sweetpotato is the #1 vegetable
+crop and has a much higher per-acre value. Both are key to eastern NC agriculture.
+</p>
+<a href="soy.html" style="font-size:11px;">View NC Soybean page →</a>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ═══ PRODUCTION ════════════════════════════════════════════════════════ -->
+<div class="section" id="production">
+<h2>Sweetpotato Production</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:24px;">🌱</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Slips &amp; Planting</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Grown from vine cuttings (slips), not seeds. Planted May–June in well-drained sandy loam with full sunlight. Disease-free certified slips are critical.
+</p>
+</div>
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:24px;">🌡️</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Curing</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+After harvest, roots are cured at 85°F and 85–90% humidity for 4–7 days. This heals wounds, converts starch to sugar, and extends storage life to 6–12 months.
+</p>
+</div>
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:24px;">📦</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Storage</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Stored at 55–60°F after curing. Proper storage is critical — sweetpotatoes are sensitive to chilling injury below 50°F and decay above 65°F.
+</p>
+</div>
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:24px;">🏪</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Markets</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Fresh market, processing (canned, frozen, baby food), and export. NC supplies major grocery chains and food processors year-round from storage.
+</p>
+</div>
+</div>
+
+<h3>Key Varieties</h3>
+<div class="resource-grid" style="margin-top:10px;">
+<div class="resource-card">
+<h4>Covington</h4>
+<p>Developed by NC State. 80%+ of NC production. Consistent yield, disease resistance, excellent eating quality. The industry standard.</p>
+</div>
+<div class="resource-card">
+<h4>Beauregard</h4>
+<p>Popular for early-season harvest. Good yield but more susceptible to some diseases than Covington.</p>
+</div>
+<div class="resource-card">
+<h4>Orleans &amp; Bayou Belle</h4>
+<p>Newer varieties with improved resistance to soil-borne diseases. Promising for organic systems and NC sandy loam soils.</p>
+</div>
+</div>
+</div>
+
+<!-- ═══ CURING & STORAGE ═══════════════════════════════════════════════════ -->
+<div class="section" id="curing">
+<h2>Curing &amp; Storage — The Critical Difference</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+Unlike most crops, sweetpotatoes require a <b>post-harvest curing process</b> that fundamentally
+changes the product. Proper curing is what transforms a starchy root into the sweet, flavorful
+vegetable consumers expect. This is one of the most knowledge-intensive aspects of sweetpotato
+production — and a key area where NCBench QA pairs will be valuable.
+</p>
+
+<div style="display:flex; gap:0; flex-wrap:wrap; margin:15px 0;">
+<div style="flex:1; min-width:200px; padding:15px; background:#fef5ee; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:20px;">🌡️</div>
+<div style="font-weight:700; font-size:13px; margin:6px 0;">Step 1: Curing</div>
+<div style="font-size:24px; font-weight:bold; color:#a04000;">85°F</div>
+<div style="font-size:11px; color:#666;">85–90% humidity</div>
+<div style="font-size:11px; color:#666;">4–7 days</div>
+<p style="font-size:11px; color:#555; margin-top:8px; line-height:1.5;">
+Heals harvest wounds, forms protective periderm layer, converts starch to sugars (improves flavor).
+</p>
+</div>
+<div style="display:flex; align-items:center; padding:0 8px; color:#e67e22; font-size:20px;">→</div>
+<div style="flex:1; min-width:200px; padding:15px; background:#fef5ee; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:20px;">📦</div>
+<div style="font-weight:700; font-size:13px; margin:6px 0;">Step 2: Storage</div>
+<div style="font-size:24px; font-weight:bold; color:#a04000;">55–60°F</div>
+<div style="font-size:11px; color:#666;">85% humidity</div>
+<div style="font-size:11px; color:#666;">6–12 months</div>
+<p style="font-size:11px; color:#555; margin-top:8px; line-height:1.5;">
+Maintains quality year-round. Below 50°F causes chilling injury (hard core). Above 65°F promotes sprouting and decay.
+</p>
+</div>
+<div style="display:flex; align-items:center; padding:0 8px; color:#e67e22; font-size:20px;">→</div>
+<div style="flex:1; min-width:200px; padding:15px; background:#fef5ee; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:20px;">🏪</div>
+<div style="font-weight:700; font-size:13px; margin:6px 0;">Step 3: Market</div>
+<div style="font-size:24px; font-weight:bold; color:#a04000;">Year-round</div>
+<div style="font-size:11px; color:#666;">Fresh, processed, export</div>
+<div style="font-size:11px; color:#666;">Sept harvest → Aug sales</div>
+<p style="font-size:11px; color:#555; margin-top:8px; line-height:1.5;">
+NC supplies grocery chains and processors continuously from storage. Peak demand: Thanksgiving and holiday season.
+</p>
+</div>
+</div>
+
+<div class="card" style="margin-top:15px; border-left:3px solid #e67e22;">
+<div style="font-weight:700; font-size:12px; color:#a04000;">Why This Matters for NCBench</div>
+<p style="font-size:11px; color:#555; margin-top:4px; line-height:1.6;">
+Curing and storage knowledge is highly specialized and region-specific. Temperature tolerances,
+humidity control, facility design, and timing decisions vary by variety and climate. This is
+exactly the type of expert knowledge that LLMs currently lack — and that NCBench aims to capture
+through QA pairs generated from Extension documents on post-harvest handling.
+</p>
+</div>
+</div>
+
+<!-- ═══ CHALLENGES ════════════════════════════════════════════════════════ -->
+<div class="section" id="challenges">
+<h2>Production Challenges</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+Sweetpotato cultivation involves unique challenges not shared by grain crops like soybean.
+These are the key areas where NC Extension provides guidance — and where NCBench QA pairs
+will be most valuable.
+</p>
+
+<div class="resource-grid">
+<div class="resource-card">
+<h4>🦠 Diseases</h4>
+<p>Fusarium wilt, black rot, scurf, Streptomyces soil rot, and storage rots. Disease-free slips and field rotation are primary controls.</p>
+<a href="https://plantpathology.ces.ncsu.edu/pp-vegetables/pp-vegetables-root-crops/" target="_blank">Plant Pathology portal →</a>
+</div>
+<div class="resource-card">
+<h4>🐛 Insect Pests</h4>
+<p>Wireworms, flea beetles, white grubs, and sweetpotato weevil (in southern counties). Soil insecticides and cultural controls.</p>
+</div>
+<div class="resource-card">
+<h4>🌡️ Curing &amp; Storage</h4>
+<p>Improper curing leads to decay and poor flavor. Temperature and humidity control is critical. Many small growers lack proper curing facilities.</p>
+<a href="https://burke.ces.ncsu.edu/harvesting-sweet-potatoes" target="_blank">Harvesting &amp; curing guide →</a>
+</div>
+<div class="resource-card">
+<h4>🧪 Food Safety</h4>
+<p>Post-harvest handling, washing, packing house sanitation. NC Fresh Produce Safety provides commodity-specific guidance.</p>
+<a href="https://ncfreshproducesafety.ces.ncsu.edu/ncfreshproducesafety-commodity-specific-guidance-sweet-potatoes/" target="_blank">Food safety brochures →</a>
+</div>
+<div class="resource-card">
+<h4>🌿 Weed Management</h4>
+<p>Limited herbicide options compared to soybean. Mechanical cultivation and hand weeding still common. Critical during vine establishment.</p>
+</div>
+<div class="resource-card">
+<h4>📊 No Comprehensive Guide</h4>
+<p>Unlike soybean (12-chapter guide), sweetpotato knowledge is scattered across factsheets, pathology portals, and organic production chapters. NCBench aims to consolidate this.</p>
+</div>
+</div>
+</div>
+
+<!-- ═══ COUNTY MAP ═══════════════════════════════════════════════════════ -->
+<div class="section" id="map">
+<h2>NC Sweetpotato Production Map</h2>
+<p style="font-size:13px; color:#555; margin-bottom:12px;">
+Top sweetpotato-producing counties in North Carolina. Click any county to visit its Extension page.
+</p>
+<div id="nc-sp-map"></div>
+<p style="font-size:10px; color:#aaa; margin-top:6px; text-align:center;">
+Data: USDA NASS, US Sweetpotato Council. Hover for production data.
+</p>
+</div>
+
+<!-- ═══ DATA SOURCES ════════════════════════════════════════════════════ -->
+<div class="section" id="sources">
+<h2>Data Sources for NCBench — Sweetpotato</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+Unlike soybean, sweetpotato lacks a single comprehensive production guide. Sources are scattered:
+</p>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">1</div>
+<div class="stat-label">Production Chapter</div>
+<div class="stat-sub">Organic Commodities Guide Ch. 8</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">7</div>
+<div class="stat-label">Disease Factsheets</div>
+<div class="stat-sub">Plant Pathology portal</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">~52</div>
+<div class="stat-label">Publications</div>
+<div class="stat-sub">content.ces.ncsu.edu</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">8</div>
+<div class="stat-label">County News</div>
+<div class="stat-sub">Sweetpotato-specific articles</div>
+</div>
+</div>
+
+<div class="resource-grid" style="margin-top:15px;">
+<div class="resource-card">
+<h4>Organic Production Guide — Ch. 8</h4>
+<p>The closest thing to a comprehensive sweetpotato guide. Covers organic management practices.</p>
+<a href="https://resources.ces.ncsu.edu/north-carolina-organic-commodities-production-guide/chapter-8-crop-production-management-sweetpotatoes" target="_blank">Read chapter →</a>
+</div>
+<div class="resource-card">
+<h4>Plant Pathology Portal</h4>
+<p>7 disease factsheets covering major sweetpotato diseases in NC.</p>
+<a href="https://plantpathology.ces.ncsu.edu/pp-vegetables/pp-vegetables-root-crops/" target="_blank">View portal →</a>
+</div>
+<div class="resource-card">
+<h4>NC Fresh Produce Safety</h4>
+<p>Food safety brochures specific to sweetpotato production and handling.</p>
+<a href="https://ncfreshproducesafety.ces.ncsu.edu/ncfreshproducesafety-commodity-specific-guidance-sweet-potatoes/" target="_blank">View brochures →</a>
+</div>
+<div class="resource-card">
+<h4>NC State Breeding Program</h4>
+<p>One of the oldest sweetpotato breeding programs in the US. Developed Covington and other varieties.</p>
+<a href="https://potatoes.cals.ncsu.edu/sweetpotato/" target="_blank">Visit program →</a>
+</div>
+</div>
+
+<div class="card" style="margin-top:20px; border-left:3px solid #e67e22; background:#fff8f0;">
+<div style="font-weight:700; font-size:13px; color:#a04000;">📌 The NCBench Opportunity</div>
+<p style="font-size:12px; color:#555; margin-top:6px; line-height:1.6;">
+The fragmented nature of sweetpotato Extension content is exactly why NCBench is needed.
+By consolidating these scattered sources into a structured QA dataset, NCBench will create
+the first comprehensive instruction tuning resource for sweetpotato — something that doesn't
+exist even in traditional Extension publishing.
+</p>
+</div>
+</div>
+
+<!-- ═══ CROSS-LINKS ═══════════════════════════════════════════════════════ -->
+<div class="section" id="compare">
+<h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #d4a72c; text-align:center;">
+<div style="font-size:28px;">🫘</div>
+<h3 style="color:#8c6d00; margin:8px 0 4px;">NC Soybean</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">NC's #1 crop by acreage. 12-chapter production guide, NCSoy.org resources, 736 generated QA pairs.</p>
+<a href="soy.html" style="font-size:13px; font-weight:600;">View Soybean Page →</a>
+</div>
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #2e7d32; text-align:center;">
+<div style="font-size:28px;">🌾</div>
+<h3 style="color:#2e7d32; margin:8px 0 4px;">NCBench Project</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">The full project — CROP dataset explorer, methodology, benchmark results, and pipeline.</p>
+<a href="index.html" style="font-size:13px; font-weight:600;">View NCBench →</a>
+</div>
+</div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+<p>NC Sweetpotato — part of <a href="index.html">NCBench</a></p>
+<p style="font-size:12px; color:#aaa;">
+North Carolina A&amp;T State University · University of Alabama
+</p>
+<a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;"
+   style="font-size:12px; color:#999; text-decoration:none;">↑ Back to top</a>
+</div>
+
+<script>
+// Progress bar
+window.addEventListener("scroll", () => {
+  const pct = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
+  document.getElementById("progress-bar").style.width = pct + "%";
+});
+
+// NC Sweetpotato Map
+(function() {
+  const spCounties = {
+    "Sampson": 180, "Nash": 250, "Johnston": 160, "Wilson": 220,
+    "Wayne": 120, "Edgecombe": 150, "Greene": 100, "Lenoir": 80
+  };
+  const ncFips = {
+    "37001":"Alamance","37003":"Alexander","37005":"Alleghany","37007":"Anson","37009":"Ashe",
+    "37011":"Avery","37013":"Beaufort","37015":"Bertie","37017":"Bladen","37019":"Brunswick",
+    "37021":"Buncombe","37023":"Burke","37025":"Cabarrus","37027":"Caldwell","37029":"Camden",
+    "37031":"Carteret","37033":"Caswell","37035":"Catawba","37037":"Chatham","37039":"Cherokee",
+    "37041":"Chowan","37043":"Clay","37045":"Cleveland","37047":"Columbus","37049":"Craven",
+    "37051":"Cumberland","37053":"Currituck","37055":"Dare","37057":"Davidson","37059":"Davie",
+    "37061":"Duplin","37063":"Durham","37065":"Edgecombe","37067":"Forsyth","37069":"Franklin",
+    "37071":"Gaston","37073":"Gates","37075":"Graham","37077":"Granville","37079":"Greene",
+    "37081":"Guilford","37083":"Halifax","37085":"Harnett","37087":"Haywood","37089":"Henderson",
+    "37091":"Hertford","37093":"Hoke","37095":"Hyde","37097":"Iredell","37099":"Jackson",
+    "37101":"Johnston","37103":"Jones","37105":"Lee","37107":"Lenoir","37109":"Lincoln",
+    "37111":"Macon","37113":"Madison","37115":"Martin","37117":"McDowell","37119":"Mecklenburg",
+    "37121":"Mitchell","37123":"Montgomery","37125":"Moore","37127":"Nash","37129":"New Hanover",
+    "37131":"Northampton","37133":"Onslow","37135":"Orange","37137":"Pamlico","37139":"Pasquotank",
+    "37141":"Pender","37143":"Perquimans","37145":"Person","37147":"Pitt","37149":"Polk",
+    "37151":"Randolph","37153":"Richmond","37155":"Robeson","37157":"Rockingham","37159":"Rowan",
+    "37161":"Rutherford","37163":"Sampson","37165":"Scotland","37167":"Stanly","37169":"Stokes",
+    "37171":"Surry","37173":"Swain","37175":"Transylvania","37177":"Tyrrell","37179":"Union",
+    "37181":"Vance","37183":"Wake","37185":"Warren","37187":"Washington","37189":"Watauga",
+    "37191":"Wayne","37193":"Wilkes","37195":"Wilson","37197":"Yadkin","37199":"Yancey"
+  };
+  const colorScale = d3.scaleSequential().domain([0, 260]).interpolator(d3.interpolateHcl("#fde0cc", "#a04000"));
+
+  d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json").then(us => {
+    const counties = topojson.feature(us, us.objects.counties);
+    const ncCounties = { type: "FeatureCollection", features: counties.features.filter(f => String(f.id).startsWith("37")) };
+    const w = 700, h = 420;
+    const proj = d3.geoMercator().fitSize([w, h], ncCounties);
+    const path = d3.geoPath().projection(proj);
+    d3.select("#nc-sp-map").style("position", "relative");
+    const svg = d3.select("#nc-sp-map").append("svg").attr("viewBox", `0 0 ${w} ${h}`).attr("width", "100%").style("max-width", w + "px");
+    const tip = d3.select("#nc-sp-map").append("div")
+      .style("position","absolute").style("background","rgba(0,0,0,0.85)").style("color","#fff")
+      .style("padding","6px 12px").style("border-radius","6px").style("font-size","11px")
+      .style("pointer-events","none").style("opacity",0).style("max-width","200px").style("line-height","1.5");
+
+    svg.selectAll("path").data(ncCounties.features).join("path").attr("d", path)
+      .attr("fill", d => { const n = ncFips[String(d.id).padStart(5,"0")]||""; return spCounties[n] ? colorScale(spCounties[n]) : "#eee"; })
+      .attr("stroke", "#fff").attr("stroke-width", 0.8).style("cursor", "pointer")
+      .on("mouseover", function(e, d) {
+        const n = ncFips[String(d.id).padStart(5,"0")]||"";
+        d3.select(this).attr("stroke","#333").attr("stroke-width",2);
+        let html = `<b>${n} County</b>`;
+        if (spCounties[n]) html += `<br>🍠 ~${spCounties[n]}M lbs`;
+        tip.style("opacity",1).html(html);
+      })
+      .on("mousemove", function(e) { const r = document.getElementById("nc-sp-map").getBoundingClientRect(); tip.style("left",(e.clientX-r.left+12)+"px").style("top",(e.clientY-r.top-30)+"px"); })
+      .on("mouseout", function() { d3.select(this).attr("stroke","#fff").attr("stroke-width",0.8); tip.style("opacity",0); })
+      .on("click", function(e, d) { const n = ncFips[String(d.id).padStart(5,"0")]||""; if (n) window.open(`https://${n.toLowerCase().replace(/\s+/g,"")}.ces.ncsu.edu/`, "_blank"); });
+
+    // Labels
+    ncCounties.features.forEach(f => {
+      const n = ncFips[String(f.id).padStart(5,"0")]||"";
+      if (!spCounties[n]) return;
+      const c = path.centroid(f); if (isNaN(c[0])) return;
+      svg.append("text").attr("x",c[0]).attr("y",c[1]).attr("text-anchor","middle").attr("dy","0.35em")
+        .style("font-size","8px").style("font-weight","700").style("fill","#333").style("text-shadow","0 0 3px #fff, 0 0 3px #fff").text(n);
+    });
+    // NC A&T
+    const g = ncCounties.features.find(f => ncFips[String(f.id).padStart(5,"0")] === "Guilford");
+    if (g) {
+      const gc = path.centroid(g);
+      svg.append("circle").attr("cx",gc[0]).attr("cy",gc[1]).attr("r",8).attr("fill","none").attr("stroke","#e74c3c").attr("stroke-width",2).attr("stroke-dasharray","3,2");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]).attr("text-anchor","middle").attr("dy","0.35em").style("font-size","10px").text("⭐");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]+15).attr("text-anchor","middle").style("font-size","7px").style("font-weight","700").style("fill","#e74c3c").style("text-shadow","0 0 3px #fff").text("NC A&T");
+    }
+  });
+})();
+</script>
+</body>
+</html>

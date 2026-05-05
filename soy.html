@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NC Soybean — NCBench</title>
+<meta name="description" content="NC Soybean deep-dive: production guide, grower resources, county data, and QA pairs for agricultural LLM instruction tuning.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫘</text></svg>">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h1 { text-align: center; font-size: 32px; color: #8c6d00; }
+h2 { border-bottom: 2px solid #f0e6c0; padding-bottom: 5px; color: #333; }
+h3 { color: #8c6d00; }
+a { color: #8c6d00; }
+a:hover { color: #d4a72c; }
+.section { margin-bottom: 50px; }
+.card { background: #fdf8ec; padding: 15px; border-radius: 8px; min-width: 150px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #f0e6c0; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #8c6d00; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+.topnav a:hover { background: #fdf8ec; }
+.topnav a.back { color: #999; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #f6e8b1, #8c6d00); z-index: 200; }
+.chapter-list { list-style: none; padding: 0; margin: 0; }
+.chapter-item { border: 1px solid #e8dbb0; border-radius: 8px; margin-bottom: 8px; overflow: hidden; transition: border-color 0.3s; }
+.chapter-item:hover { border-color: #d4a72c; }
+.chapter-header { display: flex; align-items: center; gap: 10px; padding: 12px 16px; cursor: pointer; background: #fdf8ec; font-size: 14px; font-weight: 600; color: #333; user-select: none; transition: background 0.2s; }
+.chapter-header:hover { background: #f6e8b1; }
+.chapter-num { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: #d4a72c; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+.chapter-chevron { margin-left: auto; font-size: 10px; color: #bbb; transition: transform 0.25s; }
+.chapter-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s; padding: 0 16px; font-size: 13px; color: #555; line-height: 1.6; background: #fff; }
+.chapter-item.open .chapter-body { max-height: 500px; padding: 12px 16px; border-top: 1px solid #e8dbb0; }
+.chapter-item.open .chapter-chevron { transform: rotate(90deg); }
+.resource-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.resource-card { flex: 1; min-width: 250px; border-left: 3px solid #d4a72c; padding: 10px 14px; background: #fdf8ec; border-radius: 0 6px 6px 0; }
+.resource-card h4 { margin: 0 0 4px; font-size: 13px; color: #333; }
+.resource-card p { margin: 0; font-size: 11px; color: #777; }
+.resource-card a { font-size: 11px; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #fdf8ec; padding: 15px; border-radius: 8px; border-top: 3px solid #d4a72c; }
+.stat-num { font-size: 28px; font-weight: bold; color: #8c6d00; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.stat-sub { font-size: 10px; color: #999; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #f0e6c0; }
+#nc-soy-map { width: 100%; max-width: 700px; margin: 0 auto; position: relative; }
+
+/* hero header */
+.hero {
+    background: linear-gradient(135deg, #1a472a 0%, #2d6a4f 30%, #4a8c5c 60%, #6aaa6e 100%);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 5 Q35 15 30 25 Q25 15 30 5' fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='1.5'/%3E%3Cpath d='M30 25 Q35 35 30 45 Q25 35 30 25' fill='none' stroke='rgba(255,255,255,0.06)' stroke-width='1.5'/%3E%3Ccircle cx='30' cy='50' r='3' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E") repeat;
+    animation: heroFloat 20s linear infinite;
+}
+@keyframes heroFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-60px); }
+}
+.hero h1 { color: #fff; font-size: 36px; margin: 0; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.hero p { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 8px; position: relative; z-index: 1; }
+.hero a { color: #f6e8b1; }
+
+@media (max-width: 600px) { .stat-row { flex-direction: column; } .resource-grid { flex-direction: column; } }
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+
+<nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#history">History</a>
+<a href="#growing">Growing</a>
+<a href="#nc-soybeans">NC Soybeans</a>
+<a href="#guide">Production Guide</a>
+<a href="#resources">Grower Resources</a>
+<a href="#map">County Map</a>
+<a href="#data">Data Sources</a>
+<a href="#generated">Generated QA</a>
+</nav>
+
+<div class="hero">
+<h1>🫘 NC Soybean</h1>
+<p>A deep-dive into North Carolina soybean production — part of the <a href="index.html">NCBench</a> project</p>
+</div>
+
+<div class="container">
+
+<!-- ═══ OVERVIEW ═══════════════════════════════════════════════════════════ -->
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p>
+Soybeans are the <b>#1 crop produced in North Carolina</b>, with 1.63 million acres planted
+and 57.96 million bushels harvested. All 100 NC counties grow soybeans, with the heaviest
+production concentrated in the Coastal Plain and Piedmont regions. 95% of NC farms are
+family-owned and operated.
+</p>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">1.63M</div>
+<div class="stat-label">Acres Planted</div>
+<div class="stat-sub">USDA NASS 2025</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">57.96M</div>
+<div class="stat-label">Bushels Harvested</div>
+<div class="stat-sub">36 bu/acre avg yield</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">100</div>
+<div class="stat-label">Counties Growing Soy</div>
+<div class="stat-sub">All NC counties</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">12</div>
+<div class="stat-label">Guide Chapters</div>
+<div class="stat-sub">NC Soybean Production Guide</div>
+</div>
+</div>
+
+<p style="font-size:13px; color:#666;">
+The <a href="https://www.ncsoy.org" target="_blank">NC Soybean Producers Association (NCSPA)</a>
+administers checkoff-funded programs for NC soybean growers through research, promotion, and advocacy.
+The <a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">NC Soybean Production Guide</a>,
+funded by NCSPA and published by NC State Extension, is the authoritative reference for soybean
+production in the state.
+</p>
+</div>
+
+<!-- ═══ HISTORY ════════════════════════════════════════════════════════════ -->
+<div class="section" id="history">
+<h2>History of Soybeans</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+
+<div style="flex:2; min-width:300px;">
+<h3 style="margin-top:0;">Origins &amp; Early Spread</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans originated in Southeast Asia and were first domesticated by Chinese farmers around
+<b>1100 BC</b>. By the first century AD, the crop had spread to Japan and across Asia.
+Soybean seeds first arrived in the Americas in <b>1765</b>, when a colonist in Georgia planted
+seed from China. In 1851, seeds were distributed to farmers in Illinois — reportedly from
+a rescued Japanese fisherman — marking the first steps toward American soybean farming.
+</p>
+
+<h3>Rise in American Agriculture</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+By the 1870s, soybeans gained popularity as livestock forage, thriving in the hot, humid
+conditions of states like North Carolina. In <b>1904</b>, George Washington Carver discovered
+their value as a source of protein, oil, and soil enrichment — leading to his famous crop
+rotation system that revitalized cotton farming in the South. In 1919, William Morse
+co-founded the American Soybean Association and later collected over 10,000 varieties from
+China to expand research.
+</p>
+
+<h3>Modern Era</h3>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Production accelerated during the 1940s when WWII disrupted supply from China, driving demand
+for soybean-based oils, lubricants, and plastics. Henry Ford explored soy's potential for
+making plastics and car parts as early as the 1930s. By the 1990s, biotechnology transformed
+the crop with herbicide-tolerant varieties that increased yields and reduced erosion.
+</p>
+</div>
+
+<div style="flex:1; min-width:200px;">
+<div class="card" style="border-left:3px solid #d4a72c; margin-bottom:12px;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">Key Dates</div>
+<ul style="font-size:11px; color:#555; margin:8px 0 0; padding-left:16px; line-height:1.8;">
+<li><b>1100 BC</b> — Domesticated in China</li>
+<li><b>1765</b> — First seeds in Americas (Georgia)</li>
+<li><b>1851</b> — Distributed to Illinois farmers</li>
+<li><b>1870s</b> — Popular as forage in NC</li>
+<li><b>1904</b> — Carver discovers protein/oil value</li>
+<li><b>1919</b> — American Soybean Association founded</li>
+<li><b>1940s</b> — WWII drives US production boom</li>
+<li><b>1966</b> — NCSPA incorporated</li>
+<li><b>1990s</b> — Biotech herbicide-tolerant varieties</li>
+</ul>
+</div>
+
+<div class="card" style="border-left:3px solid #d4a72c;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">NC Today</div>
+<p style="font-size:11px; color:#555; margin:6px 0 0; line-height:1.6;">
+Soybeans are grown in all 31 US states, with Iowa, Illinois, Indiana, and Minnesota leading.
+North Carolina plays a vital role as both a grower and a major consumer due to its large
+pork and poultry industries. NC farmers grow soybeans alongside corn, wheat, cotton,
+sweetpotatoes, and peanuts.
+</p>
+</div>
+</div>
+
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/learn" target="_blank">NCSoy.org — History of Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ GROWING SOYBEANS ═══════════════════════════════════════════════════ -->
+<div class="section" id="growing">
+<h2>Growing Soybeans</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🌱</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Planting</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+May–July in NC. Seeds planted ~1.5" deep in rows up to 30" apart. No-till planting into wheat stubble saves time and reduces erosion.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🌿</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Growth</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Sprouts in 4–7 days. Blooms July–September with small white to violet flowers. Self-pollinating — each flower has male and female parts.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🫘</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Maturity</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Late September — leaves turn yellow then brown and fall off, exposing mature pods. Ready for harvest by mid-October to November.
+</p>
+</div>
+
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #8c6d00; text-align:center;">
+<div style="font-size:24px;">🚜</div>
+<div style="font-weight:700; font-size:13px; margin-top:6px;">Harvest</div>
+<p style="font-size:11px; color:#555; margin-top:6px; line-height:1.5;">
+Combines cut and separate beans from pods. Transported to grain dealers or on-farm storage. Processed into soybean meal (protein) and soy oil.
+</p>
+</div>
+
+</div>
+
+<h3>Why Soybeans Are Special</h3>
+<div style="display:flex; gap:15px; flex-wrap:wrap; margin:10px 0;">
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🔄 Nitrogen Fixation</h4>
+<p>Soybeans are legumes that form a symbiotic relationship with bacteria in their root nodules, converting atmospheric nitrogen into plant-usable form. This reduces fertilizer needs and restores nitrogen to the soil for the next crop.</p>
+</div>
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🌾 Rotational Crop</h4>
+<p>Farmers rotate soybeans with corn, wheat, cotton, and other crops. After soybean harvest, winter wheat can be planted in the nitrogen-enriched soil. Soybeans can also be double-cropped after wheat harvest in the same year.</p>
+</div>
+<div class="resource-card" style="flex:1; min-width:250px;">
+<h4>🧬 Seed Selection</h4>
+<p>Farmers select seed based on yield potential, drought tolerance, disease resistance, and herbicide tolerance traits (Roundup Ready, Liberty Link, Xtend). NC Official Variety Testing provides local performance data.</p>
+</div>
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/growing-soybeans" target="_blank">NCSoy.org — Growing Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ NC SOYBEANS ══════════════════════════════════════════════════════ -->
+<div class="section" id="nc-soybeans">
+<h2>Soybeans in North Carolina</h2>
+
+<div style="display:flex; gap:20px; flex-wrap:wrap; margin:15px 0;">
+<div style="flex:2; min-width:300px;">
+<p style="font-size:13px; color:#444; line-height:1.7;">
+NC farmers plant soybeans in <b>all 100 counties</b> from the mountains to the sea, though
+75% of production is concentrated in the eastern Coastal Plain. At 1.6 million acres in an
+average year, soybeans have the biggest footprint of any crop in the state — worth up to
+<b>$800 million</b> to farmers in a good year.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans rank in the <b>top 5 commodities by cash receipts</b> in NC. The crop is deeply
+connected to the state's livestock industry — NC's large pork and poultry operations are
+major consumers of soybean meal for animal feed. Roughly 95% of NC farms are family-owned
+and operated.
+</p>
+<p style="font-size:13px; color:#444; line-height:1.7;">
+Soybeans work well in rotation with tobacco, cotton, corn, and wheat — making them an
+integral part of NC's diverse agricultural landscape. Many farmers double-crop soybeans
+after winter wheat harvest, maximizing land use within a single growing season.
+</p>
+</div>
+<div style="flex:1; min-width:200px;">
+<div class="card" style="border-left:3px solid #d4a72c; margin-bottom:12px;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">NC Soybean Facts</div>
+<ul style="font-size:11px; color:#555; margin:8px 0 0; padding-left:16px; line-height:1.8;">
+<li>#1 crop by acreage in NC</li>
+<li>1.6 million acres average</li>
+<li>All 100 counties</li>
+<li>75% in eastern Coastal Plain</li>
+<li>Up to $800M annual value</li>
+<li>Top 5 commodity by cash receipts</li>
+<li>95% family-owned farms</li>
+<li>Key rotation with wheat &amp; corn</li>
+</ul>
+</div>
+<div class="card" style="border-left:3px solid #d4a72c;">
+<div style="font-weight:700; font-size:12px; color:#8c6d00;">Top Counties</div>
+<p style="font-size:11px; color:#555; margin:6px 0 0; line-height:1.6;">
+Beaufort (3.3M bu), Robeson (3.1M bu), Union (2.8M bu), Pitt (2.5M bu), Sampson (2.4M bu)
+</p>
+</div>
+</div>
+</div>
+
+<p style="font-size:11px; color:#aaa; margin-top:10px;">
+Content rephrased for compliance with licensing restrictions. Source: <a href="https://www.ncsoy.org/north-carolina-soybeans" target="_blank">NCSoy.org — NC Soybeans</a>.
+</p>
+</div>
+
+<!-- ═══ PRODUCTION GUIDE ══════════════════════════════════════════════════ -->
+<div class="section" id="guide">
+<h2>NC Soybean Production Guide</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+The 12-chapter guide covers every aspect of soybean production in North Carolina — from
+plant biology to marketing. Click a chapter to see details and a link to the full text.
+This is the primary source material for NCBench's soybean QA generation pipeline.
+</p>
+
+<ul class="chapter-list">
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">1</span> The Soybean Plant <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Biology of the soybean plant — growth stages, root nodulation, nitrogen fixation, and how plant structure affects yield potential.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/the-soybean-plant" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">2</span> Variety Selection <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Choosing the right maturity group, herbicide tolerance traits, disease resistance packages, and using NC Official Variety Testing data to make informed decisions.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-variety-selection" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">3</span> Fertilization and Nutrient Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Soil testing, lime requirements, phosphorus and potassium recommendations, micronutrients, and the role of biological nitrogen fixation in soybean fertility.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-fertilization-and-nutrient-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">4</span> Soil Health, Tillage, Cover Crops, and Crop Rotation <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Conservation tillage systems, cover crop selection and termination, rotation benefits with corn and cotton, and building long-term soil health.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/rotational-considerations" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">5</span> Planting Decisions <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Optimal planting dates by region, seeding rates (80,000–120,000 plants/acre), row spacing, and planter setup for no-till conditions.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-planting-decisions" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">6</span> Weed Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Herbicide programs for Roundup Ready, Liberty Link, and Xtend systems. Resistance management, residual herbicides, and integrated weed management strategies.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-weed-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">7</span> Soybean Diseases and Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Major diseases in NC — frogeye leaf spot, sudden death syndrome, Phytophthora root rot, charcoal rot. Fungicide timing and variety resistance.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-disease-and-nematode-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">8</span> Soybean Nematode Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Soybean cyst nematode (SCN) — the #1 yield-robbing pest. Soil sampling, SCN race identification, resistant varieties, and rotation strategies.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/8-soybean-nematode-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">9</span> Insect Management <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Scouting thresholds for stink bugs, bean leaf beetles, soybean loopers, and corn earworm. Economic thresholds and spray timing.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-insect-management" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">10</span> Water Management in Soybeans <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Irrigation scheduling, drought stress during reproductive stages, and water management in the Coastal Plain's high water table environments.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/10-water-management-in-soybeans" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">11</span> Late-Season Management, Harvesting, Drying, and Storage <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Harvest timing, combine settings, drying to 13% moisture, on-farm storage, and minimizing harvest losses.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/harvesting-drying-and-storage" target="_blank">Read full chapter →</a></div>
+</li>
+
+<li class="chapter-item">
+<div class="chapter-header"><span class="chapter-num">12</span> Soybean Marketing in North Carolina <span class="chapter-chevron">▶</span></div>
+<div class="chapter-body">Basis, futures contracts, crop insurance, marketing plans, and understanding NC's position in the global soybean market.<br><a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide/soybean-production-and-marketing-in-north-carolina" target="_blank">Read full chapter →</a></div>
+</li>
+
+</ul>
+
+<p style="font-size:12px; color:#999; margin-top:10px;">
+Source: <a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">NC State Extension, AG-835</a>.
+Funded by the NC Soybean Producers Association.
+</p>
+</div>
+
+<!-- ═══ GROWER RESOURCES (NCSoy.org) ═════════════════════════════════════ -->
+<div class="section" id="resources">
+<h2>Grower Resources — NCSoy.org</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+The <a href="https://www.ncsoy.org" target="_blank">NC Soybean Producers Association</a>
+publishes research-based articles for NC soybean growers. These cover practical
+production decisions backed by NC State research data.
+</p>
+
+<div class="resource-grid">
+<div class="resource-card">
+<h4>🌱 Planting &amp; Maturity Groups</h4>
+<p>Optimal planting dates, maturity group selection, and yield impact of early vs late planting (7.2 bu/ac difference on average).</p>
+<a href="https://www.ncsoy.org/news/article/maximizing-soybean-yield-through-maturity-group-and-planting-date-selection" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🧪 Fertility Basics</h4>
+<p>Soybeans require 1.5–3x more P and K per bushel than corn. Soil testing, lime, and nutrient management for NC soils.</p>
+<a href="https://www.ncsoy.org/news/article/soybean-fertility-basics" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>📏 Seeding Rate</h4>
+<p>Optimal plant population: 80,000–120,000 plants/acre. Research on seeding rate economics across NC environments.</p>
+<a href="https://www.ncsoy.org/news/article/seeding-rate" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🧴 Foliar Yield Enhancements</h4>
+<p>Fungicide applications providing 2.5 bu/A yield advantage. Dual MOA vs single MOA fungicide comparisons.</p>
+<a href="https://www.ncsoy.org/news/article/foliar-yield-enhancements" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>💊 Seed Treatments</h4>
+<p>Value of fungicidal seed treatments in NC — especially important for early planting into cool, wet soils.</p>
+<a href="https://www.ncsoy.org/news/article/value-of-a-fungicidal-seed-treatment-in-nc-soybeans" target="_blank">Read article →</a>
+</div>
+<div class="resource-card">
+<h4>🌿 Weed Control</h4>
+<p>Herbicide-resistant weed management. Long-term profit increases of 14–17% from proactive resistance management.</p>
+<a href="https://www.ncsoy.org/news/article/2018-management-decisions-weed-control" target="_blank">Read article →</a>
+</div>
+</div>
+
+<h3 style="margin-top:25px;">NC Soy News &amp; Events</h3>
+<div class="resource-grid" style="margin-top:10px;">
+<div class="resource-card">
+<h4>🏆 2025 Yield Contest</h4>
+<p>State champion: Matthews Family Farms, Yadkin County — 100.9 bu/A. Dryland champion: Carawan Farms, Hyde County — 97.7 bu/A.</p>
+<a href="https://www.ncsoy.org/news/2025-soybean-yield-contest-awards" target="_blank">View results →</a>
+</div>
+<div class="resource-card">
+<h4>📊 Are NC Yields Increasing?</h4>
+<p>Top producing counties: Beaufort (3.3M bu), Robeson (3.1M bu), Union (2.8M bu). Yield trends and analysis.</p>
+<a href="https://www.ncsoy.org/news/article/nc-soybean-yields-increasing" target="_blank">Read analysis →</a>
+</div>
+<div class="resource-card">
+<h4>🏫 2026 Soybean Schools</h4>
+<p>Regional research-based soybean schools around the state, co-hosted with NC Cooperative Extension.</p>
+<a href="https://www.ncsoy.org/soybean-schools" target="_blank">Learn more →</a>
+</div>
+</div>
+</div>
+
+<!-- ═══ COUNTY MAP ═══════════════════════════════════════════════════════ -->
+<div class="section" id="map">
+<h2>NC Soybean Production Map</h2>
+<p style="font-size:13px; color:#555; margin-bottom:12px;">
+Top soybean-producing counties in North Carolina. Click any county to visit its Extension page.
+</p>
+<div id="nc-soy-map"></div>
+<p style="font-size:10px; color:#aaa; margin-top:6px; text-align:center;">
+Data: USDA NASS, NC Soybean Producers Association. Hover for production data.
+</p>
+</div>
+
+<!-- ═══ CROP EXPLORER (Corn topics — closest analog to soybean) ═══════════ -->
+<div class="section" id="crop-explorer">
+<h2>CROP Dataset — Corn Topics (Soybean Analog)</h2>
+<p style="font-size:13px; color:#555; margin-bottom:12px;">
+The CROP dataset's <b>corn topics</b> are the closest analog to what NCBench will produce for soybean.
+Both are field crops with similar agronomic concerns — genetics, pest management, soil health,
+production practices. Click a topic to see sample QA pairs from the CROP dataset.
+</p>
+
+<div style="display:flex; gap:15px; flex-wrap:wrap; margin:15px 0;" id="corn-topics"></div>
+<div id="corn-qa-panel" style="margin-top:15px; display:none;">
+<div style="background:#fdf8ec; border:1px solid #e8dbb0; border-radius:8px; padding:15px;">
+<div id="corn-qa-title" style="font-weight:700; font-size:14px; color:#8c6d00; margin-bottom:10px;"></div>
+<div id="corn-qa-list"></div>
+</div>
+</div>
+</div>
+
+<!-- ═══ DATA SOURCES ════════════════════════════════════════════════════ -->
+<div class="section" id="data">
+<h2>Data Sources for NCBench — Soybean</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+These are the source documents that will feed the NCBench QA generation pipeline for soybean.
+</p>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">12</div>
+<div class="stat-label">Guide Chapters</div>
+<div class="stat-sub">NC Soybean Production Guide</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">46</div>
+<div class="stat-label">Portal Articles</div>
+<div class="stat-sub">soybeans.ces.ncsu.edu</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">~52</div>
+<div class="stat-label">Publications</div>
+<div class="stat-sub">content.ces.ncsu.edu</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">28</div>
+<div class="stat-label">County News</div>
+<div class="stat-sub">Soybean-specific articles</div>
+</div>
+</div>
+
+<div class="resource-grid" style="margin-top:15px;">
+<div class="resource-card">
+<h4>NC Soybean Production Guide</h4>
+<p>12 chapters — the authoritative reference. Highest-value source for QA generation.</p>
+<a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide" target="_blank">View guide →</a>
+</div>
+<div class="resource-card">
+<h4>NC Extension Soybean Portal</h4>
+<p>46 news articles — seasonal alerts, pest updates, planting decisions, drought guidance.</p>
+<a href="https://soybeans.ces.ncsu.edu/news/" target="_blank">View portal →</a>
+</div>
+<div class="resource-card">
+<h4>NCSoy.org Grower Resources</h4>
+<p>Research-backed articles on yield optimization, fertility, weed control, and marketing.</p>
+<a href="https://www.ncsoy.org" target="_blank">Visit NCSoy.org →</a>
+</div>
+<div class="resource-card">
+<h4>NC Extension Publications</h4>
+<p>~52 formal publications tagged with "soybean" keyword in the Extension catalog.</p>
+<a href="https://content.ces.ncsu.edu/catalog" target="_blank">Browse catalog →</a>
+</div>
+</div>
+</div>
+
+<!-- ═══ GENERATED QA PREVIEW ══════════════════════════════════════════════ -->
+<div class="section" id="generated">
+<h2>Generated NCBench QA Pairs — Preview</h2>
+<p style="font-size:13px; color:#555; margin-bottom:5px;">
+These are <b>real QA pairs</b> generated by running the 12 NC Soybean Production Guide chapters
+through the NCBench pipeline (GPT-4o + CROP prompt template). <b>736 pairs</b> total.
+</p>
+<p style="font-size:11px; color:#999; margin-bottom:15px;">
+Each pair is grounded in NC State Extension research. Showing 6 samples from different chapters.
+</p>
+
+<div style="display:flex; flex-direction:column; gap:10px;">
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 1 — The Soybean Plant</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: What are the key components that determine soybean yield, and how many pods and seeds does an average soybean plant produce?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: The key components that determine soybean yield are the number of plants per acre, the number of pods per plant, the number of seeds per pod, and the size of the seed. An average soybean plant produces between 50 to 100 pods, with each pod typically containing three seeds.</div>
+</div>
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 1 — Growth Stages</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: What is the significance of understanding soybean growth stages, and what are the main stages?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: Understanding soybean growth stages is crucial for effective crop management to increase yields. The main stages are divided into vegetative (V) and reproductive (R) stages. Vegetative stages start with emergence (VE) and proceed through node development (V1, V2, etc.), while reproductive stages begin with flowering (R1) and continue through pod and seed development to maturity (R7 and R8).</div>
+</div>
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 3 — Fertilization</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: How should soil samples be collected for testing in cultivated and no-till fields?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: In cultivated fields, soil samples should be collected from a depth of 6 to 8 inches, where fertilizers and lime are typically incorporated. For continuous no-till fields, a shallower depth of 4 inches is recommended. It's also useful to occasionally compare samples from 4 inches and 4 to 8 inches deep to assess pH and nutrient stratification.</div>
+</div>
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 4 — Soil Health</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: What are the benefits of microbial secretions in soil structure and water retention?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: Microbial secretions, including biofilms and other 'sticky' substances, help bind soil particles, which enhances soil structure and promotes water infiltration. These secretions also improve the soil's water-holding capacity, which is beneficial for plant growth, especially in areas prone to drought.</div>
+</div>
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 6 — Weed Management</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: What is Harvest Weed Seed Control (HWSC) and how does it benefit weed management in soybeans?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: Harvest Weed Seed Control (HWSC) involves managing and destroying weed seeds at harvest to reduce the seedbank and the number of weeds needing control in future seasons. Methods such as chaff lining, chaff carts, and combine-mounted HWSC units help remove or reduce seeds during harvest. HWSC also decreases the selection pressure on chemical weed control.</div>
+</div>
+
+<div style="padding:12px 15px; background:#fff; border-radius:8px; border-left:4px solid #d4a72c; border:1px solid #e8dbb0;">
+<div style="font-size:10px; color:#999; text-transform:uppercase; margin-bottom:4px;">Ch. 9 — Insect Management</div>
+<div style="font-weight:600; font-size:13px; color:#333; margin-bottom:6px;">Q: How do you select the appropriate nozzle size and type for pesticide application?</div>
+<div style="font-size:12px; color:#555; line-height:1.6;">A: Select the proper size and type of nozzle based on the specific pesticide application planned, consulting nozzle manufacturers' catalogs or pesticide labels for guidance. Replace nozzles at least once a year, or more frequently if used on large acreage, as brass nozzles wear faster than stainless steel or ceramic ones.</div>
+</div>
+
+</div>
+
+<div class="stat-row" style="margin-top:20px;">
+<div class="stat-card">
+<div class="stat-num">736</div>
+<div class="stat-label">Total QA Pairs</div>
+<div class="stat-sub">Generated from 12 chapters</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">12</div>
+<div class="stat-label">Source Chapters</div>
+<div class="stat-sub">NC Soybean Production Guide</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">GPT-4o</div>
+<div class="stat-label">Generation Model</div>
+<div class="stat-sub">CROP prompt template</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">454K</div>
+<div class="stat-label">Source Characters</div>
+<div class="stat-sub">Total extracted text</div>
+</div>
+</div>
+
+<p style="font-size:11px; color:#999; margin-top:10px;">
+Full dataset: <code>data/ncbench/soybean_combined.json</code>. Generated using <code>scripts/generate_qa.py</code> with the CROP prompt template.
+</p>
+</div>
+
+<!-- ═══ CROSS-LINKS ═══════════════════════════════════════════════════════ -->
+<div class="section" id="compare">
+<h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:28px;">🍠</div>
+<h3 style="color:#a04000; margin:8px 0 4px;">NC Sweetpotato</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">NC's #1 vegetable crop. Curing &amp; storage, disease management, scattered sources that NCBench will consolidate.</p>
+<a href="sweetpotato.html" style="font-size:13px; font-weight:600;">View Sweetpotato Page →</a>
+</div>
+<div class="card" style="flex:1; min-width:250px; border-top:3px solid #2e7d32; text-align:center;">
+<div style="font-size:28px;">🌾</div>
+<h3 style="color:#2e7d32; margin:8px 0 4px;">NCBench Project</h3>
+<p style="font-size:12px; color:#555; margin-bottom:10px;">The full project — CROP dataset explorer, methodology, benchmark results, and pipeline.</p>
+<a href="index.html" style="font-size:13px; font-weight:600;">View NCBench →</a>
+</div>
+</div>
+</div>
+
+</div><!-- end container -->
+
+<div class="footer">
+<p>NC Soybean — part of <a href="index.html">NCBench</a></p>
+<p style="font-size:12px; color:#aaa;">
+North Carolina A&amp;T State University · University of Alabama
+</p>
+<a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;"
+   style="font-size:12px; color:#999; text-decoration:none;">↑ Back to top</a>
+</div>
+
+<script>
+
+// ── CHAPTER ACCORDION ────────────────────────────────────────────────────────
+document.querySelectorAll(".chapter-header").forEach(header => {
+  header.addEventListener("click", () => {
+    const item = header.parentElement;
+    const wasOpen = item.classList.contains("open");
+    // Close all
+    document.querySelectorAll(".chapter-item").forEach(i => i.classList.remove("open"));
+    if (!wasOpen) item.classList.add("open");
+  });
+});
+
+// ── PROGRESS BAR ─────────────────────────────────────────────────────────────
+window.addEventListener("scroll", () => {
+  const pct = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
+  document.getElementById("progress-bar").style.width = pct + "%";
+});
+
+// ── NC SOYBEAN MAP ───────────────────────────────────────────────────────────
+(function() {
+  const soyCounties = {
+    "Beaufort":    3.3, "Robeson":     3.1, "Union":       2.8,
+    "Pitt":        2.5, "Sampson":     2.4, "Pasquotank":  2.2,
+    "Johnston":    2.1, "Duplin":      2.0, "Wayne":       1.9,
+    "Hyde":        1.9, "Northampton": 1.8, "Bertie":      1.7
+  };
+
+  const ncFips = {
+    "37001":"Alamance","37003":"Alexander","37005":"Alleghany","37007":"Anson","37009":"Ashe",
+    "37011":"Avery","37013":"Beaufort","37015":"Bertie","37017":"Bladen","37019":"Brunswick",
+    "37021":"Buncombe","37023":"Burke","37025":"Cabarrus","37027":"Caldwell","37029":"Camden",
+    "37031":"Carteret","37033":"Caswell","37035":"Catawba","37037":"Chatham","37039":"Cherokee",
+    "37041":"Chowan","37043":"Clay","37045":"Cleveland","37047":"Columbus","37049":"Craven",
+    "37051":"Cumberland","37053":"Currituck","37055":"Dare","37057":"Davidson","37059":"Davie",
+    "37061":"Duplin","37063":"Durham","37065":"Edgecombe","37067":"Forsyth","37069":"Franklin",
+    "37071":"Gaston","37073":"Gates","37075":"Graham","37077":"Granville","37079":"Greene",
+    "37081":"Guilford","37083":"Halifax","37085":"Harnett","37087":"Haywood","37089":"Henderson",
+    "37091":"Hertford","37093":"Hoke","37095":"Hyde","37097":"Iredell","37099":"Jackson",
+    "37101":"Johnston","37103":"Jones","37105":"Lee","37107":"Lenoir","37109":"Lincoln",
+    "37111":"Macon","37113":"Madison","37115":"Martin","37117":"McDowell","37119":"Mecklenburg",
+    "37121":"Mitchell","37123":"Montgomery","37125":"Moore","37127":"Nash","37129":"New Hanover",
+    "37131":"Northampton","37133":"Onslow","37135":"Orange","37137":"Pamlico","37139":"Pasquotank",
+    "37141":"Pender","37143":"Perquimans","37145":"Person","37147":"Pitt","37149":"Polk",
+    "37151":"Randolph","37153":"Richmond","37155":"Robeson","37157":"Rockingham","37159":"Rowan",
+    "37161":"Rutherford","37163":"Sampson","37165":"Scotland","37167":"Stanly","37169":"Stokes",
+    "37171":"Surry","37173":"Swain","37175":"Transylvania","37177":"Tyrrell","37179":"Union",
+    "37181":"Vance","37183":"Wake","37185":"Warren","37187":"Washington","37189":"Watauga",
+    "37191":"Wayne","37193":"Wilkes","37195":"Wilson","37197":"Yadkin","37199":"Yancey"
+  };
+
+  const colorScale = d3.scaleSequential()
+    .domain([0, 3.5])
+    .interpolator(d3.interpolateHcl("#f6e8b1", "#8c6d00"));
+
+  d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json").then(us => {
+    const counties = topojson.feature(us, us.objects.counties);
+    const ncCounties = {
+      type: "FeatureCollection",
+      features: counties.features.filter(f => String(f.id).startsWith("37"))
+    };
+
+    const w = 700, h = 420;
+    const proj = d3.geoMercator().fitSize([w, h], ncCounties);
+    const path = d3.geoPath().projection(proj);
+
+    d3.select("#nc-soy-map").style("position", "relative");
+
+    const svg = d3.select("#nc-soy-map").append("svg")
+      .attr("viewBox", `0 0 ${w} ${h}`).attr("width", "100%").style("max-width", w + "px");
+
+    const tip = d3.select("#nc-soy-map").append("div")
+      .style("position","absolute").style("background","rgba(0,0,0,0.85)")
+      .style("color","#fff").style("padding","6px 12px").style("border-radius","6px")
+      .style("font-size","11px").style("pointer-events","none").style("opacity",0)
+      .style("max-width","200px").style("line-height","1.5");
+
+    svg.selectAll("path")
+      .data(ncCounties.features).join("path")
+      .attr("d", path)
+      .attr("fill", d => {
+        const name = ncFips[String(d.id).padStart(5,"0")] || "";
+        return soyCounties[name] ? colorScale(soyCounties[name]) : "#eee";
+      })
+      .attr("stroke", "#fff").attr("stroke-width", 0.8)
+      .style("cursor", "pointer")
+      .on("mouseover", function(event, d) {
+        const name = ncFips[String(d.id).padStart(5,"0")] || "";
+        d3.select(this).attr("stroke","#333").attr("stroke-width",2);
+        let html = `<b>${name} County</b>`;
+        if (soyCounties[name]) html += `<br>🫘 ~${soyCounties[name]}M bushels`;
+        tip.style("opacity",1).html(html);
+      })
+      .on("mousemove", function(event) {
+        const r = document.getElementById("nc-soy-map").getBoundingClientRect();
+        tip.style("left",(event.clientX-r.left+12)+"px").style("top",(event.clientY-r.top-30)+"px");
+      })
+      .on("mouseout", function() {
+        d3.select(this).attr("stroke","#fff").attr("stroke-width",0.8);
+        tip.style("opacity",0);
+      })
+      .on("click", function(event, d) {
+        const name = ncFips[String(d.id).padStart(5,"0")] || "";
+        if (name) window.open(`https://${name.toLowerCase().replace(/\s+/g,"")}.ces.ncsu.edu/`, "_blank");
+      });
+
+    // Labels on top counties
+    ncCounties.features.forEach(f => {
+      const name = ncFips[String(f.id).padStart(5,"0")] || "";
+      if (!soyCounties[name]) return;
+      const c = path.centroid(f);
+      if (isNaN(c[0])) return;
+      svg.append("text").attr("x",c[0]).attr("y",c[1])
+        .attr("text-anchor","middle").attr("dy","0.35em")
+        .style("font-size","8px").style("font-weight","700")
+        .style("fill","#333").style("text-shadow","0 0 3px #fff, 0 0 3px #fff")
+        .text(name);
+    });
+
+    // NC A&T marker
+    const guilford = ncCounties.features.find(f => ncFips[String(f.id).padStart(5,"0")] === "Guilford");
+    if (guilford) {
+      const gc = path.centroid(guilford);
+      svg.append("circle").attr("cx",gc[0]).attr("cy",gc[1]).attr("r",8)
+        .attr("fill","none").attr("stroke","#e74c3c").attr("stroke-width",2).attr("stroke-dasharray","3,2");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]).attr("text-anchor","middle").attr("dy","0.35em")
+        .style("font-size","10px").text("⭐");
+      svg.append("text").attr("x",gc[0]).attr("y",gc[1]+15).attr("text-anchor","middle")
+        .style("font-size","7px").style("font-weight","700").style("fill","#e74c3c")
+        .style("text-shadow","0 0 3px #fff").text("NC A&T");
+    }
+  });
+})();
+
+// ── CROP EXPLORER (Corn topics) ───────────────────────────────────────────────
+d3.json("topic_index.json").then(index => {
+  const cornTopics = Object.entries(index).filter(([k]) => k.startsWith("Corn/") && !k.includes("Others"));
+  const container = document.getElementById("corn-topics");
+
+  cornTopics.forEach(([key, items]) => {
+    const label = key.split("/")[1];
+    const btn = document.createElement("button");
+    btn.style.cssText = "padding:8px 14px; border:1px solid #e8dbb0; border-radius:20px; background:#fdf8ec; font-size:12px; font-weight:600; color:#8c6d00; cursor:pointer; transition:all 0.2s;";
+    btn.textContent = label + ` (${items.length})`;
+    btn.onmouseover = () => { btn.style.background = "#f6e8b1"; };
+    btn.onmouseout = () => { btn.style.background = "#fdf8ec"; };
+    btn.onclick = () => {
+      document.getElementById("corn-qa-panel").style.display = "block";
+      document.getElementById("corn-qa-title").textContent = label + " — Sample QA from CROP Dataset";
+      const list = document.getElementById("corn-qa-list");
+      list.innerHTML = "";
+      items.slice(0, 5).forEach((item, i) => {
+        const div = document.createElement("div");
+        div.style.cssText = "margin-bottom:12px; padding:10px; background:#fff; border-radius:6px; border-left:3px solid #d4a72c;";
+        div.innerHTML = `<div style="font-weight:600; font-size:12px; color:#333; margin-bottom:4px;">Q${i+1}: ${item.instruction.replace(/^Question:\\s*/i,"")}</div>
+          <div style="font-size:12px; color:#555; line-height:1.5;">${item.output.replace(/^Answer:\\s*/i,"")}</div>`;
+        list.appendChild(div);
+      });
+      if (items.length > 5) {
+        const more = document.createElement("p");
+        more.style.cssText = "font-size:11px; color:#999; margin-top:8px;";
+        more.textContent = `...and ${items.length - 5} more in the full dataset.`;
+        list.appendChild(more);
+      }
+    };
+    container.appendChild(btn);
+  });
+}).catch(err => console.error("Topic index load error:", err));
+
+</script>
+</body>
+</html>
