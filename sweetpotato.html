@@ -73,6 +73,7 @@ a:hover { color: #a04000; }
 <a href="#challenges">Challenges</a>
 <a href="#map">County Map</a>
 <a href="#sources">Sources</a>
+<a href="#generated">Generated QA</a>
 </nav>
 <div class="hero">
 <h1>🍠 NC Sweetpotato</h1>
@@ -395,6 +396,36 @@ exist even in traditional Extension publishing.
 </div>
 </div>
 
+<!-- ═══ GENERATED QA EXPLORER ═════════════════════════════════════════════ -->
+<div class="section" id="generated">
+<h2>Generated NCBench QA Explorer — 66 Pairs</h2>
+<p style="font-size:13px; color:#555; margin-bottom:5px;">
+<b>66 real QA pairs</b> generated from the NC Organic Commodities Production Guide, Chapter 8 (Sweetpotatoes).
+Click a topic to browse. Click any question to reveal the answer.
+</p>
+
+<div class="stat-row" style="margin-bottom:20px;">
+<div class="stat-card" id="sp-explorer-total"><div class="stat-num">—</div><div class="stat-label">Total Pairs</div></div>
+<div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Source Chapter</div></div>
+<div class="stat-card"><div class="stat-num">GPT-4o</div><div class="stat-label">Generation Model</div></div>
+<div class="stat-card"><div class="stat-num">43K</div><div class="stat-label">Source Characters</div></div>
+</div>
+
+<!-- Topic buttons -->
+<div id="sp-topic-btns" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+
+<!-- QA display panel -->
+<div id="sp-qa-panel" style="display:none; background:#fef5ee; border:1px solid #f0c8a0; border-radius:8px; padding:15px; max-height:500px; overflow-y:auto;">
+<div id="sp-qa-title" style="font-weight:700; font-size:14px; color:#a04000; margin-bottom:4px;"></div>
+<div id="sp-qa-count" style="font-size:11px; color:#999; margin-bottom:12px;"></div>
+<div id="sp-qa-list"></div>
+</div>
+
+<p style="font-size:11px; color:#999; margin-top:10px;">
+Data: <code>sweetpotato_qa.json</code>. Generated using the CROP prompt template from the NC Organic Commodities Production Guide Ch. 8.
+</p>
+</div>
+
 <!-- ═══ CROSS-LINKS ═══════════════════════════════════════════════════════ -->
 <div class="section" id="compare">
 <h2>Explore More</h2>
@@ -506,6 +537,70 @@ window.addEventListener("scroll", () => {
       svg.append("text").attr("x",gc[0]).attr("y",gc[1]+15).attr("text-anchor","middle").style("font-size","7px").style("font-weight","700").style("fill","#e74c3c").style("text-shadow","0 0 3px #fff").text("NC A&T");
     }
   });
+// NC Sweetpotato QA Explorer
+fetch("sweetpotato_qa.json").then(r => r.json()).then(data => {
+  document.querySelector("#sp-explorer-total .stat-num").textContent = data.length;
+
+  const topics = [
+    { name: "Variety Selection", keywords: ["variety", "covington", "beauregard", "orleans", "averre", "bayou", "carolina ruby", "murasaki", "monaco"] },
+    { name: "Planting & Growth", keywords: ["planting", "plant date", "row spacing", "population", "slip", "transplant"] },
+    { name: "Weed Management", keywords: ["weed", "palmer", "nutsedge", "morningglory", "purslane", "cultivation"] },
+    { name: "Insect Pests", keywords: ["wireworm", "flea beetle", "diabrotica", "caterpillar", "aphid", "whitefly", "thrips", "mite", "insect"] },
+    { name: "Disease & Nematodes", keywords: ["disease", "fusarium", "nematode", "root-knot", "virus", "rot", "scurf"] },
+    { name: "Nutrition & Soil", keywords: ["nitrogen", "fertiliz", "nutrient", "potassium", "phosphorus", "soil", "cover crop"] },
+    { name: "Curing & Storage", keywords: ["cur", "storage", "post-harvest", "temperature", "humidity", "fruit fl"] },
+    { name: "General/Other", keywords: [] },
+  ];
+
+  const grouped = {};
+  topics.forEach(t => grouped[t.name] = []);
+  data.forEach(item => {
+    const text = (item.instruction + " " + item.output).toLowerCase();
+    let assigned = false;
+    for (const t of topics) {
+      if (t.keywords.length === 0) continue;
+      if (t.keywords.some(kw => text.includes(kw))) { grouped[t.name].push(item); assigned = true; break; }
+    }
+    if (!assigned) grouped["General/Other"].push(item);
+  });
+
+  const btnContainer = document.getElementById("sp-topic-btns");
+  topics.forEach(t => {
+    const items = grouped[t.name];
+    if (!items.length) return;
+    const btn = document.createElement("button");
+    btn.style.cssText = "padding:7px 12px; border:1px solid #f0c8a0; border-radius:20px; background:#fef5ee; font-size:11px; font-weight:600; color:#a04000; cursor:pointer; transition:all 0.2s;";
+    btn.textContent = t.name + " (" + items.length + ")";
+    btn.onmouseover = () => btn.style.background = "#fde0cc";
+    btn.onmouseout = () => btn.style.background = "#fef5ee";
+    btn.onclick = () => {
+      const panel = document.getElementById("sp-qa-panel");
+      panel.style.display = "block";
+      document.getElementById("sp-qa-title").textContent = t.name;
+      document.getElementById("sp-qa-count").textContent = items.length + " QA pairs";
+      const list = document.getElementById("sp-qa-list");
+      list.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.style.cssText = "margin-bottom:8px; border:1px solid #f0c8a0; border-radius:6px; overflow:hidden;";
+        const qRow = document.createElement("div");
+        qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start; user-select:none;";
+        qRow.innerHTML = '<span style=\"color:#e67e22; flex-shrink:0;\">▶</span><span>' + item.instruction + '</span>';
+        const aDiv = document.createElement("div");
+        aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#fef5ee; padding:0 12px;";
+        aDiv.textContent = item.output;
+        qRow.onclick = () => {
+          const isOpen = aDiv.style.maxHeight !== "0px" && aDiv.style.maxHeight !== "";
+          if (isOpen) { aDiv.style.maxHeight = "0"; aDiv.style.padding = "0 12px"; qRow.querySelector("span").textContent = "▶"; }
+          else { aDiv.style.maxHeight = "300px"; aDiv.style.padding = "10px 12px"; qRow.querySelector("span").textContent = "▼"; }
+        };
+        card.appendChild(qRow); card.appendChild(aDiv); list.appendChild(card);
+      });
+      panel.scrollTop = 0;
+    };
+    btnContainer.appendChild(btn);
+  });
+}).catch(err => console.error("Sweetpotato QA load error:", err));
 })();
 </script>
 </body>
