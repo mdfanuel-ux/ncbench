@@ -587,7 +587,7 @@ fetch("sweetpotato_qa.json").then(r => r.json()).then(data => {
         card.style.cssText = "margin-bottom:8px; border:1px solid #f0c8a0; border-radius:6px; overflow:hidden;";
         const qRow = document.createElement("div");
         qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start; user-select:none;";
-        qRow.innerHTML = '<span style=\"color:#e67e22; flex-shrink:0;\">▶</span><span>' + item.instruction + '</span>';
+        qRow.innerHTML = '<span style="color:#e67e22; flex-shrink:0;">▶</span><span>' + item.instruction + '</span>';
         const aDiv = document.createElement("div");
         aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#fef5ee; padding:0 12px;";
         aDiv.textContent = item.output;
