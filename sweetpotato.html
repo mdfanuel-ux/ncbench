@@ -537,6 +537,8 @@ window.addEventListener("scroll", () => {
       svg.append("text").attr("x",gc[0]).attr("y",gc[1]+15).attr("text-anchor","middle").style("font-size","7px").style("font-weight","700").style("fill","#e74c3c").style("text-shadow","0 0 3px #fff").text("NC A&T");
     }
   });
+})();
+
 // NC Sweetpotato QA Explorer
 fetch("sweetpotato_qa.json").then(r => r.json()).then(data => {
   document.querySelector("#sp-explorer-total .stat-num").textContent = data.length;
@@ -601,7 +603,7 @@ fetch("sweetpotato_qa.json").then(r => r.json()).then(data => {
     btnContainer.appendChild(btn);
   });
 }).catch(err => console.error("Sweetpotato QA load error:", err));
-})();
+
 </script>
 </body>
 </html>
