@@ -541,69 +541,106 @@ window.addEventListener("scroll", () => {
 })();
 
 // NC Sweetpotato QA Explorer
-fetch("sweetpotato_qa.json").then(r => r.json()).then(data => {
-  document.querySelector("#sp-explorer-total .stat-num").textContent = data.length;
+console.log("Starting sweetpotato QA explorer...");
+var spQaPanel = document.getElementById("sp-qa-panel");
+var spBtnContainer = document.getElementById("sp-topic-btns");
 
-  const topics = [
-    { name: "Variety Selection", keywords: ["variety", "covington", "beauregard", "orleans", "averre", "bayou", "carolina ruby", "murasaki", "monaco"] },
-    { name: "Planting & Growth", keywords: ["planting", "plant date", "row spacing", "population", "slip", "transplant"] },
-    { name: "Weed Management", keywords: ["weed", "palmer", "nutsedge", "morningglory", "purslane", "cultivation"] },
-    { name: "Insect Pests", keywords: ["wireworm", "flea beetle", "diabrotica", "caterpillar", "aphid", "whitefly", "thrips", "mite", "insect"] },
-    { name: "Disease & Nematodes", keywords: ["disease", "fusarium", "nematode", "root-knot", "virus", "rot", "scurf"] },
-    { name: "Nutrition & Soil", keywords: ["nitrogen", "fertiliz", "nutrient", "potassium", "phosphorus", "soil", "cover crop"] },
-    { name: "Curing & Storage", keywords: ["cur", "storage", "post-harvest", "temperature", "humidity", "fruit fl"] },
-    { name: "General/Other", keywords: [] },
-  ];
+if (!spBtnContainer) {
+  console.error("sp-topic-btns element not found!");
+} else {
+  spBtnContainer.innerHTML = '<span style="color:#999;font-size:12px;">Loading questions...</span>';
+}
 
-  const grouped = {};
-  topics.forEach(t => grouped[t.name] = []);
-  data.forEach(item => {
-    const text = (item.instruction + " " + item.output).toLowerCase();
-    let assigned = false;
-    for (const t of topics) {
-      if (t.keywords.length === 0) continue;
-      if (t.keywords.some(kw => text.includes(kw))) { grouped[t.name].push(item); assigned = true; break; }
-    }
-    if (!assigned) grouped["General/Other"].push(item);
+fetch("sweetpotato_qa.json")
+  .then(function(r) {
+    console.log("Fetch response:", r.status);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    return r.json();
+  })
+  .then(function(data) {
+    console.log("Sweetpotato QA loaded:", data.length, "pairs");
+    document.querySelector("#sp-explorer-total .stat-num").textContent = data.length;
+    spBtnContainer.innerHTML = "";
+
+    var topics = [
+      { name: "Variety Selection", keywords: ["variety", "covington", "beauregard", "orleans", "averre", "bayou", "carolina ruby", "murasaki", "monaco"] },
+      { name: "Planting & Growth", keywords: ["planting", "plant date", "row spacing", "population", "slip", "transplant", "bedding"] },
+      { name: "Weed Management", keywords: ["weed", "palmer", "nutsedge", "morningglory", "purslane", "cultivation", "amaranth"] },
+      { name: "Insect Pests", keywords: ["wireworm", "flea beetle", "diabrotica", "caterpillar", "aphid", "whitefly", "thrips", "mite", "insect", "pest"] },
+      { name: "Disease & Rot", keywords: ["disease", "fusarium", "nematode", "root-knot", "virus", "rot", "scurf", "blight", "geotrichum", "rhizopus"] },
+      { name: "Nutrition & Soil", keywords: ["nitrogen", "fertiliz", "nutrient", "potassium", "phosphorus", "soil", "cover crop", "litter"] },
+      { name: "Curing & Storage", keywords: ["curing", "storage", "post-harvest", "temperature", "humidity", "warehouse", "cooling", "packing"] },
+      { name: "General/Other", keywords: [] }
+    ];
+
+    var grouped = {};
+    topics.forEach(function(t) { grouped[t.name] = []; });
+    data.forEach(function(item) {
+      var text = (item.instruction + " " + item.output).toLowerCase();
+      var assigned = false;
+      for (var i = 0; i < topics.length; i++) {
+        var t = topics[i];
+        if (t.keywords.length === 0) continue;
+        for (var j = 0; j < t.keywords.length; j++) {
+          if (text.indexOf(t.keywords[j]) !== -1) {
+            grouped[t.name].push(item);
+            assigned = true;
+            break;
+          }
+        }
+        if (assigned) break;
+      }
+      if (!assigned) grouped["General/Other"].push(item);
+    });
+
+    topics.forEach(function(t) {
+      var items = grouped[t.name];
+      if (!items.length) return;
+      var btn = document.createElement("button");
+      btn.style.cssText = "padding:7px 12px; border:1px solid #f0c8a0; border-radius:20px; background:#fef5ee; font-size:11px; font-weight:600; color:#a04000; cursor:pointer; margin:3px;";
+      btn.textContent = t.name + " (" + items.length + ")";
+      btn.onclick = function() {
+        spQaPanel.style.display = "block";
+        document.getElementById("sp-qa-title").textContent = t.name;
+        document.getElementById("sp-qa-count").textContent = items.length + " QA pairs";
+        var list = document.getElementById("sp-qa-list");
+        list.innerHTML = "";
+        items.forEach(function(item) {
+          var card = document.createElement("div");
+          card.style.cssText = "margin-bottom:8px; border:1px solid #f0c8a0; border-radius:6px; overflow:hidden;";
+          var qRow = document.createElement("div");
+          qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start;";
+          var chevron = document.createElement("span");
+          chevron.style.cssText = "color:#e67e22; flex-shrink:0;";
+          chevron.textContent = "▶";
+          var qText = document.createElement("span");
+          qText.textContent = item.instruction;
+          qRow.appendChild(chevron);
+          qRow.appendChild(qText);
+          var aDiv = document.createElement("div");
+          aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#fef5ee; padding:0 12px;";
+          aDiv.textContent = item.output;
+          qRow.onclick = function() {
+            if (aDiv.style.maxHeight && aDiv.style.maxHeight !== "0px") {
+              aDiv.style.maxHeight = "0"; aDiv.style.padding = "0 12px"; chevron.textContent = "▶";
+            } else {
+              aDiv.style.maxHeight = "300px"; aDiv.style.padding = "10px 12px"; chevron.textContent = "▼";
+            }
+          };
+          card.appendChild(qRow);
+          card.appendChild(aDiv);
+          list.appendChild(card);
+        });
+        spQaPanel.scrollTop = 0;
+      };
+      spBtnContainer.appendChild(btn);
+    });
+    console.log("Explorer buttons rendered");
+  })
+  .catch(function(err) {
+    console.error("Sweetpotato QA load error:", err);
+    if (spBtnContainer) spBtnContainer.innerHTML = '<span style="color:#c00;font-size:12px;">Error loading QA data: ' + err.message + '</span>';
   });
-
-  const btnContainer = document.getElementById("sp-topic-btns");
-  topics.forEach(t => {
-    const items = grouped[t.name];
-    if (!items.length) return;
-    const btn = document.createElement("button");
-    btn.style.cssText = "padding:7px 12px; border:1px solid #f0c8a0; border-radius:20px; background:#fef5ee; font-size:11px; font-weight:600; color:#a04000; cursor:pointer; transition:all 0.2s;";
-    btn.textContent = t.name + " (" + items.length + ")";
-    btn.onmouseover = () => btn.style.background = "#fde0cc";
-    btn.onmouseout = () => btn.style.background = "#fef5ee";
-    btn.onclick = () => {
-      const panel = document.getElementById("sp-qa-panel");
-      panel.style.display = "block";
-      document.getElementById("sp-qa-title").textContent = t.name;
-      document.getElementById("sp-qa-count").textContent = items.length + " QA pairs";
-      const list = document.getElementById("sp-qa-list");
-      list.innerHTML = "";
-      items.forEach(item => {
-        const card = document.createElement("div");
-        card.style.cssText = "margin-bottom:8px; border:1px solid #f0c8a0; border-radius:6px; overflow:hidden;";
-        const qRow = document.createElement("div");
-        qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start; user-select:none;";
-        qRow.innerHTML = '<span style="color:#e67e22; flex-shrink:0;">▶</span><span>' + item.instruction + '</span>';
-        const aDiv = document.createElement("div");
-        aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#fef5ee; padding:0 12px;";
-        aDiv.textContent = item.output;
-        qRow.onclick = () => {
-          const isOpen = aDiv.style.maxHeight !== "0px" && aDiv.style.maxHeight !== "";
-          if (isOpen) { aDiv.style.maxHeight = "0"; aDiv.style.padding = "0 12px"; qRow.querySelector("span").textContent = "▶"; }
-          else { aDiv.style.maxHeight = "300px"; aDiv.style.padding = "10px 12px"; qRow.querySelector("span").textContent = "▼"; }
-        };
-        card.appendChild(qRow); card.appendChild(aDiv); list.appendChild(card);
-      });
-      panel.scrollTop = 0;
-    };
-    btnContainer.appendChild(btn);
-  });
-}).catch(err => console.error("Sweetpotato QA load error:", err));
 
 </script>
 </body>
