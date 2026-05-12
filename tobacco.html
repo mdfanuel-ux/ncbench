@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NC Tobacco — NCBench</title>
+<meta name="description" content="NC Flue-Cured Tobacco deep-dive: production guide, disease management, and QA pairs for agricultural LLM instruction tuning.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍃</text></svg>">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h2 { border-bottom: 2px solid #e0d4b0; padding-bottom: 5px; color: #333; }
+h3 { color: #5d4e37; }
+a { color: #8b6914; }
+a:hover { color: #5d4e37; }
+.section { margin-bottom: 50px; }
+.card { background: #faf6ee; padding: 15px; border-radius: 8px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #e0d4b0; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #5d4e37; text-decoration: none; border-radius: 4px; transition: background 0.2s; }
+.topnav a:hover { background: #faf6ee; }
+.topnav a.back { color: #999; }
+.hero { background: linear-gradient(135deg, #2d1f0e 0%, #5d4e37 40%, #8b6914 100%); padding: 60px 20px 50px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='80'%3E%3Cpath d='M30 5 Q38 20 30 40 Q22 20 30 5' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='2'/%3E%3Cpath d='M30 40 L30 75' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/svg%3E") repeat; animation: heroFloat 18s linear infinite; }
+@keyframes heroFloat { 0% { transform: translateY(0); } 100% { transform: translateY(-80px); } }
+.hero h1 { color: #fff; font-size: 36px; margin: 0; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.hero p { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 8px; position: relative; z-index: 1; }
+.hero a { color: #e0d4b0; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #faf6ee; padding: 15px; border-radius: 8px; border-top: 3px solid #8b6914; }
+.stat-num { font-size: 28px; font-weight: bold; color: #5d4e37; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.stat-sub { font-size: 10px; color: #999; }
+.resource-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+.resource-card { flex: 1; min-width: 250px; border-left: 3px solid #8b6914; padding: 10px 14px; background: #faf6ee; border-radius: 0 6px 6px 0; }
+.resource-card h4 { margin: 0 0 4px; font-size: 13px; color: #333; }
+.resource-card p { margin: 0; font-size: 11px; color: #777; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #e0d4b0; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #e0d4b0, #5d4e37); z-index: 200; }
+@media (max-width: 600px) { .stat-row { flex-direction: column; } .resource-grid { flex-direction: column; } }
+</style>
+</head>
+<body>
+<div id="progress-bar"></div>
+<nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#guide">Production Guide</a>
+<a href="#generated">Generated QA</a>
+</nav>
+
+<div class="hero">
+<h1>🍃 NC Tobacco</h1>
+<p>Flue-cured tobacco production in North Carolina — part of the <a href="index.html">NCBench</a> project</p>
+</div>
+
+<div class="container">
+
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p>
+North Carolina is one of the top flue-cured tobacco producing states in the US.
+Tobacco has been a cornerstone of NC agriculture for over 400 years and remains
+economically significant — particularly in the eastern Coastal Plain counties.
+Organic tobacco production in NC accounts for approximately 2,680 acres on 61 farms,
+with a farm gate value exceeding $19 million.
+</p>
+
+<div class="stat-row">
+<div class="stat-card">
+<div class="stat-num">2,680</div>
+<div class="stat-label">Organic Acres</div>
+<div class="stat-sub">61 farms in NC</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">$19M+</div>
+<div class="stat-label">Farm Gate Value</div>
+<div class="stat-sub">Organic tobacco</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">AG-187</div>
+<div class="stat-label">Production Guide</div>
+<div class="stat-sub">2026 Flue-Cured Tobacco Guide</div>
+</div>
+<div class="stat-card">
+<div class="stat-num">118</div>
+<div class="stat-label">QA Pairs Generated</div>
+<div class="stat-sub">From organic guide Ch. 6</div>
+</div>
+</div>
+
+<p style="font-size:13px; color:#555;">
+The <a href="https://content.ces.ncsu.edu/flue-cured-tobacco-information" target="_blank">2026 Flue-Cured Tobacco Guide (AG-187)</a>
+is the authoritative annual reference with 14 chapters covering variety selection, transplant production,
+nutrient management, disease/insect/nematode control, curing, and mechanization. However, its chapters
+are PDF-only and not directly extractable via web scraping. The organic production chapter (AG-660 Ch. 6)
+was successfully extracted and processed.
+</p>
+</div>
+
+<div class="section" id="guide">
+<h2>2026 Flue-Cured Tobacco Guide — Chapters</h2>
+<p style="font-size:13px; color:#555; margin-bottom:15px;">
+14 chapters covering all aspects of flue-cured tobacco production. PDF-only format — listed here for reference.
+</p>
+
+<div class="resource-grid">
+<div class="resource-card"><h4>The Tobacco Plant</h4><p>Biology, growth stages, leaf development</p></div>
+<div class="resource-card"><h4>US Tobacco Situation & Outlook</h4><p>Market economics, pricing, contracts</p></div>
+<div class="resource-card"><h4>Farm Labor Regulations</h4><p>NC compliance requirements</p></div>
+<div class="resource-card"><h4>Selecting a Variety</h4><p>Disease resistance, yield, quality traits</p></div>
+<div class="resource-card"><h4>Producing Healthy Transplants</h4><p>Float system greenhouse production</p></div>
+<div class="resource-card"><h4>Managing Nutrients</h4><p>Nitrogen, potassium, lime requirements</p></div>
+<div class="resource-card"><h4>Managing Weeds</h4><p>Herbicide programs, cultivation</p></div>
+<div class="resource-card"><h4>Topping & Sucker Management</h4><p>Ethephon use, timing decisions</p></div>
+<div class="resource-card"><h4>Managing Diseases</h4><p>Black shank, blue mold, target spot</p></div>
+<div class="resource-card"><h4>Managing Nematodes</h4><p>Root-knot, fumigation, rotation</p></div>
+<div class="resource-card"><h4>Insect Management</h4><p>Budworm, hornworm, aphids, flea beetle</p></div>
+<div class="resource-card"><h4>Curing & Mechanization</h4><p>Barn design, temperature schedules</p></div>
+<div class="resource-card"><h4>Pesticide Safety</h4><p>Worker protection, environmental compliance</p></div>
+</div>
+
+<p style="font-size:11px; color:#999; margin-top:10px;">
+Source: <a href="https://content.ces.ncsu.edu/flue-cured-tobacco-information" target="_blank">NC State Extension AG-187</a>.
+Also: <a href="https://tobacco.ces.ncsu.edu/" target="_blank">tobacco.ces.ncsu.edu</a>
+</p>
+</div>
+
+<div class="section" id="generated">
+<h2>Generated NCBench QA Explorer — 118 Pairs</h2>
+<p style="font-size:13px; color:#555; margin-bottom:5px;">
+<b>118 real QA pairs</b> generated from the NC Organic Commodities Production Guide, Chapter 6 (Flue-Cured Tobacco).
+Click a topic to browse. Click any question to reveal the answer.
+</p>
+
+<h3>Source Document</h3>
+<table style="width:100%; border-collapse:collapse; font-size:12px; line-height:1.6; margin-bottom:20px;">
+<thead><tr style="background:#faf6ee; border-bottom:2px solid #e0d4b0;"><th style="text-align:left; padding:6px 10px;">Document</th><th style="text-align:center; padding:6px 8px;">Pairs</th><th style="text-align:left; padding:6px 10px;">Link</th></tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid #eee;"><td style="padding:5px 10px;">Organic Production Guide — Ch. 6 Flue-Cured Tobacco</td><td style="text-align:center;">118</td><td><a href="https://resources.ces.ncsu.edu/north-carolina-organic-commodities-production-guide/chapter-6-crop-production-management-flue-cured-tobacco" target="_blank">View →</a></td></tr>
+</tbody>
+</table>
+
+<div class="stat-row" style="margin-bottom:20px;">
+<div class="stat-card" id="tobacco-total"><div class="stat-num">—</div><div class="stat-label">Total Pairs</div></div>
+<div class="stat-card"><div class="stat-num">1</div><div class="stat-label">Source Document</div></div>
+<div class="stat-card"><div class="stat-num">GPT-4o</div><div class="stat-label">Generation Model</div></div>
+<div class="stat-card"><div class="stat-num">72K</div><div class="stat-label">Source Characters</div></div>
+</div>
+
+<div id="tobacco-topic-btns" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+<div id="tobacco-qa-panel" style="display:none; background:#faf6ee; border:1px solid #e0d4b0; border-radius:8px; padding:15px; max-height:500px; overflow-y:auto;">
+<div id="tobacco-qa-title" style="font-weight:700; font-size:14px; color:#5d4e37; margin-bottom:4px;"></div>
+<div id="tobacco-qa-count" style="font-size:11px; color:#999; margin-bottom:12px;"></div>
+<div id="tobacco-qa-list"></div>
+</div>
+</div>
+
+<!-- Cross-links -->
+<div class="section">
+<h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #d4a72c; text-align:center;">
+<div style="font-size:24px;">🫘</div>
+<h3 style="color:#8c6d00;">NC Soybean</h3>
+<p style="font-size:12px; color:#555;">1,587 QA pairs from 15 sources.</p>
+<a href="soy.html" style="font-size:13px; font-weight:600;">View →</a>
+</div>
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #e67e22; text-align:center;">
+<div style="font-size:24px;">🍠</div>
+<h3 style="color:#a04000;">NC Sweetpotato</h3>
+<p style="font-size:12px; color:#555;">523 QA pairs from 13 sources.</p>
+<a href="sweetpotato.html" style="font-size:13px; font-weight:600;">View →</a>
+</div>
+<div class="card" style="flex:1; min-width:200px; border-top:3px solid #2e7d32; text-align:center;">
+<div style="font-size:24px;">🌾</div>
+<h3 style="color:#2e7d32;">NCBench Project</h3>
+<p style="font-size:12px; color:#555;">The full project hub.</p>
+<a href="index.html" style="font-size:13px; font-weight:600;">View →</a>
+</div>
+</div>
+</div>
+
+</div>
+
+<div class="footer">
+<p>NC Tobacco — part of <a href="index.html">NCBench</a></p>
+<p style="font-size:12px; color:#aaa;">North Carolina A&T State University · University of Alabama</p>
+<a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;" style="font-size:12px; color:#999; text-decoration:none;">↑ Back to top</a>
+</div>
+
+<script>
+window.addEventListener("scroll", () => {
+  const pct = (document.documentElement.scrollTop / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) * 100;
+  document.getElementById("progress-bar").style.width = pct + "%";
+});
+
+// Tobacco QA Explorer
+fetch("tobacco_qa.json").then(r => r.json()).then(data => {
+  document.querySelector("#tobacco-total .stat-num").textContent = data.length;
+
+  const topics = [
+    { name: "Variety & Seed", keywords: ["variety", "seed", "cultivar", "k326", "nc196", "certified"] },
+    { name: "Transplant Production", keywords: ["transplant", "greenhouse", "float", "seedling", "tray", "germination"] },
+    { name: "Nutrient Management", keywords: ["nitrogen", "fertiliz", "nutrient", "potassium", "lime", "phosphorus", "soil test"] },
+    { name: "Weed Control", keywords: ["weed", "herbicide", "cultivation", "crabgrass", "nutsedge"] },
+    { name: "Disease Management", keywords: ["disease", "black shank", "blue mold", "target spot", "fusarium", "granville wilt", "fungicide"] },
+    { name: "Insect & Nematode", keywords: ["insect", "nematode", "budworm", "hornworm", "aphid", "flea beetle", "wireworm", "thrips"] },
+    { name: "Topping & Curing", keywords: ["topping", "sucker", "ethephon", "curing", "barn", "flue", "yellowing", "leaf color"] },
+    { name: "General/Other", keywords: [] },
+  ];
+
+  const grouped = {};
+  topics.forEach(t => grouped[t.name] = []);
+  data.forEach(item => {
+    const text = (item.instruction + " " + item.output).toLowerCase();
+    let assigned = false;
+    for (const t of topics) {
+      if (t.keywords.length === 0) continue;
+      if (t.keywords.some(kw => text.includes(kw))) { grouped[t.name].push(item); assigned = true; break; }
+    }
+    if (!assigned) grouped["General/Other"].push(item);
+  });
+
+  const btnContainer = document.getElementById("tobacco-topic-btns");
+  topics.forEach(t => {
+    const items = grouped[t.name];
+    if (!items.length) return;
+    const btn = document.createElement("button");
+    btn.style.cssText = "padding:7px 12px; border:1px solid #e0d4b0; border-radius:20px; background:#faf6ee; font-size:11px; font-weight:600; color:#5d4e37; cursor:pointer; transition:all 0.2s;";
+    btn.textContent = t.name + " (" + items.length + ")";
+    btn.onmouseover = () => btn.style.background = "#e0d4b0";
+    btn.onmouseout = () => btn.style.background = "#faf6ee";
+    btn.onclick = () => {
+      const panel = document.getElementById("tobacco-qa-panel");
+      panel.style.display = "block";
+      document.getElementById("tobacco-qa-title").textContent = t.name;
+      document.getElementById("tobacco-qa-count").textContent = items.length + " QA pairs";
+      const list = document.getElementById("tobacco-qa-list");
+      list.innerHTML = "";
+      items.forEach(item => {
+        const card = document.createElement("div");
+        card.style.cssText = "margin-bottom:8px; border:1px solid #e0d4b0; border-radius:6px; overflow:hidden;";
+        const qRow = document.createElement("div");
+        qRow.style.cssText = "padding:8px 12px; cursor:pointer; background:#fff; font-size:12px; font-weight:600; color:#333; display:flex; gap:6px; align-items:flex-start; user-select:none;";
+        qRow.innerHTML = '<span style="color:#8b6914; flex-shrink:0;">▶</span><span>' + item.instruction + '</span>';
+        const aDiv = document.createElement("div");
+        aDiv.style.cssText = "max-height:0; overflow:hidden; transition:max-height 0.3s; font-size:12px; color:#555; line-height:1.6; background:#faf6ee; padding:0 12px;";
+        aDiv.textContent = item.output;
+        qRow.onclick = () => {
+          const isOpen = aDiv.style.maxHeight !== "0px" && aDiv.style.maxHeight !== "";
+          if (isOpen) { aDiv.style.maxHeight = "0"; aDiv.style.padding = "0 12px"; qRow.querySelector("span").textContent = "▶"; }
+          else { aDiv.style.maxHeight = "300px"; aDiv.style.padding = "10px 12px"; qRow.querySelector("span").textContent = "▼"; }
+        };
+        card.appendChild(qRow); card.appendChild(aDiv); list.appendChild(card);
+      });
+      panel.scrollTop = 0;
+    };
+    btnContainer.appendChild(btn);
+  });
+}).catch(err => console.error("Tobacco QA load error:", err));
+</script>
+</body>
+</html>
