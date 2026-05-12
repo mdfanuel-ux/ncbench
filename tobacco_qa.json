@@ -824,5 +824,901 @@
     "output": "Farmers interested in organic commodity production in North Carolina can access various resources through the NC State Extension websites. These include detailed publications on organic crop production management, soil management, organic certification, and marketing strategies for organic grains. Email notifications for new publications and related materials are also available.",
     "system": "",
     "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended practices for managing barn rots in tobacco production?",
+    "input": "",
+    "output": "To manage barn rots in tobacco, it's important to maintain proper ventilation in the curing barn to prevent moisture build-up, which can lead to rotting. Regularly inspect the barn for leaks and repair any that are found, as water intrusion can exacerbate the problem. Additionally, ensure that tobacco is harvested at the correct maturity levels to reduce susceptibility to rots during curing.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can flue-cured tobacco growers improve their variety selection?",
+    "input": "",
+    "output": "Flue-cured tobacco growers can enhance variety selection by consulting the 2025 Flue-Cured Production Guide, which provides detailed information on different tobacco varieties, their disease resistance, yield potential, and suitability for specific climates in the southeastern United States. This helps in selecting varieties that best match the local growing conditions and market demands.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What nutrient management strategies are recommended for tobacco production?",
+    "input": "",
+    "output": "Effective nutrient management in tobacco production involves regular soil testing to determine nutrient levels and pH balance. The Five Keys to Proper Fertility suggest using lime to adjust soil pH, applying nutrients based on test results, and considering the use of liquid nitrogen (UAN) sources for efficient nitrogen management. These strategies can help optimize growth and reduce input costs.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for reducing fertilizer costs without compromising crop yield?",
+    "input": "",
+    "output": "To reduce fertilizer costs, growers should focus on precise application of nutrients, relying on soil test results to avoid over-application. Incorporating organic matter can enhance nutrient availability, and using UAN for nitrogen can improve efficiency. Additionally, timing applications to coincide with key growth stages can maximize nutrient uptake and minimize waste.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What is the role of sucker control in tobacco production, and how can reliance on MH be minimized?",
+    "input": "",
+    "output": "Sucker control is crucial in tobacco production to prevent axillary bud growth, which can limit leaf quality and yield. To minimize reliance on maleic hydrazide (MH), farmers can adopt integrated practices such as timely topping and using alternative chemical or manual controls. The Sucker Control Chemical Use Guide provides recommendations on effective alternatives and timing for application.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers prepare for hurricanes to minimize damage to their crops?",
+    "input": "",
+    "output": "The Hurricane Preparation - Tobacco Producers Guide offers strategies such as securing barns and equipment, ensuring proper drainage in fields to prevent waterlogging, and having an emergency plan in place. Producers should also consider staggered planting dates to reduce the risk of total crop loss and maintain regular communication with local extension services for weather updates and advice.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some methods for controlling pests like tobacco thrips and flea beetles in tobacco fields?",
+    "input": "",
+    "output": "Control methods for pests such as tobacco thrips and flea beetles include regular scouting to identify infestations early, using recommended insecticides from the NC Agricultural Chemicals Manual, and implementing cultural practices like crop rotation and maintaining field hygiene. These methods help reduce pest populations and protect the tobacco crop from damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the benefits of using greenhouse production resources for tobacco transplants?",
+    "input": "",
+    "output": "Greenhouse production resources provide an environment for controlled growing conditions, which can lead to healthier and more uniform tobacco transplants. The Four Keys To Successful Transplant Production emphasize maintaining optimal temperature, humidity, and light levels, along with proper fertilization, to ensure vigorous transplants that can withstand field conditions better.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective methods for managing barn rot in flue-cured tobacco during the curing process?",
+    "input": "",
+    "output": "To manage barn rot effectively, it is crucial to harvest only dry leaves and avoid rough handling to prevent injuries. If wet leaves must be harvested, use fans for the first 24 hours at room temperature before yellowing to reduce humidity. Ensure good ventilation in barns and avoid overpacking to promote air circulation. Additionally, disinfect tools and equipment with a 10% bleach solution or 2% Virkon® S, keeping surfaces wet for at least one minute before rinsing with clean water.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How do bacterial and fungal barn rot differ in terms of their growth conditions and symptoms?",
+    "input": "",
+    "output": "Bacterial barn rot, primarily caused by Pectobacterium spp., begins at the midrib and spreads into the lamina, causing a soft, watery rot, and can grow up to 37°C (98.6°F). On the other hand, fungal barn rot, caused by species such as Rhizopus, Mucor, and Aspergillus, can grow up to 45°C (113°F). Rhizopus and Mucor form fluffy white growth with black-tipped sporangia, while Aspergillus may produce colorful, powdery molds. Other contributing fungi can produce dark spores.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some common factors that contribute to the development of barn rot in tobacco curing barns?",
+    "input": "",
+    "output": "Common contributing factors to barn rot include harvesting and curing wet leaves, high humidity in barns, and warm conditions (up to 37°C for bacteria and 45°C for fungi). Additional factors include injuries from topping, suckering, or mechanical harvesters, overpacking barns which restricts airflow, and infected field leaves with brown spots or other diseases being carried into the curing process.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What preventive measures can be taken to reduce the incidence of barn rot from bacterial causes?",
+    "input": "",
+    "output": "To prevent bacterial barn rot, it is essential to separate hollow stalk-affected plants before curing and maintain good ventilation in barns to limit high humidity conditions. Disinfecting tools and equipment thoroughly with a 10% bleach solution or 2% Virkon® S can also help minimize the spread of bacteria. Ensuring that harvested leaves are dry and minimizing physical damage during handling can further reduce the risk.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why is it important to avoid overpacking tobacco curing barns, and how does it relate to barn rot management?",
+    "input": "",
+    "output": "Avoiding overpacking in curing barns is crucial because it ensures adequate airflow around the tobacco leaves, which is essential for reducing humidity and preventing the warm, moist conditions favorable to barn rot pathogens. Proper ventilation helps in dissipating heat and moisture, thereby reducing the risk of both bacterial and fungal barn rot during the curing process.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What role does ventilation play in controlling barn rot in tobacco curing barns?",
+    "input": "",
+    "output": "Ventilation plays a critical role in controlling barn rot by facilitating air circulation, which helps in reducing humidity levels and maintaining a stable temperature. This environment is less conducive for the growth of both bacterial and fungal pathogens. Good ventilation also aids in the even drying of leaves, preventing areas of high moisture where barn rot can easily develop.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for managing black shank disease in flue-cured tobacco?",
+    "input": "",
+    "output": "Effective management of black shank disease in flue-cured tobacco involves selecting resistant varieties and implementing a fungicide program tailored to local conditions. Regular scouting and soil testing can help in timely detection and management of the disease, minimizing crop loss.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco farmers reduce fertilizer costs while maintaining soil fertility?",
+    "input": "",
+    "output": "To reduce fertilizer costs, tobacco farmers can utilize soil testing to apply nutrients only where needed and consider using liquid nitrogen sources like UAN. Implementing the five keys to proper fertility, which include maintaining optimal pH and liming, can also enhance nutrient efficiency and reduce unnecessary expenditure.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended practices for topping and sucker control in tobacco production?",
+    "input": "",
+    "output": "Topping should be done at the right growth stage to optimize leaf quality and yield. Farmers are advised to use a combination of chemical sucker control methods and mechanical topping to effectively manage sucker growth while minimizing reliance on MH residues.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can greenhouse resources be optimized for successful tobacco transplant production?",
+    "input": "",
+    "output": "Optimizing greenhouse resources for tobacco transplant production involves maintaining proper greenhouse fertilization and adhering to the four keys to successful transplant production, which include managing temperature, humidity, and light to ensure healthy seedling growth.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What strategies are suggested for pest management in tobacco production?",
+    "input": "",
+    "output": "Effective pest management in tobacco production includes regular scouting for insects like tobacco thrips, flea beetles, and hornworms. Integrated pest management strategies, including biological and chemical controls, should be employed to manage pest populations sustainably while minimizing environmental impact.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommendations for energy efficiency during the curing process of flue-cured tobacco?",
+    "input": "",
+    "output": "To improve energy efficiency during the curing process, it is recommended to conduct barn testing to ensure equipment is operating efficiently. Implementing mechanization and energy-saving technologies can also reduce fuel consumption and lower operational costs.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco farmers prepare for hurricanes to minimize crop damage?",
+    "input": "",
+    "output": "The Hurricane Preparation Guide advises tobacco farmers to secure infrastructure, assess drainage systems, and have contingency plans for power outages. Timely harvesting and curing of mature crops can also mitigate potential losses from storm damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What variety information is available for flue-cured and burley tobacco to aid in disease management?",
+    "input": "",
+    "output": "Variety information for flue-cured and burley tobacco includes details on resistance to specific diseases, including black shank. Selecting varieties based on disease prevalence in the region can significantly reduce the incidence and impact of diseases, enhancing overall crop resilience.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What is the main challenge for tobacco growers that the document addresses?",
+    "input": "",
+    "output": "The document addresses the challenge of managing black shank disease in tobacco, which is a significant issue for growers, particularly in areas with a history of the disease.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Which tobacco variety was used in the fungicide trial, and what were the planting specifications?",
+    "input": "",
+    "output": "The tobacco variety used in the trial was NC196. It was transplanted on April 15 with a row spacing of 44 inches and an in-row spacing of 22 inches, using a mechanical transplanter.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How was the fungicide trial designed to evaluate black shank control in tobacco?",
+    "input": "",
+    "output": "The trial was conducted using a randomized complete block design with four replications. Each plot measured 14.7 feet wide and 50 feet long, containing four rows of tobacco, with the two center rows used for evaluation. Ten different fungicide treatments were tested against an untreated control.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What methods were used to apply fungicides in the trial, and how was disease progression monitored?",
+    "input": "",
+    "output": "Fungicides were applied using a CO₂-pressurized backpack sprayer, calibrated to apply 15 gallons per acre at 30 PSI in a soil-directed band spray. Black shank incidence was recorded weekly from April 22 to July 10, and disease severity was calculated using the Area Under the Disease Progress Curve (AUDPC).",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What were the results used to assess the effectiveness of fungicide treatments in the trial?",
+    "input": "",
+    "output": "The effectiveness of the fungicide treatments was assessed using final yield evaluations, which were conducted on the middle two rows of each plot. Harvesting took place in three stages based on stalk positions: lower stalk on July 30, middle stalk on August 15, and upper stalk on August 29.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What were the key challenges faced during the 2024 growing season in Johnston County, NC?",
+    "input": "",
+    "output": "The 2024 season began with an early-season drought, followed by hurricanes and heavy rains. Additionally, black shank pressure was moderate to high throughout the season, posing a significant challenge to crop production.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How did the application of Orondis Gold Premix and Orondis Gold DC affect the crops initially, and what was the eventual outcome?",
+    "input": "",
+    "output": "Initially, treatments with transplant-applied Orondis Gold Premix and Orondis Gold DC showed higher levels of chemical injury, leading to early phytotoxicity. However, all affected plots fully recovered within 40 days, and these treatments provided strong disease control and yield benefits.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Which fungicide treatments were most effective in managing black shank and improving yields?",
+    "input": "",
+    "output": "The most effective treatments for managing black shank and improving yields included transplant-applied Orondis Gold Premix or Orondis Gold DC, followed by Ridomil Gold 480 SL and Presidio 4 SC. These treatments significantly reduced black shank severity and resulted in higher yields compared to the untreated control.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What recommendations are given for managing black shank in future seasons?",
+    "input": "",
+    "output": "For future seasons, it is recommended to use a combination of transplant-applied, in-season, and layby fungicide applications, including those tested like Orondis Gold Premix and Orondis Gold DC. Continued trials are necessary to refine these fungicide programs and adapt to varying black shank pressure.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why is it important to continue trials for fungicide programs in managing black shank?",
+    "input": "",
+    "output": "Continued trials are important to further refine fungicide programs because black shank pressure can vary from season to season. Ongoing research ensures growers have access to data-driven disease management strategies that are effective under different environmental conditions.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective pest management strategies for tobacco production in the southeastern US?",
+    "input": "",
+    "output": "Effective pest management strategies include regular scouting for tobacco pests such as cutworms, grasshoppers, tobacco thrips, and tobacco flea beetle. Implementing integrated pest management (IPM) practices, including the use of natural predators and timely application of pesticides, can help manage pest populations. Additionally, maintaining good field hygiene and crop rotation can reduce pest incidence.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco growers manage soil fertility to optimize crop production?",
+    "input": "",
+    "output": "To manage soil fertility effectively, tobacco growers should conduct regular soil testing to determine nutrient levels and pH. Applying lime correctly to adjust soil pH to an optimal range (around 6.0 to 6.5) is crucial. Using the 'Five Keys to Proper Fertility' guide can help growers supply the right nutrients at the right time, potentially using liquid nitrogen sources like UAN for efficient nitrogen management.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended practices for successful tobacco transplant production in greenhouses?",
+    "input": "",
+    "output": "Successful tobacco transplant production involves following the 'Four Keys to Successful Transplant Production' which include proper greenhouse fertilization, maintaining optimal temperature and humidity levels, using quality seed, and ensuring adequate light exposure. Regular monitoring of plant health and adjusting environmental conditions as needed are also essential for healthy transplants.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for reducing reliance on maleic hydrazide (MH) in tobacco production?",
+    "input": "",
+    "output": "To reduce reliance on MH, growers can adopt alternative sucker control methods, such as topping and using chemical sucker control agents other than MH. Implementing cultural practices like timely topping of plants can also minimize sucker growth. Evaluating and using a comprehensive 'Sucker Control Chemical Use Guide' can assist in selecting appropriate chemicals and application methods.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What steps should tobacco producers take to prepare for hurricanes and mitigate potential damage?",
+    "input": "",
+    "output": "Tobacco producers should follow the 'Hurricane Preparation - Tobacco Producers Guide' which includes securing barns and equipment, ensuring proper drainage in fields, and harvesting mature crops ahead of predicted storms. Developing a contingency plan for labor and resources post-storm is also recommended to minimize operational disruptions.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco growers improve curing and energy efficiency during the harvest period?",
+    "input": "",
+    "output": "Growers can improve curing and energy efficiency by adopting mechanized systems and conducting regular barn testing to ensure equipment is functioning optimally. Using modern curing techniques that regulate temperature and humidity can also enhance energy efficiency. Implementing these practices can lead to better quality cured leaf and reduced operational costs.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key strategies for managing Pythium root rot in tobacco greenhouse production?",
+    "input": "",
+    "output": "To manage Pythium root rot, it is crucial to maintain proper air circulation and reduce humidity in the greenhouse. Preventative applications of Terramaster 4EC at 1.0 fl oz/100 gal of float water can be applied at 3-8 weeks, while curative applications of 1.4 fl oz/100 gal can be used when symptoms are observed. Additionally, sanitation practices such as steaming trays at 175°F for 30 minutes before use are essential.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can bacterial soft rot be identified and what are the common symptoms?",
+    "input": "",
+    "output": "Bacterial soft rot caused by Pectobacterium carotovorum can be identified by stem rot and stunted roots. Common symptoms include seedling stunting and yellowing. To prevent the spread, it is important to ensure proper sanitation and environmental controls in the greenhouse.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended sanitation practices for greenhouse trays to prevent disease spread?",
+    "input": "",
+    "output": "Sanitation of greenhouse trays involves steaming them at 175°F for 30 minutes or using a 10% bleach solution, which should then be rinsed off with water. These practices help to remove soil, debris, and spores from pathogenic microbes. However, steaming does not eliminate Berkelomyces basicola or Tomato Mosaic Virus (TMV), and infested trays should be disposed of.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What preventive measures can be taken to control damping off/target spot in tobacco greenhouses?",
+    "input": "",
+    "output": "To control damping off/target spot, ensure good air circulation to lower humidity levels and remove water-soaked lesions on leaves. Regular sanitation and maintaining optimal environmental conditions in the greenhouse are crucial. Using labeled fungicides as per recommendations can also assist in managing these diseases.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should clippings be managed to prevent disease spread in tobacco greenhouses?",
+    "input": "",
+    "output": "Clippings should be disposed of at least 100 yards away from the greenhouse to prevent fungi from growing on them and spreading back. This distance helps to ensure that any potential pathogens do not re-enter the greenhouse environment.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What role do molds like Penicillium, Aspergillus, and Cladosporium play in a greenhouse, and should they be a concern?",
+    "input": "",
+    "output": "Molds such as Penicillium, Aspergillus, and Cladosporium are part of the natural decomposition process and do not affect the germination or growth of seedlings. While they are not harmful to live plants, their presence indicates that the greenhouse environment is ideal for microbial growth, which can include pathogenic microbes. Thus, maintaining proper environmental controls is important.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What is the recommended application rate for Quadris Flowable to control tobacco diseases in greenhouses?",
+    "input": "",
+    "output": "Quadris Flowable should be applied at a rate of 0.14 fl oz/5 gallons per 1000 square feet. This fungicide can help manage diseases in tobacco by controlling the spread of pathogens in the greenhouse environment.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some preventative measures for controlling target spot in tobacco crops?",
+    "input": "",
+    "output": "To prevent target spot in tobacco crops, apply Quadris Flowable at a rate of 0.14 fl. oz per 5 gallons per 1000 square feet, and Manzate Prostick at 0.5 lb per 100 gallons. It's crucial to follow all label directions to prevent crop injury and the development of fungicide resistance.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What steps should be taken to prepare tobacco trays for the next planting season?",
+    "input": "",
+    "output": "To prepare tobacco trays for the next season, clean and sanitize them thoroughly, and store them in an enclosed area to avoid contamination from drifting chemicals and spores. Sanitize the trays again before reuse and replace any old trays with new ones to ensure a clean start.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should curative applications be managed when symptoms of tobacco diseases are observed?",
+    "input": "",
+    "output": "When symptoms of tobacco diseases are observed, apply a curative treatment using 1.4 fl oz per 100 gallons of float water. This should be done promptly to manage the disease effectively and minimize damage to the crop.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some resources available for learning more about tobacco greenhouse production?",
+    "input": "",
+    "output": "Resources available for more information include the Tobacco Greenhouse Guide 2016, Tobacco Greenhouse Production materials, and Field Crops guides. These resources provide comprehensive information on managing greenhouse conditions and crop health.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why is it important to follow label applications when using fungicides on tobacco crops?",
+    "input": "",
+    "output": "Following label applications is crucial to prevent injury to the crops and to minimize the risk of developing fungicide resistance. Adhering to the guidelines ensures effective disease control and maintains crop safety.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some key strategies for controlling late-season insect pests in tobacco cultivation?",
+    "input": "",
+    "output": "Effective management of late-season insect pests in tobacco includes regular scouting to identify pest presence and applying appropriate insecticides based on economic thresholds. It is important to target pests like tobacco budworms, hornworms, and flea beetles with specific chemical controls as recommended in the NC Agricultural Chemicals Manual.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco growers reduce their reliance on Maleic Hydrazide (MH) for sucker control?",
+    "input": "",
+    "output": "To reduce reliance on MH for sucker control, tobacco growers can use a combination of cultural practices and chemical alternatives. This includes timely topping and the application of a sucker control chemical as outlined in the Sucker Control Chemical Use Guide, which offers a variety of options to minimize MH residues.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are recommended practices for ensuring proper fertility in tobacco fields?",
+    "input": "",
+    "output": "Proper fertility management in tobacco fields involves soil testing to determine nutrient needs, adjusting pH with lime, and following the 'Five Keys to Proper Fertility' which include using the right fertilizer formulation, rate, timing, and placement. This approach helps optimize nutrient uptake and reduce costs.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended flue-cured tobacco varieties for southeastern U.S. growers?",
+    "input": "",
+    "output": "The 2025 Flue-Cured Production Guide offers detailed information on recommended tobacco varieties that have been tested for yield, disease resistance, and adaptability to the southeastern U.S. climate. Growers should select varieties based on these attributes to ensure optimal production.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What considerations should tobacco producers keep in mind for hurricane preparation?",
+    "input": "",
+    "output": "The Hurricane Preparation Guide for Tobacco Producers emphasizes the importance of securing barns and machinery, reviewing insurance policies, and having an emergency plan in place. Producers should also consider harvesting crops early if a hurricane is imminent to minimize damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can growers improve the curing and energy efficiency of their tobacco barns?",
+    "input": "",
+    "output": "Improving curing and energy efficiency involves regular barn testing and maintenance, using energy-efficient equipment, and adopting mechanization where possible. The Curing & Energy Efficiency section provides detailed strategies to reduce energy consumption and improve curing outcomes.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some important aspects of greenhouse production for tobacco transplants?",
+    "input": "",
+    "output": "Successful greenhouse production of tobacco transplants requires attention to fertilization, pest management, and environmental control. The 'Four Keys to Successful Transplant Production' include using the correct growing media, maintaining optimal nutrient levels, and monitoring for pests like aphids and thrips.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What methods are recommended for scouting and managing pests like tobacco thrips and green peach aphids?",
+    "input": "",
+    "output": "Effective pest management begins with regular scouting using the Tobacco Insect Scouting Methods. This includes checking for pest populations and applying control measures when thresholds are exceeded, based on the guidelines provided in the Tobacco Insect Management section.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the best practices for managing tobacco budworms in the southeastern United States?",
+    "input": "",
+    "output": "Managing tobacco budworms involves monitoring fields regularly for signs of infestation and applying targeted insecticides when necessary. It is crucial to follow integrated pest management (IPM) strategies, which include rotating insecticides to prevent resistance and using biological controls like natural predators.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can farmers reduce reliance on Maleic Hydrazide (MH) for sucker control in tobacco crops?",
+    "input": "",
+    "output": "Farmers can reduce reliance on MH by implementing cultural practices such as topping tobacco plants at the appropriate time and maintaining proper sucker control techniques. Additionally, using alternative chemical sucker control products in a rotation can help minimize the buildup of MH residues in the crop.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are effective methods for controlling greenhouse pests in tobacco production?",
+    "input": "",
+    "output": "Effective control of greenhouse pests in tobacco production includes regular scouting and monitoring for pest presence, maintaining optimal environmental conditions to discourage pest outbreaks, and applying appropriate biopesticides or chemical controls when necessary. Employing preventive measures such as sanitizing tools and equipment can also help reduce pest incidence.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What is the significance of efficient curing and energy use in tobacco production?",
+    "input": "",
+    "output": "Efficient curing and energy use are vital in tobacco production as they directly impact the quality of the final product and the overall profitability of the operation. Employing modern curing techniques and energy-efficient equipment can significantly reduce costs and improve the uniformity and quality of cured tobacco leaves.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should farmers approach pest management for field tobacco crops nearing the end of the season?",
+    "input": "",
+    "output": "As the tobacco season nears its end, farmers should focus on managing late-season pests like grasshoppers, budworms, and hornworms by consulting the latest fact sheets for detailed information on pest biology and damage. Timely application of recommended pest control measures can prevent yield losses and ensure a healthy crop.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended fungicide treatments for managing target spot in flue-cured tobacco in North Carolina?",
+    "input": "",
+    "output": "The 2025 Flue-Cured Production Guide outlines specific fungicide treatments effective against target spot in flue-cured tobacco. It highlights the importance of timely application and the selection of fungicides that have shown efficacy in controlling this disease, although specific products are not detailed in the excerpt.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers reduce fertilizer costs while maintaining soil fertility?",
+    "input": "",
+    "output": "To reduce fertilizer costs, producers can follow the five keys to proper fertility management, which include soil testing and using targeted nutrient applications based on those results. The guide also suggests the use of liquid nitrogen (UAN) sources for efficient nitrogen management in tobacco fields.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective pest management strategies for flue-cured tobacco in the southeastern United States?",
+    "input": "",
+    "output": "Effective pest management strategies include scouting for pests such as tobacco thrips, tobacco flea beetle, and green peach aphid. The guide emphasizes the importance of integrating chemical controls with cultural practices to minimize pest impact, highlighting the need for regular monitoring and the application of insecticides as needed.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What variety selection information is available for flue-cured and burley tobacco?",
+    "input": "",
+    "output": "The guide provides detailed information on flue-cured and burley tobacco varieties, recommending those that have shown resilience to local pests and diseases. Producers are encouraged to select varieties that align with their specific regional conditions and production goals.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should tobacco producers prepare for hurricanes to minimize damage to their crops?",
+    "input": "",
+    "output": "The Hurricane Preparation - Tobacco Producers Guide offers strategies for minimizing hurricane damage, such as securing infrastructure, ensuring proper drainage in fields, and having a plan for rapid response post-event. It stresses the importance of having a contingency plan to protect both the crop and farm assets.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for managing soil pH and liming in tobacco production?",
+    "input": "",
+    "output": "Managing soil pH involves regular soil testing to determine lime requirements. The guide recommends maintaining a pH level conducive to tobacco growth, typically between 5.6 and 6.2, depending on soil type and regional conditions. Proper liming practices are crucial for nutrient availability and overall plant health.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended practices for successful tobacco transplant production in greenhouses?",
+    "input": "",
+    "output": "Successful tobacco transplant production in greenhouses involves adhering to the four keys to successful transplant production: selecting the right seed varieties, ensuring optimal greenhouse conditions, managing nutrients through appropriate fertilization, and controlling pests through integrated pest management practices.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers effectively control sucker growth without relying heavily on MH residues?",
+    "input": "",
+    "output": "Producers are advised to use a combination of topping and sucker control chemicals as outlined in the Sucker Control Chemical Use Guide. This approach allows for effective sucker management while reducing reliance on maleic hydrazide (MH) residues, thus ensuring compliance with regulatory limits and maintaining tobacco quality.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the best practices for curing and energy efficiency in flue-cured tobacco production?",
+    "input": "",
+    "output": "Best practices for curing and energy efficiency include using barn testing information to optimize the curing process, employing mechanization to enhance efficiency, and implementing energy-saving techniques. These practices not only improve curing outcomes but also reduce operational costs and environmental impact.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What greenhouse pests should tobacco producers be vigilant about, and how can they manage them effectively?",
+    "input": "",
+    "output": "Tobacco producers should be vigilant about pests such as tobacco thrips and tobacco flea beetle in greenhouses. Effective management involves regular monitoring, maintaining proper sanitation, and applying appropriate insecticides as needed to control pest populations and minimize damage to young plants.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What was the main focus of the 2025 field trial conducted at the Oxford Research Station in North Carolina?",
+    "input": "",
+    "output": "The 2025 field trial at the Oxford Research Station in North Carolina focused on evaluating fungicide and adjuvant programs for managing target spot in tobacco. The trial assessed the effectiveness of 14 different fungicide treatments compared to an untreated control, with applications made at set intervals after transplanting to determine their impact on disease severity.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How was the experimental design set up for the tobacco fungicide trial, and what tobacco variety was used?",
+    "input": "",
+    "output": "The experimental design was a randomized complete block with four replications, ensuring reliable results. Each plot measured 14.7 feet wide and 50 feet long, containing two rows of tobacco. The variety used was 'K326', which was transplanted using a mechanical tobacco transplanter on May 8, 2025, following standard non-irrigated production practices in North Carolina.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Describe the application schedule and method used for the fungicide treatments in the trial.",
+    "input": "",
+    "output": "Fungicide treatments were applied using a CO₂-pressurized backpack sprayer to ensure proper coverage and accurate application rates. The schedule included three applications: the first at 4 weeks after transplanting (June 11), the second at 6 weeks (June 25), and the third at 8 weeks (July 9).",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Which fungicide treatment combinations showed significant reduction in target spot severity?",
+    "input": "",
+    "output": "The treatments that showed a significant reduction in target spot severity compared to the untreated control included: Excalia followed by Excalia followed by Quadris Flowable, and Excalia followed by Quadris Flowable followed by Excalia. These rotations effectively reduced disease severity as measured by the Area Under the Disease Progress Curve (AUDPC).",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How was disease severity monitored during the trial, and what were the results?",
+    "input": "",
+    "output": "Disease severity was monitored by evaluating five plants per plot at different stalk positions—lower stalk (lugs), middle and upper-middle stalk (cutters and leaf), and upper stalk (tips)—biweekly from May through July. The peak disease severity was about 8% on the lower stalk, occurring around ten weeks after transplanting. The effective fungicide treatments significantly reduced this severity compared to the control.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What were the conditions of the growing season, and how did they affect the trial results?",
+    "input": "",
+    "output": "The growing season conditions were average, which provided a typical setting for evaluating the fungicide treatments. Despite the average conditions, disease severity peaked at about 8% on the lower stalk, allowing for a clear assessment of the effectiveness of the fungicide treatments in reducing target spot severity.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective strategies for managing target spot in flue-cured tobacco in North Carolina?",
+    "input": "",
+    "output": "Effective management of target spot in flue-cured tobacco involves using a combination of cultural practices and fungicide programs. Ensuring proper crop rotation and maintaining optimal plant spacing can help reduce disease incidence. Additionally, selecting fungicides that have been tested and proven effective in trials, such as those conducted in Oxford, NC, is crucial for controlling this disease.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How do fungicide trials conducted in Oxford, NC, contribute to target spot management?",
+    "input": "",
+    "output": "Fungicide trials in Oxford, NC, provide valuable data on the efficacy of different fungicides against target spot in flue-cured tobacco. These trials help identify which commercially available products are most effective, allowing farmers to make informed decisions about their fungicide programs to minimize disease severity and protect crop yields.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What role does plant spacing play in controlling target spot in tobacco crops?",
+    "input": "",
+    "output": "Proper plant spacing is essential in controlling target spot because it improves air circulation around plants, which reduces humidity levels and the likelihood of disease development. By maintaining the recommended spacing, farmers can decrease the environmental conditions that favor the spread of target spot.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why is crop rotation important in the management of target spot in tobacco?",
+    "input": "",
+    "output": "Crop rotation is important because it interrupts the life cycle of the target spot pathogen by removing its host plant for a period of time. This practice reduces the pathogen's ability to survive and build up in the soil, thereby decreasing the risk of infection in subsequent tobacco crops.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the benefits of using extension services for managing target spot?",
+    "input": "",
+    "output": "Extension services provide farmers with the latest research-based information and recommendations for managing target spot. They offer guidance on selecting effective fungicides, implementing cultural practices, and adapting management strategies to local conditions. By leveraging these resources, farmers can improve their disease management outcomes and overall crop health.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended practices for managing tobacco mosaic virus (TMV) in tobacco crops?",
+    "input": "",
+    "output": "To manage tobacco mosaic virus (TMV) in tobacco crops, it is essential to implement strict sanitation measures. This includes disinfecting tools and equipment regularly, using virus-free seeds or resistant varieties, and controlling weeds that may act as virus reservoirs. Additionally, farmers should avoid smoking or using tobacco products while handling plants to prevent virus transmission.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can flue-cured tobacco producers optimize their variety selection?",
+    "input": "",
+    "output": "Flue-cured tobacco producers should choose varieties that are well-suited to their specific regional climate and soil conditions. The 2025 Flue-Cured Production Guide provides detailed information on different varieties, including their disease resistance profiles and yield potential, which can help farmers make informed decisions that align with their production goals.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key steps in ensuring proper fertility for tobacco crops?",
+    "input": "",
+    "output": "Proper fertility for tobacco crops involves conducting regular soil tests to determine nutrient needs, liming to adjust soil pH to optimal levels, and applying fertilizers based on soil test recommendations. The Five Keys to Proper Fertility outlined in the guide emphasize the importance of balancing nutrient inputs to avoid deficiencies or toxicities, ultimately enhancing crop health and yield.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What strategies can be employed to reduce fertilizer costs in tobacco production?",
+    "input": "",
+    "output": "To reduce fertilizer costs in tobacco production, farmers can utilize precision agriculture techniques, such as site-specific soil testing, to apply nutrients more efficiently. Additionally, using liquid nitrogen sources like UAN (urea-ammonium nitrate) can provide a cost-effective and flexible option for nitrogen application, allowing for adjustments based on crop needs throughout the growing season.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can greenhouse tobacco producers improve the success of their transplants?",
+    "input": "",
+    "output": "Greenhouse tobacco producers can improve the success of their transplants by following the Four Keys to Successful Transplant Production, which include maintaining optimal temperature and humidity levels, ensuring adequate ventilation, providing balanced nutrition through appropriate fertilization, and managing pests effectively to prevent early-stage crop damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective methods for controlling pests in tobacco crops?",
+    "input": "",
+    "output": "Effective pest control in tobacco crops involves regular scouting to identify pest populations early, using integrated pest management (IPM) strategies, and applying targeted chemical controls when necessary. For example, controlling tobacco thrips and flea beetles involves monitoring pest levels and using insecticides as part of a broader IPM plan to minimize damage while preserving beneficial insect populations.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What considerations should be made for efficient curing and energy use in tobacco production?",
+    "input": "",
+    "output": "Efficient curing and energy use in tobacco production can be achieved by optimizing barn design and maintenance, implementing energy-efficient technologies, and utilizing barn testing information to adjust curing conditions. These practices not only reduce energy costs but also improve the quality of the cured tobacco by ensuring consistent drying and minimizing leaf damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers prepare for hurricanes and minimize potential damage?",
+    "input": "",
+    "output": "To prepare for hurricanes, tobacco producers should follow guidelines outlined in the Hurricane Preparation - Tobacco Producers Guide. This includes securing equipment and structures, ensuring proper drainage in fields to prevent flooding, and having a post-storm recovery plan in place to address potential crop damage and maintain production continuity.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can farmers prevent the spread of Tobacco Mosaic Virus (TMV) in their tobacco crops?",
+    "input": "",
+    "output": "Farmers can prevent the spread of TMV by using milk proteins to inactivate the virus. They should spray plants with a 20% milk solution 24 hours before handling and let the plants dry before touching them. Additionally, tools, hands, and benches can be disinfected with the milk solution for at least one minute or dipped for ten minutes. It is also important to remove infected plants using gloves and wash clothes with detergent after working in infected areas.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective methods for disinfecting tools and equipment to prevent TMV transmission?",
+    "input": "",
+    "output": "Tools and equipment can be disinfected using a 10% bleach solution, 2% Virkon®S, or a 20% nonfat dry milk solution with 0.1% Tween 20, ensuring all surfaces remain wet for at least one minute. Rinse equipment with water to avoid corrosion and allow it to dry completely before moving. It is also recommended to clean equipment using a pressure washer with a soapy water solution to remove soil and debris.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What precautions should be taken when working in areas with TMV-infected plants?",
+    "input": "",
+    "output": "When working in areas with TMV-infected plants, workers should dip their hands and gloves in a milk solution or phosphate detergent before and after work. It is advisable to work in healthy areas first, then move to infected areas last. Wash clothes with detergent and spray shoes with a 20% milk solution or 10% bleach after working in infected areas to prevent further spread.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should tobacco seeds be treated to prevent TMV infection?",
+    "input": "",
+    "output": "To prevent TMV infection, tobacco seeds should be soaked for at least 15 minutes in either a 3% trisodium phosphate (Na₃PO₄) solution or a 9% calcium hypochlorite (Ca(ClO)₂) solution. This treatment helps inactivating any TMV present on the seeds.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why is it important to let equipment dry completely after cleaning to prevent TMV spread?",
+    "input": "",
+    "output": "Allowing equipment to dry completely after cleaning is crucial because it ensures that all disinfectant solutions have been effectively absorbed and reduces the risk of corrosion or mold formation. Proper drying also ensures that any residual virus particles are inactivated before the equipment is used again, minimizing the risk of TMV transmission.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What role do milk proteins play in managing TMV in tobacco plants?",
+    "input": "",
+    "output": "Milk proteins inactivate TMV by binding to the virus and preventing its spread. While milk won't cure infected plants, it provides protection to healthy ones for up to ten days. Reapplication of the milk solution is necessary after rain, irrigation, or new growth to maintain effectiveness.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended disinfectants for cleaning equipment exposed to TMV, and what are their concentrations?",
+    "input": "",
+    "output": "The recommended disinfectants for cleaning equipment exposed to Tobacco Mosaic Virus (TMV) are 3% trisodium phosphate (Na₃PO₄) and 9% calcium hypochlorite (Ca(ClO)₂). These disinfectants are suggested to minimize the risk of TMV contamination.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Why should trays that held TMV-infected plants not be reused, and what are the potential risks of using bleach on them?",
+    "input": "",
+    "output": "Trays that held TMV-infected plants should not be reused because TMV is extremely durable and can survive even steaming. Bleach might not be fully effective due to the hydrophobic nature of styrofoam that prevents thorough surface penetration. Additionally, residual bleach can cause phytotoxicity, leading to poor germination, root damage, or weakened transplants.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the specific challenges of using bleach as a disinfectant for TMV in greenhouse trays?",
+    "input": "",
+    "output": "The specific challenges include the hydrophobic nature of styrofoam, which limits bleach's effectiveness in thoroughly penetrating the surface. Furthermore, residual bleach can cause phytotoxicity, which may result in poor seed germination, root damage, or weakened transplants.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What is the best practice recommended for handling trays previously used for TMV-infected plants?",
+    "input": "",
+    "output": "The best practice is to discard trays that were used for TMV-infected plants instead of attempting to disinfect and reuse them. This is due to the difficulty in fully eradicating the virus from the trays and the potential for residual chemicals to cause phytotoxicity.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What precautions should be taken to prevent TMV contamination in greenhouse settings?",
+    "input": "",
+    "output": "To prevent TMV contamination in greenhouse settings, it is crucial to discard trays that previously held infected plants and thoroughly disinfect equipment using recommended solutions like 3% trisodium phosphate or 9% calcium hypochlorite. Ensuring that all workers follow strict hygiene protocols and regularly sanitizing tools and surfaces can also help mitigate the risk of spreading the virus.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some effective practices for managing thrips and TSWV in tobacco crops?",
+    "input": "",
+    "output": "Managing thrips and Tomato Spotted Wilt Virus (TSWV) involves integrated pest management strategies, including selecting resistant tobacco varieties, timely application of insecticides, and maintaining healthy plant conditions to reduce stress. Monitoring thrips populations and using reflective mulches can also help minimize thrips infestation and TSWV spread.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco farmers optimize soil fertility for flue-cured tobacco?",
+    "input": "",
+    "output": "To optimize soil fertility for flue-cured tobacco, farmers should conduct soil testing to determine nutrient levels and pH. Liming should be done to adjust soil pH to the optimal range for tobacco, and fertilizers should be applied based on soil test recommendations. Using liquid nitrogen sources like UAN can offer flexibility and efficiency in providing necessary nutrients.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What variety selection recommendations are available for flue-cured and burley tobacco?",
+    "input": "",
+    "output": "When selecting tobacco varieties, growers should consider disease resistance, yield potential, and quality traits. Flue-cured and burley tobacco guides provide detailed information on different varieties, helping farmers choose those best suited for their local conditions and market demands.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for managing pests like tobacco thrips and flea beetles in the greenhouse?",
+    "input": "",
+    "output": "In the greenhouse, managing pests such as tobacco thrips and flea beetles involves regular scouting and monitoring to catch infestations early. Applying appropriate insecticides and practicing good greenhouse sanitation can help control these pests. Additionally, maintaining optimal growing conditions can reduce plant stress and make them less susceptible to pest damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended practices for ensuring energy efficiency during the curing process of flue-cured tobacco?",
+    "input": "",
+    "output": "To enhance energy efficiency during the curing process of flue-cured tobacco, farmers should ensure proper barn maintenance and use energy-efficient equipment. Implementing barn testing can identify leaks or inefficiencies. Proper scheduling and monitoring of the curing process can also optimize energy use, reducing costs and improving curing quality.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can mechanization benefit tobacco harvesting and curing operations?",
+    "input": "",
+    "output": "Mechanization in tobacco harvesting and curing can significantly increase efficiency and reduce labor costs. Automated harvesting equipment ensures a consistent quality of harvested leaves, while mechanized curing systems can optimize environmental controls within barns, improving the uniformity and quality of the cured product.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What strategies can tobacco farmers employ to prepare for hurricanes?",
+    "input": "",
+    "output": "Tobacco farmers can prepare for hurricanes by following guidelines in the Hurricane Preparation - Tobacco Producers Guide. This includes securing and reinforcing barns, removing or securing equipment, and having an emergency plan for labor and resources. Proper field drainage and protection of young plants can minimize damage from flooding and high winds.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for successful transplant production in greenhouses?",
+    "input": "",
+    "output": "Successful transplant production in greenhouses involves careful management of several factors, including proper fertilization, topping, and sucker control. Ensuring appropriate levels of nitrogen and other nutrients is crucial, as is timely topping to manage plant growth. Additionally, managing sucker growth with chemical control methods can help maintain plant health and productivity.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco growers reduce their reliance on MH and manage MH residues effectively?",
+    "input": "",
+    "output": "To reduce reliance on MH (maleic hydrazide), growers can integrate alternative sucker control methods, such as using chemical sucker control agents more strategically. This involves following a sucker control chemical use guide, which provides information on effective timing and application techniques to minimize residues while maintaining sucker control efficacy.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What pest management strategies are recommended for controlling tobacco thrips and flea beetles in tobacco fields?",
+    "input": "",
+    "output": "Effective management of tobacco thrips and flea beetles involves regular scouting to monitor pest populations and using targeted insecticides when thresholds are exceeded. For thrips, managing the surrounding environment to reduce weed hosts can also help. Integrated pest management strategies combining chemical and cultural controls are recommended to minimize resistance development.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended practices for harvesting and curing flue-cured tobacco to ensure quality and energy efficiency?",
+    "input": "",
+    "output": "For flue-cured tobacco, it is important to harvest at the optimal time when leaves are mature but not overripe. Curing should be conducted in a well-maintained barn with efficient use of energy resources. Implementing barn testing and mechanization can help optimize the curing process, maintaining leaf quality while reducing energy consumption.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How should tobacco growers manage Tomato Spotted Wilt Virus (TSWV) and thrips to protect their crops?",
+    "input": "",
+    "output": "To manage Tomato Spotted Wilt Virus (TSWV) and associated thrips in tobacco, growers should implement an integrated management approach that includes the use of resistant varieties where available, timely application of insecticides to control thrips populations, and monitoring fields regularly. Keeping weed hosts and alternate thrips hosts in check can also help reduce virus incidence.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some recommended practices for managing soil pH and fertility for flue-cured tobacco in the southeastern U.S.?",
+    "input": "",
+    "output": "For optimal growth of flue-cured tobacco, maintaining the correct soil pH through proper liming is crucial. Regular soil testing should be conducted to determine the pH level and nutrient needs. The Five Keys to Proper Fertility emphasize balancing nutrient inputs and reducing fertilizer costs, with specific attention to using liquid nitrogen sources like UAN.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers manage sucker growth effectively without relying heavily on MH and MH residues?",
+    "input": "",
+    "output": "Producers are encouraged to follow the Sucker Control Chemical Use Guide, which provides recommendations for chemical sucker control. This includes using various chemical agents to manage sucker growth and reduce reliance on maleic hydrazide (MH) residues, which can affect tobacco quality and marketability.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the key considerations for selecting flue-cured tobacco varieties in the southeastern United States?",
+    "input": "",
+    "output": "When selecting flue-cured tobacco varieties, it is essential to consider disease resistance ratings, yield potential, and adaptability to local growing conditions. Updated disease ratings for 2025 provide critical information for choosing varieties that can withstand prevalent diseases, thus ensuring improved crop performance.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What integrated pest management strategies are recommended for controlling tobacco insect pests?",
+    "input": "",
+    "output": "Effective pest management involves scouting for specific pests such as cutworms, grasshoppers, and tobacco thrips, and applying targeted control measures. The Tobacco Insect Scouting Methods offer guidance on identifying pest presence and severity, allowing for timely interventions to minimize crop damage.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can tobacco producers prepare for hurricanes and minimize damage to their crops?",
+    "input": "",
+    "output": "The Hurricane Preparation Guide for Tobacco Producers outlines strategies to protect crops, such as securing field structures, improving drainage, and planning for rapid harvest if necessary. These practices help mitigate the risk of crop loss during extreme weather events common in the region.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the best practices for greenhouse tobacco transplant production?",
+    "input": "",
+    "output": "Successful transplant production in greenhouses involves proper fertilization and pest management. The Four Keys To Successful Transplant Production highlight the importance of maintaining optimal growing conditions, including temperature control, adequate nutrition, and managing pests like tobacco flea beetles and aphids.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can curing and energy efficiency be improved for flue-cured tobacco?",
+    "input": "",
+    "output": "Improving curing and energy efficiency involves regular barn testing and maintenance to ensure optimal airflow and temperature control. Mechanization and using energy-efficient curing techniques can significantly reduce fuel costs and enhance the uniformity and quality of cured tobacco leaves.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some of the key practices recommended for successful transplant production in greenhouses?",
+    "input": "",
+    "output": "Successful transplant production in greenhouses involves managing fertilization carefully, controlling topping and sucker growth, and reducing reliance on Maleic Hydrazide (MH) due to residue concerns. It's also important to adhere to a chemical sucker control guide to optimize growth in the initial stages.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can farmers effectively manage sucker growth in tobacco plants?",
+    "input": "",
+    "output": "Effective sucker management in tobacco plants can be achieved by using chemical control methods, as outlined in the Sucker Control Chemical Use Guide. Reducing reliance on MH through alternative methods and timing is crucial to minimize residues while maintaining effective sucker control.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are the recommended methods for controlling tobacco pests like grasshoppers and tobacco thrips?",
+    "input": "",
+    "output": "Controlling pests such as grasshoppers and tobacco thrips involves regular scouting and employing integrated pest management strategies. Specific insecticides can be used, but it's essential to follow recommended application guidelines to avoid resistance and ensure effective control.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "Which tobacco diseases should growers be particularly vigilant about, and what resources are available for managing them?",
+    "input": "",
+    "output": "Growers should be vigilant about diseases like bacterial wilt and black shank. Updated flue-cured tobacco variety disease ratings for 2025 are available, which can guide growers in selecting resistant varieties and implementing appropriate disease management strategies.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "What are some ways to enhance curing and energy efficiency in tobacco production?",
+    "input": "",
+    "output": "Enhancing curing and energy efficiency in tobacco production involves optimizing barn operations and mechanization. Barn testing information and guidelines on curing processes can help improve energy efficiency, reduce costs, and maintain high-quality tobacco leaf outcomes.",
+    "system": "",
+    "history": "[]"
+  },
+  {
+    "instruction": "How can flue-cured tobacco variety disease ratings guide variety selection for 2025?",
+    "input": "",
+    "output": "The updated flue-cured tobacco variety disease ratings for 2025 provide information on the resistance of different tobacco varieties to diseases such as bacterial wilt and black shank. This guide helps farmers select varieties that are more resistant to prevalent diseases, potentially reducing the need for chemical interventions and improving yield stability.",
+    "system": "",
+    "history": "[]"
   }
 ]
