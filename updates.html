@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Live Crop Updates</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+<style>
+* { box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    margin: 0;
+    background: #fafafa;
+    color: #222;
+}
+
+/* nav */
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    text-align: center;
+}
+.topnav a {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+.topnav a:hover { background: #f0f0f0; color: #222; }
+.topnav a.active { background: #1565c0; color: #fff; }
+
+/* dropdown */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.nav-dropdown > .nav-drop-btn {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+.nav-dropdown:hover > .nav-drop-btn { background: #f0f0f0; color: #222; }
+.nav-drop-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 6px 0;
+    min-width: 150px;
+    z-index: 200;
+    margin-top: 4px;
+}
+.nav-dropdown:hover .nav-drop-menu { display: block; }
+.nav-drop-menu a {
+    display: block;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #444;
+    text-decoration: none;
+    white-space: nowrap;
+    margin: 0;
+    border-radius: 0;
+}
+.nav-drop-menu a:hover { background: #f5f5f5; }
+
+/* hero */
+.hero {
+    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 40%, #42a5f5 100%);
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: #fff;
+}
+.hero h1 { margin: 0; font-size: 32px; }
+.hero .subtitle { opacity: 0.85; font-size: 14px; margin-top: 6px; }
+.hero .meta { opacity: 0.6; font-size: 11px; margin-top: 10px; }
+
+/* container */
+.container { max-width: 900px; margin: 0 auto; padding: 30px 20px; }
+
+/* filters */
+.filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    align-items: center;
+}
+.filter-btn {
+    padding: 6px 14px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #fff;
+    color: #555;
+    transition: all 0.2s;
+}
+.filter-btn:hover { border-color: #999; }
+.filter-btn.active { background: #1565c0; color: #fff; border-color: #1565c0; }
+
+/* stats bar */
+.stats-bar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+.stat-card {
+    flex: 1;
+    min-width: 120px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 12px 16px;
+    text-align: center;
+}
+.stat-card .num { font-size: 24px; font-weight: 700; }
+.stat-card .label { font-size: 11px; color: #888; margin-top: 2px; }
+
+/* timeline */
+.timeline { position: relative; }
+.date-group { margin-bottom: 24px; }
+.date-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #eee;
+}
+.update-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+    color: inherit;
+}
+.update-card:hover {
+    border-color: #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.update-emoji { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+.update-body { flex: 1; }
+.update-title { font-size: 13px; font-weight: 600; color: #222; line-height: 1.4; }
+.update-meta { font-size: 11px; color: #999; margin-top: 3px; }
+.update-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 8px;
+}
+
+/* search */
+.search-box {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+.search-box:focus { border-color: #1565c0; }
+
+/* empty state */
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #999;
+    font-size: 14px;
+}
+
+/* pulse dot for recent */
+.pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4caf50;
+    margin-right: 6px;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* responsive */
+@media (max-width: 600px) {
+    .stats-bar { flex-direction: column; }
+    .stat-card { min-width: unset; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<div class="nav-dropdown">
+  <button class="nav-drop-btn">🌱 Crops ▾</button>
+  <div class="nav-drop-menu">
+    <a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
+    <a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
+    <a href="tobacco.html" style="color:#5d4e37;">🍃 Tobacco</a>
+    <a href="peanut.html" style="color:#8B4513;">🥜 Peanut</a>
+    <a href="corn.html" style="color:#f0a500;">🌽 Corn</a>
+  </div>
+</div>
+<a href="tracker.html">📋 Tracker</a>
+<a href="updates.html" class="active">📡 Updates</a>
+</nav>
+
+<div class="hero">
+    <h1>📡 Live Crop Updates</h1>
+    <div class="subtitle">Recent articles from NC Extension crop portals</div>
+    <div class="meta">Auto-crawled from peanut, soybean, sweetpotato, tobacco, and corn portals</div>
+</div>
+
+<div class="container">
+
+<!-- Stats -->
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- Filters -->
+<div class="filters">
+    <button class="filter-btn active" data-crop="all">All</button>
+    <button class="filter-btn" data-crop="peanut">🥜 Peanut</button>
+    <button class="filter-btn" data-crop="soybean">🫘 Soybean</button>
+    <button class="filter-btn" data-crop="sweetpotato">🍠 Sweetpotato</button>
+    <button class="filter-btn" data-crop="tobacco">🍃 Tobacco</button>
+    <button class="filter-btn" data-crop="corn">🌽 Corn</button>
+</div>
+
+<!-- Search -->
+<input type="text" class="search-box" placeholder="Search updates..." id="search-input">
+
+<!-- Timeline -->
+<div class="timeline" id="timeline"></div>
+
+</div>
+
+<script>
+let allUpdates = [];
+let currentFilter = 'all';
+let searchQuery = '';
+
+async function loadUpdates() {
+    try {
+        const resp = await fetch('updates.json');
+        allUpdates = await resp.json();
+        renderStats();
+        renderTimeline();
+    } catch (e) {
+        document.getElementById('timeline').innerHTML = 
+            '<div class="empty-state">No updates data found. Run: <code>python scripts/crawl_updates.py</code></div>';
+    }
+}
+
+function renderStats() {
+    const bar = document.getElementById('stats-bar');
+    const crops = {};
+    let recent = 0;
+    const today = new Date().toISOString().slice(0, 10);
+    const weekAgo = new Date(Date.now() - 7*86400000).toISOString().slice(0, 10);
+
+    allUpdates.forEach(u => {
+        crops[u.crop] = (crops[u.crop] || 0) + 1;
+        if (u.date && u.date >= weekAgo) recent++;
+    });
+
+    bar.innerHTML = `
+        <div class="stat-card">
+            <div class="num">${allUpdates.length}</div>
+            <div class="label">Total Articles</div>
+        </div>
+        <div class="stat-card">
+            <div class="num" style="color:#4caf50;">${recent}</div>
+            <div class="label">This Week</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">${Object.keys(crops).length}</div>
+            <div class="label">Crops Tracked</div>
+        </div>
+        <div class="stat-card">
+            <div class="num">${allUpdates.filter(u => u.date).length}</div>
+            <div class="label">With Dates</div>
+        </div>
+    `;
+}
+
+function renderTimeline() {
+    const container = document.getElementById('timeline');
+    const today = new Date().toISOString().slice(0, 10);
+    const weekAgo = new Date(Date.now() - 7*86400000).toISOString().slice(0, 10);
+
+    // Filter
+    let filtered = allUpdates;
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(u => u.crop === currentFilter);
+    }
+    if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        filtered = filtered.filter(u => u.title.toLowerCase().includes(q));
+    }
+
+    if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state">No updates match your filter.</div>';
+        return;
+    }
+
+    // Group by date
+    const groups = {};
+    filtered.forEach(u => {
+        const key = u.date || 'Unknown Date';
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(u);
+    });
+
+    // Sort date keys descending
+    const sortedKeys = Object.keys(groups).sort((a, b) => b.localeCompare(a));
+
+    let html = '';
+    sortedKeys.forEach(dateKey => {
+        const isRecent = dateKey >= weekAgo && dateKey !== 'Unknown Date';
+        const dateLabel = dateKey === 'Unknown Date' ? 'Unknown Date' : formatDate(dateKey);
+        
+        html += `<div class="date-group">`;
+        html += `<div class="date-header">${isRecent ? '<span class="pulse-dot"></span>' : ''}${dateLabel} (${groups[dateKey].length})</div>`;
+        
+        groups[dateKey].forEach(u => {
+            html += `
+                <a href="${u.url}" target="_blank" rel="noopener" class="update-card">
+                    <div class="update-emoji">${u.emoji}</div>
+                    <div class="update-body">
+                        <div class="update-title">${highlightSearch(u.title)}</div>
+                        <div class="update-meta">
+                            ${u.crop_name}
+                            <span class="update-badge" style="background:${u.color};">${u.crop_name}</span>
+                        </div>
+                    </div>
+                </a>
+            `;
+        });
+        
+        html += `</div>`;
+    });
+
+    container.innerHTML = html;
+}
+
+function formatDate(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function highlightSearch(text) {
+    if (!searchQuery) return text;
+    const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.crop;
+        renderTimeline();
+    });
+});
+
+// Search
+document.getElementById('search-input').addEventListener('input', (e) => {
+    searchQuery = e.target.value.trim();
+    renderTimeline();
+});
+
+// Load
+loadUpdates();
+</script>
+
+</body>
+</html>
