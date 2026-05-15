@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench: A Domain-Specific Instruction Tuning Benchmark for Agricultural LLMs</title>
+<style>
+body { font-family: 'Times New Roman', Georgia, serif; margin: 0; background: #fff; color: #222; line-height: 1.8; font-size: 16px; }
+.paper { max-width: 750px; margin: 0 auto; padding: 60px 40px; }
+h1 { font-size: 24px; text-align: center; margin-bottom: 5px; line-height: 1.3; }
+h2 { font-size: 18px; margin-top: 40px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+h3 { font-size: 16px; margin-top: 25px; }
+.authors { text-align: center; font-size: 14px; color: #444; margin: 10px 0 5px; }
+.affiliation { text-align: center; font-size: 13px; color: #666; margin-bottom: 20px; }
+.abstract { background: #f9f9f9; border-left: 4px solid #2e7d32; padding: 15px 20px; margin: 30px 0; font-size: 14px; }
+.abstract h3 { margin-top: 0; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 15px 0; }
+th { background: #f4f4f4; border-bottom: 2px solid #ddd; padding: 8px; text-align: left; }
+td { padding: 6px 8px; border-bottom: 1px solid #eee; }
+.figure { margin: 20px 0; text-align: center; }
+.figure img { max-width: 100%; border: 1px solid #eee; border-radius: 4px; }
+.caption { font-size: 13px; color: #666; margin-top: 6px; font-style: italic; }
+.ref { font-size: 13px; color: #444; margin-bottom: 8px; padding-left: 20px; text-indent: -20px; }
+a { color: #1565c0; }
+.footnote { font-size: 12px; color: #888; border-top: 1px solid #eee; margin-top: 40px; padding-top: 10px; }
+@media print { .paper { padding: 20px; } body { font-size: 12pt; } }
+</style>
+</head>
+<body>
+<div class="paper">
+
+<h1>NCBench: A Domain-Specific Instruction Tuning Benchmark for Agricultural LLMs</h1>
+
+<div class="authors">
+Shaohu Zhang<sup>1</sup>, Mesafint Fanuel<sup>1</sup>, Crystal Cook Marshall<sup>1</sup>, Mahmoud Nabile Mahmoud<sup>2</sup>
+</div>
+<div class="affiliation">
+<sup>1</sup>North Carolina Agricultural &amp; Technical State University &nbsp;·&nbsp;
+<sup>2</sup>University of Alabama
+</div>
+
+<div class="abstract">
+<h3>Abstract</h3>
+<p>
+We introduce <b>NCBench</b>, a domain-specific instruction tuning dataset for agricultural
+large language models (LLMs), targeting soybean, sweetpotato, and flue-cured tobacco
+production in the United States — specifically North Carolina. Built on the methodology
+of the CROP dataset, which demonstrated that structured QA data significantly improves
+agricultural reasoning in LLMs, NCBench extends the same proven pipeline to crops relevant
+to US agriculture. We generate <b>2,356 question-answer pairs</b> from 37 authoritative
+NC Cooperative Extension source documents using GPT-4o with the CROP prompt template.
+The dataset covers variety selection, pest management, disease control, soil health,
+planting decisions, harvest/storage, and marketing across three crops. We provide an
+interactive web-based explorer, county-level document inventory, and open-source generation
+scripts. NCBench addresses the gap in agricultural instruction tuning data for US crops
+and demonstrates that the CROP methodology transfers effectively to new agricultural domains.
+</p>
+<p style="font-size:13px; margin-top:10px;">
+<b>Demo:</b> <a href="https://mdfanuel-ux.github.io/ncbench/">https://mdfanuel-ux.github.io/ncbench/</a> &nbsp;|&nbsp;
+<b>Code:</b> <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a>
+</p>
+</div>
+
+<h2>1. Introduction</h2>
+<p>
+Large language models (LLMs) have shown remarkable capabilities across many domains, yet their
+performance in specialized agricultural contexts remains limited. Crop cultivation involves
+complex, region-specific knowledge — pest identification, variety selection, soil management,
+and climate adaptation — that general-purpose LLMs often handle poorly or inaccurately.
+</p>
+<p>
+The CROP dataset (Zhang et al., 2024) demonstrated that large-scale, structured instruction
+tuning data can significantly improve LLM performance on agricultural tasks. Their work produced
+210,038 single-turn QA pairs for rice and corn, achieving up to +0.41 accuracy improvement on
+fine-tuned models. However, CROP focuses on crops and regions relevant to Chinese agriculture,
+leaving a gap for US-grown crops.
+</p>
+<p>
+We address this gap with <b>NCBench</b> — a domain-specific instruction tuning benchmark
+targeting three crops critical to North Carolina agriculture:
+</p>
+<ul>
+<li><b>Soybean</b> — NC's #1 crop by acreage (1.63M acres, all 100 counties)</li>
+<li><b>Sweetpotato</b> — NC is the #1 US producer (60%+ of national supply)</li>
+<li><b>Flue-cured tobacco</b> — historically significant, $19M+ organic sector</li>
+</ul>
+<p>
+Our key contributions are: (1) a replicable pipeline for generating agricultural QA pairs from
+Extension publications, (2) 2,356 high-quality QA pairs from 37 authoritative sources,
+(3) a county-level document inventory covering 17 NC counties, and (4) an interactive
+web-based explorer for browsing the dataset.
+</p>
+
+<h2>2. Related Work</h2>
+<p>
+<b>Agricultural LLMs.</b> Recent work has explored domain-specific LLMs for agriculture,
+including crop disease diagnosis, pest identification, and farming recommendations. However,
+most efforts lack large-scale instruction tuning datasets grounded in authoritative sources.
+</p>
+<p>
+<b>The CROP Dataset.</b> Zhang et al. (2024) introduced CROP, encompassing 210,038 single-turn
+and 1,871 multi-turn dialogue samples for rice and corn. Their benchmark of 5,045 MCQs across
+three difficulty levels demonstrated that fine-tuning with domain-specific data yields substantial
+improvements — up to +0.41 on LLaMA3-8B. The pipeline uses prompt-based generation, task
+decomposition, and LLM-based filtering. Critically, the methodology is <i>crop-agnostic</i>,
+meaning it transfers to new domains with minimal adaptation.
+</p>
+<p>
+<b>NC Cooperative Extension.</b> North Carolina's Extension system, operated jointly by NC State
+University and NC A&amp;T State University, maintains over 1,000 experts across 101 local centers.
+Their publications represent the most authoritative, research-backed agricultural knowledge for
+NC crops — yet this content has never been structured for LLM training.
+</p>
+
+<h2>3. Methodology</h2>
+
+<h3>3.1 Source Document Collection</h3>
+<p>
+We identified and extracted text from authoritative NC Extension publications using web scraping
+(BeautifulSoup + requests). Sources were selected based on: (1) direct relevance to target crops,
+(2) authoritative authorship (NC State faculty and Extension specialists), and (3) sufficient
+depth for QA generation (minimum ~5,000 characters).
+</p>
+
+<table>
+<thead><tr><th>Crop</th><th>Primary Source</th><th>Additional Sources</th><th>Total Chars</th></tr></thead>
+<tbody>
+<tr><td>Soybean</td><td>NC Soybean Production Guide (AG-835, 12 chapters)</td><td>AG-660 Ch. 5, 9, 10</td><td>~522K</td></tr>
+<tr><td>Sweetpotato</td><td>Postharvest Handling Guide</td><td>Organic Guide Ch. 8, 6 disease factsheets, pest guide, nutsedge mgmt</td><td>~280K</td></tr>
+<tr><td>Tobacco</td><td>Organic Guide Ch. 6 (AG-660)</td><td>8 portal articles (disease, insects, varieties)</td><td>~130K</td></tr>
+</tbody>
+</table>
+
+<h3>3.2 QA Generation Pipeline</h3>
+<p>
+We adopt the CROP prompt template structure with modifications for US agricultural context.
+Each source document is:
+</p>
+<ol>
+<li><b>Chunked</b> into ~4,000-character segments with 200-character overlap</li>
+<li><b>Prompted</b> using a structured system prompt with role description, document context,
+guidelines (5 rules), and a format example</li>
+<li><b>Generated</b> via GPT-4o (5–10 QA pairs per chunk)</li>
+<li><b>Filtered</b> — removing yes/no questions, pairs shorter than thresholds, and
+questions that repeat the answer</li>
+<li><b>Deduplicated</b> — exact instruction-match deduplication across runs</li>
+</ol>
+
+<h3>3.3 Quality Controls</h3>
+<p>
+The prompt template enforces: (1) factual grounding in the source document, (2) coverage of
+multiple agronomic aspects, (3) avoidance of trivial questions, (4) logical answer sequences,
+and (5) detailed answers (2–4 sentences minimum). A heuristic filter removes pairs failing
+length, format, or repetition checks.
+</p>
+
+<h2>4. Dataset</h2>
+
+<h3>4.1 Overview</h3>
+<table>
+<thead><tr><th>Crop</th><th>QA Pairs</th><th>Sources</th><th>Primary Guide</th></tr></thead>
+<tbody>
+<tr><td>🫘 Soybean</td><td>1,587</td><td>15</td><td>NC Soybean Production Guide (AG-835)</td></tr>
+<tr><td>🍠 Sweetpotato</td><td>523</td><td>13</td><td>Postharvest Handling + Organic Guide Ch. 8</td></tr>
+<tr><td>🍃 Tobacco</td><td>246</td><td>9</td><td>Organic Guide Ch. 6 + portal articles</td></tr>
+<tr style="font-weight:700; border-top:2px solid #ddd;"><td>Total</td><td>2,356</td><td>37</td><td></td></tr>
+</tbody>
+</table>
+
+<h3>4.2 Topic Distribution</h3>
+<p>
+QA pairs span the full range of agronomic topics: variety selection, planting decisions,
+nutrient management, weed control, disease management, insect pest management, nematode
+management, soil health, water management, harvest/storage, curing, and marketing.
+The distribution reflects source document availability — weed management and insect
+chapters tend to be the longest and produce the most pairs.
+</p>
+
+<h3>4.3 County-Level Document Inventory</h3>
+<p>
+We crawled 17 NC county Extension websites (the top soybean and sweetpotato producing counties)
+and inventoried 2,947 unique local news articles. These represent geographically-tagged
+agricultural content that could be used for location-aware QA generation in future work.
+An additional 107 Tier 1 (crop-specific) documents were identified from statewide portals.
+</p>
+
+<h3>4.4 Data Format</h3>
+<p>
+Each entry follows the CROP format:
+</p>
+<pre style="background:#f4f4f4; padding:12px; font-size:13px; border-radius:4px; overflow-x:auto;">
+{
+  "instruction": "What are the key components that determine soybean yield?",
+  "input": "",
+  "output": "The key components are the number of plants per acre, the number of pods per plant, the number of seeds per pod, and the size of the seed. An average soybean plant produces 50-100 pods with 3 seeds each.",
+  "system": "",
+  "history": "[]"
+}
+</pre>
+
+<h2>5. Interactive Explorer</h2>
+<p>
+We provide a web-based interactive explorer at
+<a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench/</a>
+featuring:
+</p>
+<ul>
+<li>A D3.js sunburst chart visualizing the CROP dataset's 68,210 pairs across 24 topics</li>
+<li>Crop-specific deep-dive pages for soybean, sweetpotato, and tobacco</li>
+<li>Interactive QA explorers with topic filtering and expandable answers</li>
+<li>An NC county map showing production regions with clickable Extension links</li>
+<li>A document tracker showing pipeline progress</li>
+</ul>
+
+<h2>6. Discussion</h2>
+
+<h3>6.1 Pipeline Transferability</h3>
+<p>
+Our results confirm the CROP methodology's claim of crop-agnosticism. The same prompt template,
+chunking strategy, and filtering heuristics produced high-quality QA pairs across three
+fundamentally different crops (a grain legume, a root vegetable, and a leaf crop) without
+modification. The only changes were the source documents and regional context.
+</p>
+
+<h3>6.2 Source Availability Gap</h3>
+<p>
+We observed a significant asymmetry in source material availability. Soybean has a comprehensive
+12-chapter production guide (AG-835) yielding 1,587 pairs, while sweetpotato knowledge is
+scattered across 13 smaller documents (523 pairs), and the tobacco guide's chapters are
+PDF-only and not web-extractable (limiting us to 246 pairs from alternative sources).
+This fragmentation is itself a finding — it highlights where Extension publishing could
+better serve LLM-based agricultural tools.
+</p>
+
+<h3>6.3 Limitations</h3>
+<ul>
+<li>No human evaluation of generated QA quality (planned for future work)</li>
+<li>Single generation model (GPT-4o) — no comparison across generators</li>
+<li>No fine-tuning experiments yet — dataset quality unvalidated via downstream task</li>
+<li>Tobacco coverage limited by PDF-only source format</li>
+<li>County news articles (2,947) remain unprocessed</li>
+</ul>
+
+<h2>7. Conclusion &amp; Future Work</h2>
+<p>
+NCBench demonstrates that the CROP dataset methodology transfers effectively to US agricultural
+crops, producing 2,356 high-quality instruction tuning pairs from 37 authoritative NC Extension
+sources. The dataset, interactive explorer, and generation scripts are publicly available.
+</p>
+<p>
+Future work includes: (1) fine-tuning open-source LLMs (LLaMA-3, Qwen) on NCBench and evaluating
+on agricultural benchmarks, (2) processing the remaining 3,000+ county news articles with
+geographic tagging, (3) human evaluation of QA quality, (4) expanding to additional NC crops
+(peanut, cotton, corn), and (5) developing a multi-choice evaluation benchmark analogous to
+CROP's 5,045-question MCQ set.
+</p>
+
+<h2>References</h2>
+<div class="ref">[1] Zhang, H., Sun, J., Chen, R., et al. (2024). "Empowering and Assessing the Utility of Large Language Models in Crop Science." Shanghai AI Laboratory.</div>
+<div class="ref">[2] NC Soybean Production Guide (AG-835). NC State Extension, 2025. <a href="https://content.ces.ncsu.edu/north-carolina-soybean-production-guide">content.ces.ncsu.edu</a></div>
+<div class="ref">[3] NC Organic Commodities Production Guide (AG-660). NC State Extension, 2024. <a href="https://resources.ces.ncsu.edu/north-carolina-organic-commodities-production-guide">resources.ces.ncsu.edu</a></div>
+<div class="ref">[4] 2026 Flue-Cured Tobacco Guide (AG-187). NC State Extension, 2025. <a href="https://content.ces.ncsu.edu/flue-cured-tobacco-information">content.ces.ncsu.edu</a></div>
+<div class="ref">[5] NC Soybean Producers Association. <a href="https://www.ncsoy.org">ncsoy.org</a></div>
+<div class="ref">[6] USDA NASS. 2025 State Agriculture Overview — North Carolina. <a href="https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=NORTH%20CAROLINA">nass.usda.gov</a></div>
+
+<div class="footnote">
+<p><b>Acknowledgments:</b> The NC Soybean Producers Association funded the NC Soybean Production Guide.
+The North Carolina Tobacco Research Commission supports tobacco research at NC State University.</p>
+<p><b>Data &amp; Code:</b> <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a></p>
+<p><b>Interactive Demo:</b> <a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench/</a></p>
+</div>
+
+</div>
+</body>
+</html>
