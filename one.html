@@ -246,6 +246,67 @@ pre {
     background: #f0f0f0;
     color: #222;
 }
+/* dropdown */
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.nav-dropdown > .nav-drop-btn {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+.nav-dropdown > .nav-drop-btn:hover,
+.nav-dropdown:hover > .nav-drop-btn {
+    background: #f0f0f0;
+    color: #222;
+}
+.nav-drop-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 6px 0;
+    min-width: 150px;
+    z-index: 200;
+    margin-top: 4px;
+}
+.nav-dropdown:hover .nav-drop-menu {
+    display: block;
+}
+.nav-drop-menu a {
+    display: block;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #444;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s;
+    margin: 0;
+    border-radius: 0;
+}
+.nav-drop-menu a:hover {
+    background: #f5f5f5;
+    color: #222;
+}
+
 .topnav a.active {
     background: #2e7d32;
     color: #fff;
@@ -497,11 +558,16 @@ pre {
 <a href="#overview">Overview</a>
 <a href="#ncbench">NCBench</a>
 <a href="#explorer">Explorer</a>
-<a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
-<a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
-<a href="tobacco.html" style="color:#5d4e37;">🍃 Tobacco</a>
-<a href="peanut.html" style="color:#8B4513;">🥜 Peanut</a>
-<a href="corn.html" style="color:#f0a500;">🌽 Corn</a>
+<div class="nav-dropdown">
+  <button class="nav-drop-btn">🌱 Crops ▾</button>
+  <div class="nav-drop-menu">
+    <a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
+    <a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
+    <a href="tobacco.html" style="color:#5d4e37;">🍃 Tobacco</a>
+    <a href="peanut.html" style="color:#8B4513;">🥜 Peanut</a>
+    <a href="corn.html" style="color:#f0a500;">🌽 Corn</a>
+  </div>
+</div>
 <a href="tracker.html" style="color:#555;">📋 Tracker</a>
 <a href="#full-dataset">Full Dataset</a>
 <a href="#dialogue">Dialogue</a>
