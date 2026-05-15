@@ -228,6 +228,76 @@ body {
     .stats-bar { flex-direction: column; }
     .stat-card { min-width: unset; }
 }
+
+/* temporal QA cards */
+.tqa-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.tqa-card:hover { border-color: #ccc; }
+.tqa-question {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+.tqa-question:hover { background: #fafafa; }
+.tqa-chevron {
+    flex-shrink: 0;
+    font-size: 10px;
+    color: #999;
+    margin-top: 4px;
+    transition: transform 0.25s;
+}
+.tqa-card.open .tqa-chevron { transform: rotate(90deg); }
+.tqa-q-text { font-size: 13px; font-weight: 600; color: #222; line-height: 1.4; flex: 1; }
+.tqa-urgency {
+    flex-shrink: 0;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+}
+.tqa-urgency.immediate { background: #e53935; }
+.tqa-urgency.this_week { background: #fb8c00; }
+.tqa-urgency.this_season { background: #43a047; }
+.tqa-urgency.planning { background: #1e88e5; }
+.tqa-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    font-size: 13px;
+    color: #444;
+    line-height: 1.6;
+    padding: 0 16px;
+    border-top: 0 solid transparent;
+    background: #f9f9f9;
+}
+.tqa-card.open .tqa-answer {
+    max-height: 300px;
+    padding: 12px 16px;
+    border-top: 1px solid #eee;
+}
+.tqa-context {
+    font-size: 11px;
+    color: #888;
+    margin-top: 8px;
+    font-style: italic;
+}
+.tqa-source {
+    font-size: 11px;
+    color: #1565c0;
+    margin-top: 4px;
+    text-decoration: none;
+}
+.tqa-source:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
@@ -274,6 +344,30 @@ body {
 
 <!-- Timeline -->
 <div class="timeline" id="timeline"></div>
+
+<!-- Temporal QA Section -->
+<div style="margin-top:50px; border-top:2px solid #eee; padding-top:30px;">
+<h2 style="font-size:22px; margin-bottom:6px;">🧪 Temporal QA — Situational Questions</h2>
+<p style="font-size:13px; color:#666; margin-bottom:20px;">
+    Generated from the update articles above. These test whether an LLM can handle <b>time-sensitive</b> agricultural decisions — 
+    not textbook facts, but real-world situational advice. Each pair includes an urgency level and situational context.
+</p>
+
+<div class="stats-bar" id="tqa-stats"></div>
+
+<!-- Urgency filter -->
+<div class="filters" id="tqa-filters">
+    <button class="filter-btn active" data-urgency="all">All</button>
+    <button class="filter-btn" data-urgency="immediate" style="border-color:#e53935;">🔴 Immediate</button>
+    <button class="filter-btn" data-urgency="this_week" style="border-color:#fb8c00;">🟠 This Week</button>
+    <button class="filter-btn" data-urgency="this_season" style="border-color:#43a047;">🟢 This Season</button>
+    <button class="filter-btn" data-urgency="planning" style="border-color:#1e88e5;">🔵 Planning</button>
+</div>
+
+<input type="text" class="search-box" placeholder="Search temporal QA..." id="tqa-search">
+
+<div id="tqa-list"></div>
+</div>
 
 </div>
 
@@ -415,6 +509,133 @@ document.getElementById('search-input').addEventListener('input', (e) => {
 
 // Load
 loadUpdates();
+
+// ── TEMPORAL QA ──────────────────────────────────────────────────────────────
+let allTQA = [];
+let tqaUrgencyFilter = 'all';
+let tqaCropFilter = 'all'; // reuses the main crop filter
+let tqaSearch = '';
+
+async function loadTemporalQA() {
+    try {
+        const resp = await fetch('temporal_qa.json');
+        allTQA = await resp.json();
+        renderTQAStats();
+        renderTQAList();
+    } catch (e) {
+        document.getElementById('tqa-list').innerHTML = 
+            '<div class="empty-state">No temporal QA data. Run: <code>python scripts/generate_temporal_qa.py</code></div>';
+    }
+}
+
+function renderTQAStats() {
+    const bar = document.getElementById('tqa-stats');
+    const urgencyCounts = { immediate: 0, this_week: 0, this_season: 0, planning: 0 };
+    const cropCounts = {};
+    allTQA.forEach(p => {
+        const u = p.urgency || 'this_season';
+        if (urgencyCounts[u] !== undefined) urgencyCounts[u]++;
+        cropCounts[p.crop] = (cropCounts[p.crop] || 0) + 1;
+    });
+
+    bar.innerHTML = `
+        <div class="stat-card">
+            <div class="num">${allTQA.length}</div>
+            <div class="label">Temporal QA Pairs</div>
+        </div>
+        <div class="stat-card">
+            <div class="num" style="color:#e53935;">${urgencyCounts.immediate}</div>
+            <div class="label">Immediate</div>
+        </div>
+        <div class="stat-card">
+            <div class="num" style="color:#fb8c00;">${urgencyCounts.this_week}</div>
+            <div class="label">This Week</div>
+        </div>
+        <div class="stat-card">
+            <div class="num" style="color:#43a047;">${urgencyCounts.this_season}</div>
+            <div class="label">This Season</div>
+        </div>
+        <div class="stat-card">
+            <div class="num" style="color:#1e88e5;">${urgencyCounts.planning}</div>
+            <div class="label">Planning</div>
+        </div>
+    `;
+}
+
+function renderTQAList() {
+    const container = document.getElementById('tqa-list');
+    let filtered = allTQA;
+
+    // Urgency filter
+    if (tqaUrgencyFilter !== 'all') {
+        filtered = filtered.filter(p => p.urgency === tqaUrgencyFilter);
+    }
+    // Crop filter (reuse main filter)
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(p => p.crop === currentFilter);
+    }
+    // Search
+    if (tqaSearch) {
+        const q = tqaSearch.toLowerCase();
+        filtered = filtered.filter(p => 
+            p.instruction.toLowerCase().includes(q) || 
+            p.output.toLowerCase().includes(q)
+        );
+    }
+
+    if (!filtered.length) {
+        container.innerHTML = '<div class="empty-state">No temporal QA matches your filter.</div>';
+        return;
+    }
+
+    let html = `<p style="font-size:12px;color:#888;margin-bottom:12px;">Showing ${filtered.length} of ${allTQA.length} pairs. Click to expand answers.</p>`;
+
+    filtered.forEach((p, i) => {
+        const urgency = p.urgency || 'this_season';
+        html += `
+            <div class="tqa-card" onclick="this.classList.toggle('open')">
+                <div class="tqa-question">
+                    <span class="tqa-chevron">▶</span>
+                    <span class="tqa-q-text">${p.instruction}</span>
+                    <span class="tqa-urgency ${urgency}">${urgency.replace('_',' ')}</span>
+                </div>
+                <div class="tqa-answer">
+                    ${p.output}
+                    ${p.context ? `<div class="tqa-context">Context: ${p.context}</div>` : ''}
+                    ${p.source_title ? `<a class="tqa-source" href="${p.source_url || '#'}" target="_blank">Source: ${p.source_title}</a>` : ''}
+                </div>
+            </div>
+        `;
+    });
+
+    container.innerHTML = html;
+}
+
+// TQA urgency filter buttons
+document.querySelectorAll('#tqa-filters .filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('#tqa-filters .filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        tqaUrgencyFilter = btn.dataset.urgency;
+        renderTQAList();
+    });
+});
+
+// TQA search
+document.getElementById('tqa-search').addEventListener('input', (e) => {
+    tqaSearch = e.target.value.trim();
+    renderTQAList();
+});
+
+// Also re-render TQA when main crop filter changes
+const origFilterHandler = document.querySelectorAll('.filters:first-of-type .filter-btn');
+document.querySelectorAll('.filters')[0].querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        setTimeout(renderTQAList, 50);
+    });
+});
+
+loadTemporalQA();
 </script>
 
 </body>
