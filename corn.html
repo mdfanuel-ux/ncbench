@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NC Corn — NCBench</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌽</text></svg>">
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h2 { border-bottom: 2px solid #d4e8c0; padding-bottom: 5px; }
+h3 { color: #2e7d32; }
+a { color: #388e3c; }
+.section { margin-bottom: 50px; }
+.card { background: #f0f8e8; padding: 15px; border-radius: 8px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #d4e8c0; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #2e7d32; text-decoration: none; border-radius: 4px; }
+.topnav a:hover { background: #f0f8e8; }
+.topnav a.back { color: #999; }
+.hero { background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #66bb6a 100%); padding: 60px 20px 50px; text-align: center; }
+.hero h1 { color: #fff; font-size: 36px; margin: 0; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.hero p { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 8px; }
+.hero a { color: #c8e6c9; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #f0f8e8; padding: 15px; border-radius: 8px; border-top: 3px solid #2e7d32; }
+.stat-num { font-size: 28px; font-weight: bold; color: #1b5e20; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #d4e8c0; }
+@media (max-width: 600px) { .stat-row { flex-direction: column; } }
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#generated">Generated QA</a>
+</nav>
+<div class="hero"><h1>🌽 NC Corn</h1><p>Corn production in North Carolina — part of the <a href="index.html">NCBench</a> project</p></div>
+<div class="container">
+
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p>North Carolina plants <b>910,000 acres of corn</b> annually, making it the #2 field crop after soybean. Corn is grown for grain (144 bu/acre avg yield) and silage. It's a key rotation partner with soybean — most NC farmers grow both. The CROP dataset already contains 25,259 corn QA pairs from Chinese agriculture; NCBench adds <b>NC-specific</b> organic corn production knowledge.</p>
+<div class="stat-row">
+<div class="stat-card"><div class="stat-num">910K</div><div class="stat-label">Acres Planted</div></div>
+<div class="stat-card"><div class="stat-num">144</div><div class="stat-label">Bu/Acre Yield</div></div>
+<div class="stat-card"><div class="stat-num">40</div><div class="stat-label">QA Pairs Generated</div></div>
+<div class="stat-card"><div class="stat-num">AG-660</div><div class="stat-label">Organic Guide Ch. 3</div></div>
+</div>
+<p style="font-size:13px; color:#555;">Note: The CROP dataset's 25,259 corn pairs focus on Chinese corn production. NCBench's 40 pairs are specifically about <b>organic corn production in North Carolina</b> — different varieties, pest pressures, and management practices. This creates a direct comparison opportunity for evaluating regional specificity in agricultural LLMs.</p>
+</div>
+
+<div class="section" id="generated">
+<h2>Generated NCBench QA Explorer — 40 Pairs</h2>
+<h3>Source Document</h3>
+<table style="width:100%; border-collapse:collapse; font-size:12px; margin-bottom:20px;">
+<thead><tr style="background:#f0f8e8; border-bottom:2px solid #d4e8c0;"><th style="text-align:left; padding:6px 10px;">Document</th><th style="text-align:center; padding:6px 8px;">Pairs</th><th style="padding:6px 10px;">Link</th></tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid #eee;"><td style="padding:5px 10px;">Organic Production Guide — Ch. 3 Corn</td><td style="text-align:center;">40</td><td><a href="https://resources.ces.ncsu.edu/north-carolina-organic-commodities-production-guide/chapter-3-crop-production-management-corn" target="_blank">View →</a></td></tr>
+</tbody></table>
+
+<div id="corn-btns" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+<div id="corn-panel" style="display:none; background:#f0f8e8; border:1px solid #d4e8c0; border-radius:8px; padding:15px; max-height:500px; overflow-y:auto;">
+<div id="corn-title" style="font-weight:700; font-size:14px; color:#1b5e20; margin-bottom:4px;"></div>
+<div id="corn-count" style="font-size:11px; color:#999; margin-bottom:12px;"></div>
+<div id="corn-list"></div>
+</div>
+</div>
+
+<div class="section"><h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:150px; border-top:3px solid #d4a72c; text-align:center;"><a href="soy.html">🫘 Soybean</a></div>
+<div class="card" style="flex:1; min-width:150px; border-top:3px solid #e67e22; text-align:center;"><a href="sweetpotato.html">🍠 Sweetpotato</a></div>
+<div class="card" style="flex:1; min-width:150px; border-top:3px solid #5d4e37; text-align:center;"><a href="tobacco.html">🍃 Tobacco</a></div>
+<div class="card" style="flex:1; min-width:150px; border-top:3px solid #b8860b; text-align:center;"><a href="peanut.html">🥜 Peanut</a></div>
+<div class="card" style="flex:1; min-width:150px; border-top:3px solid #2e7d32; text-align:center;"><a href="index.html">🌾 NCBench</a></div>
+</div></div>
+</div>
+<div class="footer"><p>NC Corn — part of <a href="index.html">NCBench</a></p></div>
+<script>
+fetch("corn_qa.json").then(r=>r.json()).then(data=>{
+  const topics=[{name:"Variety & Planting",keywords:["variety","hybrid","planting","population","seed","maturity"]},{name:"Weed Management",keywords:["weed","herbicide","cultivation","palmer","cover crop"]},{name:"Disease & Pest",keywords:["disease","insect","corn earworm","rootworm","stalk rot","gray leaf"]},{name:"Soil & Fertility",keywords:["soil","nitrogen","fertiliz","manure","compost","nutrient","organic matter"]},{name:"Harvest & Storage",keywords:["harvest","grain","silage","moisture","storage","drying"]},{name:"General",keywords:[]}];
+  const grouped={};topics.forEach(t=>grouped[t.name]=[]);
+  data.forEach(item=>{const text=(item.instruction+" "+item.output).toLowerCase();let assigned=false;for(const t of topics){if(!t.keywords.length)continue;if(t.keywords.some(k=>text.includes(k))){grouped[t.name].push(item);assigned=true;break;}}if(!assigned)grouped["General"].push(item);});
+  const c=document.getElementById("corn-btns");
+  topics.forEach(t=>{const items=grouped[t.name];if(!items.length)return;const btn=document.createElement("button");btn.style.cssText="padding:7px 12px;border:1px solid #d4e8c0;border-radius:20px;background:#f0f8e8;font-size:11px;font-weight:600;color:#1b5e20;cursor:pointer;";btn.textContent=t.name+" ("+items.length+")";btn.onclick=()=>{document.getElementById("corn-panel").style.display="block";document.getElementById("corn-title").textContent=t.name;document.getElementById("corn-count").textContent=items.length+" pairs";const list=document.getElementById("corn-list");list.innerHTML="";items.forEach(item=>{const card=document.createElement("div");card.style.cssText="margin-bottom:8px;border:1px solid #d4e8c0;border-radius:6px;overflow:hidden;";const q=document.createElement("div");q.style.cssText="padding:8px 12px;cursor:pointer;background:#fff;font-size:12px;font-weight:600;color:#333;display:flex;gap:6px;";q.innerHTML='<span style="color:#2e7d32;">▶</span><span>'+item.instruction+'</span>';const a=document.createElement("div");a.style.cssText="max-height:0;overflow:hidden;transition:max-height 0.3s;font-size:12px;color:#555;line-height:1.6;background:#f0f8e8;padding:0 12px;";a.textContent=item.output;q.onclick=()=>{const open=a.style.maxHeight!=="0px"&&a.style.maxHeight!=="";a.style.maxHeight=open?"0":"300px";a.style.padding=open?"0 12px":"10px 12px";q.querySelector("span").textContent=open?"▶":"▼";};card.appendChild(q);card.appendChild(a);list.appendChild(card);});};c.appendChild(btn);});
+});
+</script>
+</body>
+</html>
