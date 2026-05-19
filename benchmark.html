@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Benchmark Results</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #fafafa;
+    color: #222;
+}
+
+/* nav */
+.topnav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid #eee;
+    padding: 8px 0; text-align: center;
+}
+.topnav a {
+    display: inline-block; margin: 0 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; color: #555;
+    text-decoration: none; border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+.topnav a:hover { background: #f0f0f0; color: #222; }
+.topnav a.active { background: #6a1b9a; color: #fff; }
+.nav-dropdown { position: relative; display: inline-block; vertical-align: middle; }
+.nav-dropdown > .nav-drop-btn {
+    display: inline-block; margin: 0 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; color: #555;
+    cursor: pointer; border: none; background: none; font-family: inherit; border-radius: 4px;
+}
+.nav-dropdown:hover > .nav-drop-btn { background: #f0f0f0; }
+.nav-drop-menu {
+    display: none; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); background: #fff;
+    border: 1px solid #e0e0e0; border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 6px 0; min-width: 150px; z-index: 200; margin-top: 4px;
+}
+.nav-dropdown:hover .nav-drop-menu { display: block; }
+.nav-drop-menu a { display: block; padding: 7px 16px; margin: 0; border-radius: 0; white-space: nowrap; }
+.nav-drop-menu a:hover { background: #f5f5f5; }
+
+/* hero */
+.hero {
+    background: linear-gradient(135deg, #4a148c 0%, #6a1b9a 40%, #ab47bc 100%);
+    padding: 40px 20px 30px; text-align: center; color: #fff;
+}
+.hero h1 { font-size: 30px; margin-bottom: 6px; }
+.hero .subtitle { opacity: 0.85; font-size: 13px; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 30px 20px; }
+
+/* key finding callout */
+.callout {
+    background: linear-gradient(135deg, #fff3e0, #fce4ec);
+    border: 1px solid #ffcc80;
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+.callout .big { font-size: 28px; font-weight: 800; color: #e65100; }
+.callout .desc { font-size: 13px; color: #555; margin-top: 6px; }
+
+/* results table */
+.results-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+    background: #fff; border-radius: 10px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06); border: 1px solid #eee;
+    margin-bottom: 30px;
+}
+.results-table th {
+    background: #f8f8f8; padding: 10px 12px; text-align: center;
+    font-size: 11px; text-transform: uppercase; color: #666; letter-spacing: 0.04em;
+}
+.results-table th:first-child { text-align: left; }
+.results-table td { padding: 10px 12px; text-align: center; border-top: 1px solid #f0f0f0; }
+.results-table td:first-child { text-align: left; font-weight: 600; }
+.results-table tr:hover td { background: #fafafa; }
+
+.score-cell {
+    font-weight: 700; border-radius: 4px; padding: 2px 6px;
+    display: inline-block; min-width: 32px;
+}
+.score-high { background: #e8f5e9; color: #2e7d32; }
+.score-mid { background: #fff8e1; color: #f57f17; }
+.score-low { background: #fbe9e7; color: #c62828; }
+
+/* side-by-side demo */
+.demo-section { margin-top: 40px; }
+.demo-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
+}
+.demo-header h2 { font-size: 18px; }
+.demo-nav { display: flex; gap: 8px; align-items: center; }
+.demo-nav button {
+    padding: 6px 14px; border: 1px solid #ddd; border-radius: 6px;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    background: #fff; color: #555; transition: all 0.2s;
+}
+.demo-nav button:hover { border-color: #999; background: #f5f5f5; }
+.demo-nav .counter { font-size: 12px; color: #888; min-width: 60px; text-align: center; }
+
+.demo-card {
+    background: #fff; border: 1px solid #eee; border-radius: 10px;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.demo-question {
+    background: #f8f9fa; padding: 16px 20px;
+    border-bottom: 1px solid #eee;
+}
+.demo-question .label { font-size: 10px; text-transform: uppercase; color: #888; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 6px; }
+.demo-question .text { font-size: 14px; font-weight: 600; line-height: 1.5; }
+.demo-badges { margin-top: 8px; display: flex; gap: 6px; flex-wrap: wrap; }
+.demo-badge {
+    display: inline-block; padding: 2px 8px; border-radius: 10px;
+    font-size: 10px; font-weight: 700; color: #fff;
+}
+
+.demo-answers {
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 200px;
+}
+@media (max-width: 700px) { .demo-answers { grid-template-columns: 1fr; } }
+
+.demo-answer {
+    padding: 16px 20px; border-right: 1px solid #eee;
+}
+.demo-answer:last-child { border-right: none; }
+.demo-answer .label {
+    font-size: 10px; text-transform: uppercase; color: #888;
+    font-weight: 700; letter-spacing: 0.05em; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+}
+.demo-answer .text { font-size: 13px; line-height: 1.6; color: #333; }
+
+.score-bar {
+    margin-top: 12px; padding-top: 10px; border-top: 1px solid #f0f0f0;
+    display: flex; gap: 12px; flex-wrap: wrap;
+}
+.score-item { font-size: 11px; color: #666; }
+.score-item span { font-weight: 700; }
+
+/* filter pills */
+.filter-pills { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+.pill {
+    padding: 5px 12px; border: 1px solid #ddd; border-radius: 16px;
+    font-size: 11px; font-weight: 600; cursor: pointer;
+    background: #fff; color: #555; transition: all 0.2s;
+}
+.pill:hover { border-color: #999; }
+.pill.active { background: #6a1b9a; color: #fff; border-color: #6a1b9a; }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<div class="nav-dropdown">
+  <button class="nav-drop-btn">🌱 Crops ▾</button>
+  <div class="nav-drop-menu">
+    <a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
+    <a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
+    <a href="tobacco.html" style="color:#5d4e37;">🍃 Tobacco</a>
+    <a href="peanut.html" style="color:#8B4513;">🥜 Peanut</a>
+    <a href="corn.html" style="color:#f0a500;">🌽 Corn</a>
+  </div>
+</div>
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="updates.html">📡 Updates</a>
+<a href="benchmark.html" class="active">🏆 Benchmark</a>
+</nav>
+
+<div class="hero">
+    <h1>🏆 Benchmark Results</h1>
+    <div class="subtitle">How well do current LLMs answer NC agricultural questions?</div>
+</div>
+
+<div class="container">
+
+<!-- Key finding -->
+<div class="callout">
+    <div class="big">GPT-4o scores 3.9/5 on NC crop questions</div>
+    <div class="desc">Even the best commercial LLM misses ~20% of expert-level agricultural detail. Farmers deserve better.</div>
+</div>
+
+<!-- Results table -->
+<h2 style="font-size:18px; margin-bottom:12px;">Model Comparison</h2>
+<p style="font-size:12px; color:#888; margin-bottom:14px;">
+    10 questions per split, scored by GPT-4o judge (1–5 scale). Reference answers from NC Extension documents.
+</p>
+<table class="results-table">
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>Split</th>
+            <th>Accuracy</th>
+            <th>Completeness</th>
+            <th>Specificity</th>
+            <th>Actionability</th>
+            <th>Overall</th>
+        </tr>
+    </thead>
+    <tbody id="results-tbody"></tbody>
+</table>
+
+<div style="display:flex; gap:16px; flex-wrap:wrap; margin-bottom:30px;">
+    <div style="flex:1; min-width:200px; background:#fff; border:1px solid #eee; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; color:#888; text-transform:uppercase; font-weight:700; margin-bottom:6px;">What the scores mean</div>
+        <div style="font-size:12px; line-height:1.8; color:#555;">
+            <b>5</b> = Perfect match to Extension expert answer<br>
+            <b>4</b> = Mostly correct, minor gaps<br>
+            <b>3</b> = Partially correct, missing key details<br>
+            <b>2</b> = Significant errors or omissions<br>
+            <b>1</b> = Wrong or irrelevant
+        </div>
+    </div>
+    <div style="flex:1; min-width:200px; background:#fff; border:1px solid #eee; border-radius:8px; padding:14px;">
+        <div style="font-size:11px; color:#888; text-transform:uppercase; font-weight:700; margin-bottom:6px;">Key Takeaways</div>
+        <div style="font-size:12px; line-height:1.8; color:#555;">
+            • Models give <b>generic</b> advice instead of NC-specific<br>
+            • <b>Completeness</b> is the weakest dimension<br>
+            • Smaller models (mini) lose ~0.3 points<br>
+            • Fine-tuning on NCBench should close the gap
+        </div>
+    </div>
+</div>
+
+<!-- Interactive demo -->
+<div class="demo-section">
+    <div class="demo-header">
+        <h2>🔍 Test the Gap — Side by Side</h2>
+        <div class="demo-nav">
+            <button onclick="prevExample()">← Prev</button>
+            <span class="counter" id="demo-counter">1 / 40</span>
+            <button onclick="nextExample()">Next →</button>
+        </div>
+    </div>
+
+    <div class="filter-pills">
+        <span class="pill active" data-filter="all" onclick="setFilter('all')">All</span>
+        <span class="pill" data-filter="static" onclick="setFilter('static')">📚 Static</span>
+        <span class="pill" data-filter="temporal" onclick="setFilter('temporal')">⏱️ Temporal</span>
+        <span class="pill" data-filter="gpt-4o" onclick="setFilter('gpt-4o')">GPT-4o</span>
+        <span class="pill" data-filter="gpt-4o-mini" onclick="setFilter('gpt-4o-mini')">GPT-4o-mini</span>
+    </div>
+
+    <div class="demo-card" id="demo-card">
+        <div class="demo-question">
+            <div class="label">Question</div>
+            <div class="text" id="demo-q">Loading...</div>
+            <div class="demo-badges" id="demo-badges"></div>
+        </div>
+        <div class="demo-answers">
+            <div class="demo-answer" style="background:#f0fdf4;">
+                <div class="label">✅ Extension Expert (Reference)</div>
+                <div class="text" id="demo-ref">—</div>
+            </div>
+            <div class="demo-answer">
+                <div class="label">🤖 Model Answer <span id="demo-model-name"></span></div>
+                <div class="text" id="demo-model">—</div>
+                <div class="score-bar" id="demo-scores"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+const SCORES_DATA = {
+    "gpt-4o_static": { accuracy: 3.9, completeness: 3.7, specificity: 4.4, actionability: 4.4, overall: 3.9 },
+    "gpt-4o_temporal": { accuracy: 4.0, completeness: 3.9, specificity: 4.2, actionability: 4.4, overall: 4.0 },
+    "gpt-4o-mini_static": { accuracy: 3.6, completeness: 3.5, specificity: 4.0, actionability: 4.2, overall: 3.6 },
+    "gpt-4o-mini_temporal": { accuracy: 3.9, completeness: 3.8, specificity: 4.2, actionability: 4.4, overall: 3.9 },
+};
+
+function scoreClass(v) {
+    if (v >= 4.0) return 'score-high';
+    if (v >= 3.5) return 'score-mid';
+    return 'score-low';
+}
+
+function renderTable() {
+    const tbody = document.getElementById('results-tbody');
+    const rows = [
+        ['GPT-4o', 'Static', SCORES_DATA['gpt-4o_static']],
+        ['GPT-4o', 'Temporal', SCORES_DATA['gpt-4o_temporal']],
+        ['GPT-4o-mini', 'Static', SCORES_DATA['gpt-4o-mini_static']],
+        ['GPT-4o-mini', 'Temporal', SCORES_DATA['gpt-4o-mini_temporal']],
+    ];
+    tbody.innerHTML = rows.map(([model, split, s]) => `
+        <tr>
+            <td>${model}</td>
+            <td>${split}</td>
+            <td><span class="score-cell ${scoreClass(s.accuracy)}">${s.accuracy}</span></td>
+            <td><span class="score-cell ${scoreClass(s.completeness)}">${s.completeness}</span></td>
+            <td><span class="score-cell ${scoreClass(s.specificity)}">${s.specificity}</span></td>
+            <td><span class="score-cell ${scoreClass(s.actionability)}">${s.actionability}</span></td>
+            <td><span class="score-cell ${scoreClass(s.overall)}">${s.overall}</span></td>
+        </tr>
+    `).join('');
+}
+
+// ── DEMO ─────────────────────────────────────────────────────────────────────
+let allExamples = [];
+let filtered = [];
+let currentIdx = 0;
+let currentFilter = 'all';
+
+async function loadExamples() {
+    try {
+        const resp = await fetch('eval_data.json');
+        allExamples = await resp.json();
+        filtered = allExamples;
+        renderExample();
+    } catch(e) {
+        document.getElementById('demo-q').textContent = 'No eval data found.';
+    }
+}
+
+function setFilter(f) {
+    currentFilter = f;
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    document.querySelector(`.pill[data-filter="${f}"]`).classList.add('active');
+    
+    if (f === 'all') filtered = allExamples;
+    else if (f === 'static' || f === 'temporal') filtered = allExamples.filter(e => e.split === f);
+    else filtered = allExamples.filter(e => e.model === f);
+    
+    currentIdx = 0;
+    renderExample();
+}
+
+function nextExample() {
+    currentIdx = (currentIdx + 1) % filtered.length;
+    renderExample();
+}
+function prevExample() {
+    currentIdx = (currentIdx - 1 + filtered.length) % filtered.length;
+    renderExample();
+}
+
+function renderExample() {
+    if (!filtered.length) {
+        document.getElementById('demo-q').textContent = 'No examples match filter.';
+        return;
+    }
+    const ex = filtered[currentIdx];
+    document.getElementById('demo-q').textContent = ex.question;
+    document.getElementById('demo-ref').textContent = ex.reference;
+    document.getElementById('demo-model').textContent = ex.model_answer;
+    document.getElementById('demo-model-name').textContent = `(${ex.model})`;
+    document.getElementById('demo-counter').textContent = `${currentIdx + 1} / ${filtered.length}`;
+
+    // Badges
+    const cropColors = { soybean:'#d4a72c', sweetpotato:'#e67e22', tobacco:'#5d4e37', peanut:'#8B4513', corn:'#f0a500' };
+    let badges = `<span class="demo-badge" style="background:${cropColors[ex.crop]||'#888'}">${ex.crop}</span>`;
+    badges += `<span class="demo-badge" style="background:${ex.split==='temporal'?'#1565c0':'#2e7d32'}">${ex.split}</span>`;
+    badges += `<span class="demo-badge" style="background:#555">${ex.model}</span>`;
+    if (ex.urgency) badges += `<span class="demo-badge" style="background:#e53935">${ex.urgency}</span>`;
+    document.getElementById('demo-badges').innerHTML = badges;
+
+    // Scores
+    const s = ex.scores;
+    document.getElementById('demo-scores').innerHTML = `
+        <span class="score-item">Accuracy: <span class="${scoreClass(s.accuracy)}" style="padding:1px 4px;border-radius:3px;">${s.accuracy}/5</span></span>
+        <span class="score-item">Complete: <span class="${scoreClass(s.completeness)}" style="padding:1px 4px;border-radius:3px;">${s.completeness}/5</span></span>
+        <span class="score-item">Specific: <span class="${scoreClass(s.specificity)}" style="padding:1px 4px;border-radius:3px;">${s.specificity}/5</span></span>
+        <span class="score-item">Actionable: <span class="${scoreClass(s.actionability)}" style="padding:1px 4px;border-radius:3px;">${s.actionability}/5</span></span>
+        <span class="score-item">Overall: <span class="${scoreClass(s.overall)}" style="padding:1px 4px;border-radius:3px;">${s.overall}/5</span></span>
+    `;
+}
+
+// Keyboard nav
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextExample();
+    if (e.key === 'ArrowLeft') prevExample();
+});
+
+renderTable();
+loadExamples();
+</script>
+
+</body>
+</html>
