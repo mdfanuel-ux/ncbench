@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f6fa;
+    color: #222;
+}
+
+/* nav */
+.topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid #eee;
+    padding: 8px 0;
+    text-align: center;
+}
+.topnav a {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+.topnav a:hover { background: #f0f0f0; color: #222; }
+.topnav a.active { background: #333; color: #fff; }
+.nav-dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+}
+.nav-dropdown > .nav-drop-btn {
+    display: inline-block;
+    margin: 0 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    border-radius: 4px;
+}
+.nav-dropdown:hover > .nav-drop-btn { background: #f0f0f0; }
+.nav-drop-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    padding: 6px 0;
+    min-width: 150px;
+    z-index: 200;
+    margin-top: 4px;
+}
+.nav-dropdown:hover .nav-drop-menu { display: block; }
+.nav-drop-menu a { display: block; padding: 7px 16px; margin: 0; border-radius: 0; white-space: nowrap; }
+.nav-drop-menu a:hover { background: #f5f5f5; }
+
+/* hero */
+.hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 70%, #533483 100%);
+    padding: 40px 20px 30px;
+    text-align: center;
+    color: #fff;
+}
+.hero h1 { font-size: 30px; margin-bottom: 6px; }
+.hero .subtitle { opacity: 0.8; font-size: 13px; }
+
+/* grid */
+.container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+
+/* cards */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.card .num {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+}
+.card .label {
+    font-size: 12px;
+    color: #888;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.card .sub {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* section headers */
+.section-header {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #eee;
+}
+
+/* crop breakdown table */
+.crop-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+}
+.crop-table th {
+    background: #f8f8f8;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #666;
+    letter-spacing: 0.04em;
+}
+.crop-table td {
+    padding: 10px 14px;
+    border-top: 1px solid #f0f0f0;
+}
+.crop-table tr:hover td { background: #fafafa; }
+.crop-emoji { font-size: 18px; margin-right: 8px; vertical-align: middle; }
+
+/* bar chart */
+.bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.bar {
+    height: 18px;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+    min-width: 2px;
+}
+.bar-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    min-width: 40px;
+}
+
+/* freshness indicator */
+.freshness {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.freshness.fresh { background: #e8f5e9; color: #2e7d32; }
+.freshness.stale { background: #fff3e0; color: #e65100; }
+.freshness.old { background: #fbe9e7; color: #c62828; }
+.freshness-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.8); }
+}
+
+/* two-col layout */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+@media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; }
+}
+
+/* source list */
+.source-list {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    border: 1px solid #eee;
+    max-height: 320px;
+    overflow-y: auto;
+}
+.source-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 12px;
+}
+.source-item:last-child { border-bottom: none; }
+.source-name { color: #333; font-weight: 500; }
+.source-count {
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #666;
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<div class="nav-dropdown">
+  <button class="nav-drop-btn">🌱 Crops ▾</button>
+  <div class="nav-drop-menu">
+    <a href="soy.html" style="color:#d4a72c;">🫘 Soybean</a>
+    <a href="sweetpotato.html" style="color:#e67e22;">🍠 Sweetpotato</a>
+    <a href="tobacco.html" style="color:#5d4e37;">🍃 Tobacco</a>
+    <a href="peanut.html" style="color:#8B4513;">🥜 Peanut</a>
+    <a href="corn.html" style="color:#f0a500;">🌽 Corn</a>
+  </div>
+</div>
+<a href="tracker.html">📋 Tracker</a>
+<a href="updates.html">📡 Updates</a>
+<a href="dashboard.html" class="active">📊 Dashboard</a>
+</nav>
+
+<div class="hero">
+    <h1>📊 NCBench Dashboard</h1>
+    <div class="subtitle">Project overview — QA counts, crop coverage, data freshness</div>
+</div>
+
+<div class="container">
+
+<!-- Top-level stats -->
+<div class="grid" id="top-stats">
+    <div class="card">
+        <div class="num" id="total-qa">—</div>
+        <div class="label">Total QA Pairs</div>
+        <div class="sub">Static + Temporal</div>
+    </div>
+    <div class="card">
+        <div class="num" id="static-qa" style="color:#2e7d32;">—</div>
+        <div class="label">Static QA</div>
+        <div class="sub">From production guides</div>
+    </div>
+    <div class="card">
+        <div class="num" id="temporal-qa" style="color:#1565c0;">—</div>
+        <div class="label">Temporal QA</div>
+        <div class="sub">From seasonal updates</div>
+    </div>
+    <div class="card">
+        <div class="num" id="crop-count" style="color:#6a1b9a;">—</div>
+        <div class="label">Crops</div>
+        <div class="sub">Active in benchmark</div>
+    </div>
+    <div class="card">
+        <div class="num" id="source-count" style="color:#e65100;">—</div>
+        <div class="label">Source Articles</div>
+        <div class="sub">Crawled from portals</div>
+    </div>
+    <div class="card" id="freshness-card">
+        <div class="num" id="freshness-text">—</div>
+        <div class="label">Data Freshness</div>
+        <div class="sub" id="last-crawl">—</div>
+    </div>
+</div>
+
+<!-- Crop breakdown -->
+<div class="section-header">Crop Breakdown — Static QA</div>
+<table class="crop-table" id="crop-table">
+    <thead>
+        <tr>
+            <th>Crop</th>
+            <th>QA Pairs</th>
+            <th>Sources</th>
+            <th>Coverage</th>
+        </tr>
+    </thead>
+    <tbody id="crop-tbody"></tbody>
+</table>
+
+<div style="height:30px;"></div>
+
+<!-- Two column: Temporal breakdown + Sources -->
+<div class="two-col">
+    <div>
+        <div class="section-header">Temporal QA by Urgency</div>
+        <div id="urgency-bars" style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #eee;"></div>
+    </div>
+    <div>
+        <div class="section-header">Temporal QA by Crop</div>
+        <div id="temporal-crop-bars" style="background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 4px rgba(0,0,0,0.06);border:1px solid #eee;"></div>
+    </div>
+</div>
+
+<!-- Source documents -->
+<div class="section-header">Source Documents Covered</div>
+<div class="two-col">
+    <div>
+        <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">STATIC SOURCES (Production Guides)</div>
+        <div class="source-list" id="static-sources"></div>
+    </div>
+    <div>
+        <div style="font-size:12px;font-weight:700;color:#888;margin-bottom:8px;">TEMPORAL SOURCES (Crop Updates)</div>
+        <div class="source-list" id="temporal-sources"></div>
+    </div>
+</div>
+
+<!-- Comparison -->
+<div style="height:20px;"></div>
+<div class="section-header">Static vs Temporal — At a Glance</div>
+<div class="two-col">
+    <div class="card" style="border-top:3px solid #2e7d32;">
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">📚 NCBench-Static</div>
+        <ul style="font-size:12px;color:#555;line-height:2;padding-left:16px;">
+            <li>From production guides & textbooks</li>
+            <li>Timeless agricultural facts</li>
+            <li>Tests: memorized domain knowledge</li>
+            <li>Use: instruction tuning / fine-tuning</li>
+        </ul>
+    </div>
+    <div class="card" style="border-top:3px solid #1565c0;">
+        <div style="font-weight:700;font-size:14px;margin-bottom:8px;">⏱️ NCBench-Temporal</div>
+        <ul style="font-size:12px;color:#555;line-height:2;padding-left:16px;">
+            <li>From seasonal updates & crop notes</li>
+            <li>Time-sensitive situational advice</li>
+            <li>Tests: real-time reasoning + retrieval</li>
+            <li>Use: RAG evaluation / continual learning</li>
+        </ul>
+    </div>
+</div>
+
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const CROP_CONFIG = {
+    soybean:     { emoji: '🫘', name: 'Soybean',     color: '#d4a72c' },
+    sweetpotato: { emoji: '🍠', name: 'Sweetpotato', color: '#e67e22' },
+    tobacco:     { emoji: '🍃', name: 'Tobacco',     color: '#5d4e37' },
+    peanut:      { emoji: '🥜', name: 'Peanut',      color: '#8B4513' },
+    corn:        { emoji: '🌽', name: 'Corn',        color: '#f0a500' },
+};
+
+// Static QA counts (from data/ncbench/)
+const STATIC_DATA = {
+    soybean:     { pairs: 1587, sources: 15, docs: ['AG-835 (12 chapters)', 'AG-660 Ch. 5, 9, 10'] },
+    sweetpotato: { pairs: 523,  sources: 13, docs: ['AG-660 Ch. 8 (Organic)', 'Disease factsheets (7)', 'Postharvest guides (5)'] },
+    tobacco:     { pairs: 246,  sources: 9,  docs: ['AG-660 Ch. 6', 'Portal articles (8)'] },
+    peanut:      { pairs: 65,   sources: 5,  docs: ['AG-660 Ch. 7', 'Crop updates (4)'] },
+    corn:        { pairs: 40,   sources: 1,  docs: ['AG-660 Ch. 3'] },
+};
+
+let temporalData = [];
+let updatesData = [];
+
+async function loadData() {
+    try {
+        const [tResp, uResp] = await Promise.all([
+            fetch('temporal_qa.json'),
+            fetch('updates.json'),
+        ]);
+        temporalData = await tResp.json();
+        updatesData = await uResp.json();
+    } catch(e) {
+        console.log('Some data files missing:', e);
+    }
+    render();
+}
+
+function render() {
+    const totalStatic = Object.values(STATIC_DATA).reduce((s, c) => s + c.pairs, 0);
+    const totalTemporal = temporalData.length;
+    const totalQA = totalStatic + totalTemporal;
+
+    // Top stats
+    document.getElementById('total-qa').textContent = totalQA.toLocaleString();
+    document.getElementById('static-qa').textContent = totalStatic.toLocaleString();
+    document.getElementById('temporal-qa').textContent = totalTemporal.toLocaleString();
+    document.getElementById('crop-count').textContent = Object.keys(CROP_CONFIG).length;
+    document.getElementById('source-count').textContent = updatesData.length.toLocaleString();
+
+    // Freshness
+    const dates = updatesData.filter(u => u.date).map(u => u.date).sort().reverse();
+    if (dates.length) {
+        const latest = dates[0];
+        const daysAgo = Math.floor((Date.now() - new Date(latest+'T00:00:00').getTime()) / 86400000);
+        let cls = 'fresh', label = 'Fresh';
+        if (daysAgo > 14) { cls = 'stale'; label = 'Stale'; }
+        if (daysAgo > 30) { cls = 'old'; label = 'Old'; }
+        document.getElementById('freshness-text').innerHTML = 
+            `<span class="freshness ${cls}"><span class="freshness-dot" style="background:${cls==='fresh'?'#4caf50':cls==='stale'?'#ff9800':'#f44336'}"></span>${label}</span>`;
+        document.getElementById('last-crawl').textContent = `Latest: ${latest} (${daysAgo}d ago)`;
+    }
+
+    // Crop table
+    const tbody = document.getElementById('crop-tbody');
+    const maxPairs = Math.max(...Object.values(STATIC_DATA).map(c => c.pairs));
+    let tbodyHTML = '';
+    for (const [key, config] of Object.entries(CROP_CONFIG)) {
+        const data = STATIC_DATA[key] || { pairs: 0, sources: 0 };
+        const pct = Math.round((data.pairs / maxPairs) * 100);
+        tbodyHTML += `
+            <tr>
+                <td><span class="crop-emoji">${config.emoji}</span>${config.name}</td>
+                <td>
+                    <div class="bar-wrap">
+                        <div class="bar" style="width:${pct}%;background:${config.color};"></div>
+                        <span class="bar-label">${data.pairs.toLocaleString()}</span>
+                    </div>
+                </td>
+                <td>${data.sources}</td>
+                <td style="font-size:11px;color:#888;">${(data.docs||[]).join(', ')}</td>
+            </tr>
+        `;
+    }
+    tbody.innerHTML = tbodyHTML;
+
+    // Urgency bars
+    const urgencyCounts = { immediate: 0, this_week: 0, this_season: 0, planning: 0 };
+    const urgencyColors = { immediate: '#e53935', this_week: '#fb8c00', this_season: '#43a047', planning: '#1e88e5' };
+    const urgencyLabels = { immediate: '🔴 Immediate', this_week: '🟠 This Week', this_season: '🟢 This Season', planning: '🔵 Planning' };
+    temporalData.forEach(p => {
+        const u = p.urgency || 'this_season';
+        if (urgencyCounts[u] !== undefined) urgencyCounts[u]++;
+    });
+    const maxUrgency = Math.max(...Object.values(urgencyCounts), 1);
+    let urgencyHTML = '';
+    for (const [key, count] of Object.entries(urgencyCounts)) {
+        const pct = Math.round((count / maxUrgency) * 100);
+        urgencyHTML += `
+            <div style="margin-bottom:10px;">
+                <div style="font-size:12px;font-weight:600;margin-bottom:4px;">${urgencyLabels[key]}</div>
+                <div class="bar-wrap">
+                    <div class="bar" style="width:${pct}%;background:${urgencyColors[key]};"></div>
+                    <span class="bar-label">${count}</span>
+                </div>
+            </div>
+        `;
+    }
+    document.getElementById('urgency-bars').innerHTML = urgencyHTML;
+
+    // Temporal by crop
+    const tempCropCounts = {};
+    temporalData.forEach(p => { tempCropCounts[p.crop] = (tempCropCounts[p.crop] || 0) + 1; });
+    const maxTempCrop = Math.max(...Object.values(tempCropCounts), 1);
+    let tempCropHTML = '';
+    for (const [key, config] of Object.entries(CROP_CONFIG)) {
+        const count = tempCropCounts[key] || 0;
+        const pct = Math.round((count / maxTempCrop) * 100);
+        tempCropHTML += `
+            <div style="margin-bottom:10px;">
+                <div style="font-size:12px;font-weight:600;margin-bottom:4px;">${config.emoji} ${config.name}</div>
+                <div class="bar-wrap">
+                    <div class="bar" style="width:${pct}%;background:${config.color};"></div>
+                    <span class="bar-label">${count}</span>
+                </div>
+            </div>
+        `;
+    }
+    document.getElementById('temporal-crop-bars').innerHTML = tempCropHTML;
+
+    // Static sources
+    let staticHTML = '';
+    for (const [key, config] of Object.entries(CROP_CONFIG)) {
+        const data = STATIC_DATA[key];
+        if (!data) continue;
+        (data.docs || []).forEach(doc => {
+            staticHTML += `<div class="source-item"><span class="source-name">${config.emoji} ${doc}</span><span class="source-count">${key}</span></div>`;
+        });
+    }
+    document.getElementById('static-sources').innerHTML = staticHTML;
+
+    // Temporal sources
+    const tempSources = {};
+    temporalData.forEach(p => {
+        if (p.source_title) {
+            const key = p.source_title.slice(0, 50);
+            if (!tempSources[key]) tempSources[key] = { crop: p.crop, count: 0 };
+            tempSources[key].count++;
+        }
+    });
+    let tempSourceHTML = '';
+    for (const [title, info] of Object.entries(tempSources)) {
+        const config = CROP_CONFIG[info.crop] || { emoji: '📄' };
+        tempSourceHTML += `<div class="source-item"><span class="source-name">${config.emoji} ${title}</span><span class="source-count">${info.count} QA</span></div>`;
+    }
+    document.getElementById('temporal-sources').innerHTML = tempSourceHTML;
+}
+
+loadData();
+</script>
+
+</body>
+</html>
