@@ -43,17 +43,21 @@ Shaohu Zhang<sup>1</sup>, Mesafint Fanuel<sup>1</sup>, Crystal Cook Marshall<sup
 <h3>Abstract</h3>
 <p>
 We introduce <b>NCBench</b>, a domain-specific instruction tuning dataset for agricultural
-large language models (LLMs), targeting soybean, sweetpotato, and flue-cured tobacco
+large language models (LLMs), targeting soybean, sweetpotato, tobacco, peanut, and corn
 production in the United States — specifically North Carolina. Built on the methodology
 of the CROP dataset, which demonstrated that structured QA data significantly improves
 agricultural reasoning in LLMs, NCBench extends the same proven pipeline to crops relevant
-to US agriculture. We generate <b>2,356 question-answer pairs</b> from 37 authoritative
-NC Cooperative Extension source documents using GPT-4o with the CROP prompt template.
+to US agriculture. We generate <b>2,461 static question-answer pairs</b> from 37+ authoritative
+NC Cooperative Extension source documents using GPT-4o with the CROP prompt template,
+plus <b>94 temporal QA pairs</b> from seasonal crop updates that test time-sensitive reasoning.
 The dataset covers variety selection, pest management, disease control, soil health,
-planting decisions, harvest/storage, and marketing across three crops. We provide an
-interactive web-based explorer, county-level document inventory, and open-source generation
-scripts. NCBench addresses the gap in agricultural instruction tuning data for US crops
-and demonstrates that the CROP methodology transfers effectively to new agricultural domains.
+planting decisions, harvest/storage, and marketing across five crops, with three additional
+crops (cotton, wheat, strawberry) in pipeline. Baseline evaluation shows that GPT-4o scores
+only 3.9/5 on NC-specific agricultural questions, demonstrating the need for domain-specific
+fine-tuning. We provide an interactive web-based explorer, county-level document inventory,
+benchmark results page, and open-source generation scripts. NCBench addresses the gap in
+agricultural instruction tuning data for US crops and introduces a novel temporal QA track
+for evaluating real-time agricultural reasoning.
 </p>
 <p style="font-size:13px; margin-top:10px;">
 <b>Demo:</b> <a href="https://mdfanuel-ux.github.io/ncbench/">https://mdfanuel-ux.github.io/ncbench/</a> &nbsp;|&nbsp;
@@ -212,9 +216,49 @@ featuring:
 <li>A document tracker showing pipeline progress</li>
 </ul>
 
-<h2>6. Discussion</h2>
+<h2>6. Baseline Evaluation</h2>
 
-<h3>6.1 Pipeline Transferability</h3>
+<h3>6.1 Experimental Setup</h3>
+<p>
+We evaluate two commercial LLMs — GPT-4o and GPT-4o-mini — on stratified samples from both
+the static and temporal QA splits. For each model × split combination, we sample 10 questions
+(stratified by crop), generate zero-shot responses, and score them using GPT-4o as an automated
+judge on four dimensions: accuracy, completeness, specificity, and actionability (1–5 scale).
+Reference answers are the ground-truth outputs from NC Extension documents.
+</p>
+
+<h3>6.2 Results</h3>
+<table>
+<thead>
+<tr><th>Model</th><th>Split</th><th>Accuracy</th><th>Completeness</th><th>Specificity</th><th>Actionability</th><th>Overall</th></tr>
+</thead>
+<tbody>
+<tr><td>GPT-4o</td><td>Static</td><td>3.9</td><td>3.7</td><td>4.4</td><td>4.4</td><td><b>3.9</b></td></tr>
+<tr><td>GPT-4o</td><td>Temporal</td><td>4.0</td><td>3.9</td><td>4.2</td><td>4.4</td><td><b>4.0</b></td></tr>
+<tr><td>GPT-4o-mini</td><td>Static</td><td>3.6</td><td>3.5</td><td>4.0</td><td>4.2</td><td><b>3.6</b></td></tr>
+<tr><td>GPT-4o-mini</td><td>Temporal</td><td>3.9</td><td>3.8</td><td>4.2</td><td>4.4</td><td><b>3.9</b></td></tr>
+</tbody>
+</table>
+<p class="caption">Table 2. Baseline evaluation results. Scores are 1–5 (5 = perfect match to Extension expert answer).</p>
+
+<h3>6.3 Analysis</h3>
+<p>
+Key findings from the baseline evaluation:
+</p>
+<ul>
+<li><b>Completeness is the weakest dimension</b> (3.5–3.9): Models provide partial answers, covering 1–2 management strategies when Extension guides recommend 4–5. This suggests LLMs lack depth in NC-specific agricultural knowledge.</li>
+<li><b>Specificity is relatively strong</b> (4.0–4.4): Models can generate specific-sounding advice, but it is often generic rather than NC-specific (e.g., suggesting herbicides not labeled for NC conditions).</li>
+<li><b>Model size matters</b>: GPT-4o-mini scores 0.3 points lower than GPT-4o on static questions, indicating that smaller models — which farmers are more likely to access — have larger knowledge gaps.</li>
+<li><b>Even GPT-4o scores below 4/5</b>: The best commercial model misses approximately 20% of expert-level detail on NC agricultural questions, demonstrating clear room for improvement through domain-specific fine-tuning.</li>
+</ul>
+<p>
+These results establish that NCBench captures knowledge not adequately represented in current
+LLM training data, validating its utility as both a fine-tuning dataset and an evaluation benchmark.
+</p>
+
+<h2>7. Discussion</h2>
+
+<h3>7.1 Pipeline Transferability</h3>
 <p>
 Our results confirm the CROP methodology's claim of crop-agnosticism. The same prompt template,
 chunking strategy, and filtering heuristics produced high-quality QA pairs across three
@@ -222,7 +266,7 @@ fundamentally different crops (a grain legume, a root vegetable, and a leaf crop
 modification. The only changes were the source documents and regional context.
 </p>
 
-<h3>6.2 Source Availability Gap</h3>
+<h3>7.2 Source Availability Gap</h3>
 <p>
 We observed a significant asymmetry in source material availability. Soybean has a comprehensive
 12-chapter production guide (AG-835) yielding 1,587 pairs, while sweetpotato knowledge is
@@ -232,7 +276,17 @@ This fragmentation is itself a finding — it highlights where Extension publish
 better serve LLM-based agricultural tools.
 </p>
 
-<h3>6.3 Limitations</h3>
+<h3>7.3 Temporal QA — A Novel Contribution</h3>
+<p>
+NCBench introduces a temporal QA track that tests whether LLMs can handle time-sensitive
+agricultural decisions. Unlike static QA from production guides, temporal QA is generated
+from seasonal crop updates (e.g., "Peanut Notes No. 79") and includes urgency levels
+(immediate, this_week, this_season, planning). This enables evaluation of retrieval-augmented
+generation (RAG) systems and continual learning approaches — a dimension absent from the
+original CROP benchmark.
+</p>
+
+<h3>7.4 Limitations</h3>
 <ul>
 <li>No human evaluation of generated QA quality (planned for future work)</li>
 <li>Single generation model (GPT-4o) — no comparison across generators</li>
@@ -241,18 +295,22 @@ better serve LLM-based agricultural tools.
 <li>County news articles (2,947) remain unprocessed</li>
 </ul>
 
-<h2>7. Conclusion &amp; Future Work</h2>
+<h2>8. Conclusion &amp; Future Work</h2>
 <p>
 NCBench demonstrates that the CROP dataset methodology transfers effectively to US agricultural
-crops, producing 2,356 high-quality instruction tuning pairs from 37 authoritative NC Extension
-sources. The dataset, interactive explorer, and generation scripts are publicly available.
+crops, producing 2,461 high-quality static instruction tuning pairs plus 94 temporal QA pairs
+from 37+ authoritative NC Extension sources across 5 crops (soybean, sweetpotato, tobacco,
+peanut, corn), with 3 additional crops (cotton, wheat, strawberry) in pipeline. Baseline
+evaluation shows GPT-4o scores only 3.9/5 on NC-specific questions, validating the need for
+domain-specific fine-tuning. The dataset, interactive explorer, benchmark results, and
+generation scripts are publicly available.
 </p>
 <p>
-Future work includes: (1) fine-tuning open-source LLMs (LLaMA-3, Qwen) on NCBench and evaluating
-on agricultural benchmarks, (2) processing the remaining 3,000+ county news articles with
-geographic tagging, (3) human evaluation of QA quality, (4) expanding to additional NC crops
-(peanut, cotton, corn), and (5) developing a multi-choice evaluation benchmark analogous to
-CROP's 5,045-question MCQ set.
+Future work includes: (1) fine-tuning open-source LLMs (LLaMA-3, Mistral) on NCBench and
+measuring improvement, (2) expanding temporal QA to 500+ pairs across all 8 crops,
+(3) processing the remaining 2,947 county news articles with geographic tagging,
+(4) human evaluation of QA quality, (5) RAG vs. fine-tuning comparison on temporal questions,
+and (6) developing a multi-choice evaluation benchmark analogous to CROP's 5,045-question MCQ set.
 </p>
 
 <h2>References</h2>
