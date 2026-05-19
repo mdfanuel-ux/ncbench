@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NC Wheat & Small Grains — NCBench</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌾</text></svg>">
+<style>
+body { font-family: Arial, sans-serif; margin: 0; background: #fff; color: #222; scroll-behavior: smooth; }
+.container { max-width: 960px; margin: auto; padding: 40px 20px; }
+h2 { border-bottom: 2px solid #e8dcc8; padding-bottom: 5px; }
+h3 { color: #8a6d3b; }
+a { color: #c49a3c; }
+.section { margin-bottom: 50px; }
+.card { background: #faf6ef; padding: 15px; border-radius: 8px; }
+.topnav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); border-bottom: 2px solid #e8dcc8; padding: 8px 0; text-align: center; }
+.topnav a { display: inline-block; margin: 0 8px; padding: 4px 10px; font-size: 12px; font-weight: 600; color: #8a6d3b; text-decoration: none; border-radius: 4px; }
+.topnav a:hover { background: #faf6ef; }
+.topnav a.back { color: #999; }
+.hero { background: linear-gradient(135deg, #4a3728 0%, #8a6d3b 40%, #c49a3c 100%); padding: 60px 20px 50px; text-align: center; position: relative; overflow: hidden; }
+.hero h1 { color: #fff; font-size: 36px; margin: 0; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+.hero p { color: rgba(255,255,255,0.85); font-size: 15px; margin-top: 8px; position: relative; z-index: 1; }
+.hero a { color: #e8dcc8; }
+.stat-row { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+.stat-card { flex: 1; min-width: 140px; text-align: center; background: #faf6ef; padding: 15px; border-radius: 8px; border-top: 3px solid #c49a3c; }
+.stat-num { font-size: 28px; font-weight: bold; color: #8a6d3b; }
+.stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+.footer { text-align: center; color: gray; margin-top: 50px; padding: 20px 0; border-top: 1px solid #e8dcc8; }
+.update-list { max-height: 400px; overflow-y: auto; }
+.update-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-bottom: 1px solid #eee; font-size: 12px; }
+.update-item:hover { background: #faf6ef; }
+.update-date { color: #888; min-width: 80px; flex-shrink: 0; }
+.update-title a { color: #8a6d3b; text-decoration: none; font-weight: 500; }
+.update-title a:hover { text-decoration: underline; }
+@media (max-width: 600px) { .stat-row { flex-direction: column; } }
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="index.html" class="back">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#updates">Updates</a>
+<a href="#explore">Explore</a>
+</nav>
+<div class="hero"><h1>🌾 NC Wheat & Small Grains</h1><p>Wheat, barley, and oat production in North Carolina — part of the <a href="index.html">NCBench</a> project</p></div>
+<div class="container">
+
+<div class="section" id="overview">
+<h2>Overview</h2>
+<p>North Carolina grows significant acreage of <b>wheat</b>, along with barley and oats. Wheat is a key winter crop, often double-cropped with soybeans. Major challenges include <b>head scab (Fusarium)</b>, vomitoxin contamination, freeze damage, and nitrogen management. The NC Extension small grains portal provides seasonal alerts on disease pressure, fungicide timing, and variety performance.</p>
+<div class="stat-row">
+<div class="stat-card"><div class="stat-num">84</div><div class="stat-label">Portal Articles</div></div>
+<div class="stat-card"><div class="stat-num">Winter</div><div class="stat-label">Growing Season</div></div>
+<div class="stat-card"><div class="stat-num">NC</div><div class="stat-label">Piedmont & Coastal Plain</div></div>
+<div class="stat-card"><div class="stat-num">New</div><div class="stat-label">QA Coming Soon</div></div>
+</div>
+<p style="font-size:13px; color:#666;">Wheat QA pairs will be generated from Extension publications and the small grains portal at <a href="https://smallgrains.ces.ncsu.edu/" target="_blank">smallgrains.ces.ncsu.edu</a>.</p>
+</div>
+
+<div class="section" id="updates">
+<h2>Recent Wheat & Small Grains Updates</h2>
+<p style="font-size:12px; color:#888; margin-bottom:12px;">Latest articles from the NC Extension small grains portal.</p>
+<div class="update-list" id="wheat-updates">Loading...</div>
+</div>
+
+<div class="section" id="explore"><h2>Explore More</h2>
+<div style="display:flex; gap:15px; flex-wrap:wrap;">
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #d4a72c; text-align:center;"><a href="soy.html">🫘 Soybean</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #e67e22; text-align:center;"><a href="sweetpotato.html">🍠 Sweetpotato</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #5d4e37; text-align:center;"><a href="tobacco.html">🍃 Tobacco</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #8B4513; text-align:center;"><a href="peanut.html">🥜 Peanut</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #f0a500; text-align:center;"><a href="corn.html">🌽 Corn</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #7b8fa1; text-align:center;"><a href="cotton.html">🧶 Cotton</a></div>
+<div class="card" style="flex:1; min-width:130px; border-top:3px solid #d32f2f; text-align:center;"><a href="strawberry.html">🍓 Strawberry</a></div>
+</div></div>
+</div>
+<div class="footer"><p>NC Wheat & Small Grains — part of <a href="index.html">NCBench</a></p></div>
+<script>
+fetch("updates.json").then(r=>r.json()).then(data=>{
+    const wheat = data.filter(d => d.crop === 'wheat').slice(0, 30);
+    const el = document.getElementById('wheat-updates');
+    if (!wheat.length) { el.textContent = 'No wheat updates found.'; return; }
+    el.innerHTML = wheat.map(u => `
+        <div class="update-item">
+            <span class="update-date">${u.date || '—'}</span>
+            <span class="update-title"><a href="${u.url}" target="_blank">${u.title}</a></span>
+        </div>
+    `).join('');
+});
+</script>
+</body>
+</html>

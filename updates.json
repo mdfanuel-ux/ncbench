@@ -1,5 +1,14 @@
 [
   {
+    "title": "Where Are My Soybeans? Checking for Deer Damage to Soybean Seedlings",
+    "url": "https://soybeans.ces.ncsu.edu/news/where-are-my-soybeans-checking-for-deer-damage-to-soybean-seedlings/",
+    "date": "2026-05-18",
+    "crop": "soybean",
+    "crop_name": "Soybean",
+    "emoji": "🫘",
+    "color": "#d4a72c"
+  },
+  {
     "title": "Bailey II Versus Emery Peanut Notes No. 79 2026",
     "url": "https://peanut.ces.ncsu.edu/news/bailey-ii-versus-emery-peanut-notes-no-79-2026/",
     "date": "2026-05-14",
@@ -99,6 +108,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availableCotton Planting Conditions May 11, 2026",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-11-2026/",
+    "date": "2026-05-11",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Controlling Emerged Weeds Prior to Planting Peanut Notes No. 69 2026",
     "url": "https://peanut.ces.ncsu.edu/news/controlling-emerged-weeds-prior-to-planting-peanut-notes-no-69-2026/",
     "date": "2026-05-10",
@@ -171,6 +189,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Corn Earworm and False Chinch Bug Reports in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/corn-earworm-and-false-chinch-bug-reports-in-strawberries/",
+    "date": "2026-05-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Why Did My Corn Turn White?",
     "url": "https://corn.ces.ncsu.edu/news/why-did-my-corn-turn-white/",
     "date": "2026-05-04",
@@ -187,6 +214,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Image not availableCotton Planting conditions May 2, 2026",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-2-2026/",
+    "date": "2026-05-02",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "NC Peanut Crop Update 1 Peanut Notes No. 61 2026",
@@ -252,6 +288,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "NCSU Strawberry Field Day on May 6 at Castle Hayne",
+    "url": "https://strawberries.ces.ncsu.edu/news/ncsu-strawberry-field-day-on-may-6-at-castle-hayne/",
+    "date": "2026-04-29",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Preplant Incorporated Herbicides with Dry Conditions Peanut Notes No. 56 2026",
     "url": "https://peanut.ces.ncsu.edu/news/preplant-incorporated-herbicides-with-dry-conditions-peanut-notes-no-56-2026/",
     "date": "2026-04-27",
@@ -288,6 +333,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Cotton Planting Conditions April 23, 2026",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-april-23-2026/",
+    "date": "2026-04-23",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Drought Resources from Extension",
     "url": "https://soybeans.ces.ncsu.edu/news/drought-resources-from-extension/",
     "date": "2026-04-22",
@@ -304,6 +358,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Drought Resources from Extension",
+    "url": "https://soybeans.ces.ncsu.edu/news/drought-resources-from-extension/",
+    "date": "2026-04-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Planting Question Peanut Notes No. 54 2026",
@@ -351,6 +414,33 @@
     "color": "#f0a500"
   },
   {
+    "title": "Managing Residual Herbicides During a Dry Spring",
+    "url": "https://cotton.ces.ncsu.edu/news/managing-residual-herbicides-during-a-dry-spring/",
+    "date": "2026-04-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Managing Tarnished Plant Bug in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/managing-tarnished-plant-bug-in-strawberries/",
+    "date": "2026-04-21",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "NCSU Frost Alert: Apr 19-21.",
+    "url": "https://strawberries.ces.ncsu.edu/news/ncsu-frost-alert-apr-19-21/",
+    "date": "2026-04-18",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Risk Management Peanut Grower Magazine Peanut Notes No. 52 2026",
     "url": "https://peanut.ces.ncsu.edu/news/risk-management-peanut-grower-magazine-peanut-notes-no-52-2026/",
     "date": "2026-04-16",
@@ -358,6 +448,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "2026 Strawberry IPM Guide is now available!",
+    "url": "https://strawberries.ces.ncsu.edu/news/2026-strawberry-ipm-guide-is-now-available/",
+    "date": "2026-04-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Dry Soils and Planting Depth Peanut Notes No. 51 2026",
@@ -412,6 +511,42 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Grower Input Needed: Survey on Tobacco and/or Strawberry Diseases in NC",
+    "url": "https://strawberries.ces.ncsu.edu/news/grower-input-needed-survey-on-tobacco-andor-strawberry-diseases-in-nc/",
+    "date": "2026-04-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Fungicide Program Considerations For Spring Disease Management in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/fungicide-program-considerations-for-spring-disease-management-in-strawberries/",
+    "date": "2026-04-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Think About Thrips Management Before Planting",
+    "url": "https://cotton.ces.ncsu.edu/news/think-about-thrips-management-before-planting/",
+    "date": "2026-04-14",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableWhen should I begin planting cotton? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/when-should-i-begin-planting-cotton-collins-edmisten/",
+    "date": "2026-04-13",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Preplant Herbicide Options Peanut Notes No. 46 2026",
@@ -493,6 +628,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "AWIS Alert: Frost Night Ahead",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-alert-frost-night-ahead/",
+    "date": "2026-04-06",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Lime and Gypsum Economics Peanut Notes No. 40 2026",
@@ -621,6 +765,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "AWIS Weather Report: Rain and Freeze/Frost Alert",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-report-rain-and-freezefrost-alert/",
+    "date": "2026-03-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Passing of Steve Barnes Peanut Notes No. 27 2026",
     "url": "https://peanut.ces.ncsu.edu/news/passing-of-steve-barnes-peanut-notes-no-27-2026/",
     "date": "2026-03-12",
@@ -628,6 +781,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Image not availablePreparations for Cotton Planting (Collins, Edmisten, Foote, & Farrer)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparations-for-cotton-planting-collins-edmisten-foote-farrer/",
+    "date": "2026-03-12",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Brake Versus Valor in Context Peanut Notes No. 26 2026",
@@ -655,6 +817,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Turbulent Frost Weather ahead, starting Thursday",
+    "url": "https://strawberries.ces.ncsu.edu/news/turbulent-frost-weather-ahead-starting-thursday/",
+    "date": "2026-03-10",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Zinc and Peanuts Peanut Notes No. 24 2026",
@@ -702,6 +873,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Syngenta to Stop Selling Gramoxone",
+    "url": "https://cotton.ces.ncsu.edu/news/syngenta-to-stop-selling-gramoxone/",
+    "date": "2026-03-04",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Syngenta to Stop Selling Gramoxone",
+    "url": "https://cotton.ces.ncsu.edu/news/syngenta-to-stop-selling-gramoxone/",
+    "date": "2026-03-04",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Tribute to Dr John Van Duyn Peanut Notes No. 21 2026",
     "url": "https://peanut.ces.ncsu.edu/news/tribute-to-dr-john-van-duyn-peanut-notes-no-21-2026/",
     "date": "2026-03-03",
@@ -720,6 +909,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Insect and Mite Pests Under Strawberry Covers",
+    "url": "https://strawberries.ces.ncsu.edu/news/insect-and-mite-pests-in-strawberry-covers/",
+    "date": "2026-02-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Peanuts Behind White Potato (Irish Potato) Peanut Notes No. 20 2026",
     "url": "https://peanut.ces.ncsu.edu/news/peanuts-behind-white-potato-irish-potato-peanut-notes-no-20-2026/",
     "date": "2026-02-08",
@@ -727,6 +925,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Cotton Jassid: Insights From Other Regions on a New Pest",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-jassid-insights-for-nc-cotton/",
+    "date": "2026-02-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Calculating Soil Calcium in Pounds Per Acre From NCDA&CS Soil Test Peanut Notes No. 19 2026",
@@ -745,6 +952,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Image not availableFinal Cotton OVT Results",
+    "url": "https://cotton.ces.ncsu.edu/news/final-cotton-ovt-results/",
+    "date": "2026-01-30",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Slides and Videos NC State Peanut Production Course Peanut Notes No. 17 2026",
@@ -817,6 +1033,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Freeze Weather Advisory Jan 23-Jan 28",
+    "url": "https://strawberries.ces.ncsu.edu/news/freeze-weather-advisory-jan-23-jan-28/",
+    "date": "2026-01-21",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Virginia Peanut Production Guide Available Peanut Notes No. 10 2026",
@@ -954,6 +1179,24 @@
     "color": "#8B4513"
   },
   {
+    "title": "Image not availableFiber Quality Results From the 2025 NC on-Farm Cotton Variety Evaluation Program (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/fiber-quality-results-from-the-2025-nc-on-farm-cotton-variety-evaluation-program-collins-edmisten/",
+    "date": "2025-12-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2025 Update: Winter Disease Control in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/2025-update-winter-disease-control-in-strawberries/",
+    "date": "2025-12-04",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Image not availablePreliminary Summary of Large-Plot, Non-Variety Trials in 2025 Peanut Notes No. 287 2025",
     "url": "https://peanut.ces.ncsu.edu/news/prelimanry-summary-of-large-plot-non-variety-trials-in-2025-peanut-notes-no-287-2025/",
     "date": "2025-11-26",
@@ -961,6 +1204,24 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Image not availablePreliminary Cotton OVT Results for 2025",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-cotton-ovt-results-for-2025/",
+    "date": "2025-11-26",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableYield Results for the 2025 NC on-Farm Cotton Variety Evaluation Program (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/yield-results-for-the-2025-nc-on-farm-cotton-variety-evaluation-program-collins-edmisten/",
+    "date": "2025-11-22",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Image not availableCrop Report November 20 Peanut Notes No. 286 2025",
@@ -1044,6 +1305,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Upcoming Event: Biocontrol and Integrated Disease Management in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/upcoming-event-biocontrol-and-integrated-disease-management-in-strawberries/",
+    "date": "2025-11-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Image not availableFrost and Freeze Warnings for November 11 Peanut Notes No. 277 2025",
     "url": "https://peanut.ces.ncsu.edu/news/frost-and-freeze-warnings-for-november-11-peanut-notes-no-277-2025/",
     "date": "2025-11-03",
@@ -1089,6 +1359,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Strawberry Post-Plant Meeting & Tour",
+    "url": "https://strawberries.ces.ncsu.edu/news/strawberry-post-plant-meeting-tour/",
+    "date": "2025-10-22",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Frost Potential in Virginia This Coming Weekend Peanut Notes No. 273 2025",
     "url": "https://peanut.ces.ncsu.edu/news/frost-potential-in-virginia-this-coming-weekend-peanut-notes-no-273-2025/",
     "date": "2025-10-20",
@@ -1098,6 +1377,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Join Us for the 2025 NC Produce Safety Professionals Conference!",
+    "url": "https://ncfreshproducesafety.ces.ncsu.edu/news/join-us-for-the-2025-nc-produce-safety-professionals-conference/",
+    "date": "2025-10-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "BeanPACK (2.0) Available",
     "url": "https://soybeans.ces.ncsu.edu/news/beanpack-2-0-available/",
     "date": "2025-10-15",
@@ -1105,6 +1393,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Fall Fungicide Recommendations for Root Rot Control in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/fall-fungicide-recommendations-for-root-rot-control-in-strawberries/",
+    "date": "2025-10-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "NC State Extension Helps Tobacco Growers",
@@ -1141,6 +1438,15 @@
     "crop_name": "Peanut",
     "emoji": "🥜",
     "color": "#8B4513"
+  },
+  {
+    "title": "Image not availableUpdated Post-Planting (Fall 2025) Recommendations for Managing Neopestalotiopsis",
+    "url": "https://strawberries.ces.ncsu.edu/news/updated-post-planting-fall-2025-recommendations-for-managing-neopestalotiopsis/",
+    "date": "2025-10-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Image not available2026 NC Peanut Production Meeting Schedule Peanut Notes No. 269 2025",
@@ -1242,6 +1548,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Management Strategies When Tropical Weather Approaches (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/management-strategies-when-tropical-weather-approaches-collins-edmisten/",
+    "date": "2025-09-25",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Declining Vine Health Peanut Notes No. 260 2025",
     "url": "https://peanut.ces.ncsu.edu/news/declining-vine-health-peanut-notes-no-260-2025/",
     "date": "2025-09-23",
@@ -1314,6 +1629,15 @@
     "color": "#8B4513"
   },
   {
+    "title": "Image not availableDefoliation Strategies for the Current Crop (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/defoliation-strategies-for-the-current-crop-collins-edmisten/",
+    "date": "2025-09-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Image not availableJordan Summary for PVQE Plot Tour on September 17 Peanut Notes No. 252 2025",
     "url": "https://peanut.ces.ncsu.edu/news/jordan-summary-for-pvqe-plot-tour-on-september-17-peanut-notes-no-252-2025/",
     "date": "2025-09-19",
@@ -1359,6 +1683,51 @@
     "color": "#8B4513"
   },
   {
+    "title": "Timely Management Is Important as We Move Into the Fall (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/timely-management-is-important-as-we-move-into-the-fall-collins-edmisten/",
+    "date": "2025-09-11",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Invasive Cotton Jassid Arrives in North Carolina Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/invasive-cotton-jassid-arrives-in-north-carolina-cotton/",
+    "date": "2025-09-09",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2025 Farm Bill Information Meetings",
+    "url": "https://cotton.ces.ncsu.edu/news/2025-farm-bill-information-meetings/",
+    "date": "2025-09-04",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableThe 2025 NC Cotton Field Day is Only One Week Away",
+    "url": "https://cotton.ces.ncsu.edu/news/2025-nc-cotton-field-day-is-only-one-week-away/",
+    "date": "2025-09-04",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Invasive Cotton Jassid is an Emerging Threat to Southeastern Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/invasive-cotton-jassid-is-an-emerging-threat-to-southeastern-cotton/",
+    "date": "2025-09-02",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Light and Pheromone Trap Captures for Caterpillar Pests",
     "url": "https://soybeans.ces.ncsu.edu/news/light-and-pheromone-trap-captures-for-caterpillar-pests-2/",
     "date": "2025-08-29",
@@ -1366,6 +1735,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Light and Pheromone Trap Captures for Caterpillar Pests",
+    "url": "https://soybeans.ces.ncsu.edu/news/light-and-pheromone-trap-captures-for-caterpillar-pests-2/",
+    "date": "2025-08-29",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Head Scab and Vomitoxin Prevention Starts Now",
@@ -1386,6 +1764,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "Head Scab and Vomitoxin Prevention Starts Now",
+    "url": "https://smallgrains.ces.ncsu.edu/news/head-scab-and-vomitoxin-prevention-starts-now/",
+    "date": "2025-08-27",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Light and Pheromone Trap Captures for Caterpillar Pests- Soybean Looper Numbers Up",
     "url": "https://soybeans.ces.ncsu.edu/news/light-and-pheromone-trap-captures-for-caterpillar-pests-soybean-looper-numbers-up/",
     "date": "2025-08-21",
@@ -1393,6 +1780,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Light and Pheromone Trap Captures for Caterpillar Pests- Soybean Looper Numbers Up",
+    "url": "https://soybeans.ces.ncsu.edu/news/light-and-pheromone-trap-captures-for-caterpillar-pests-soybean-looper-numbers-up/",
+    "date": "2025-08-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Check Fields for Soybean Aphid",
@@ -1413,6 +1809,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Light and Pheromone Trap Captures for Caterpillar Pests",
+    "url": "https://soybeans.ces.ncsu.edu/news/light-and-pheromone-trap-captures-for-caterpillar-pests/",
+    "date": "2025-08-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not available2025 NC Cotton Field Day Is Less Than a Month Away",
+    "url": "https://cotton.ces.ncsu.edu/news/2025-nc-cotton-field-day-is-less-than-a-month-away/",
+    "date": "2025-08-12",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Tobacco Connection: Vol 2, Num. 3 (Summer 2025 Update)",
     "url": "https://tobacco.ces.ncsu.edu/news/tobacco-connection-vol-2-num-3-summer-2025-update/",
     "date": "2025-08-08",
@@ -1420,6 +1834,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Management Considerations for the Current Crop Situation (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/management-considerations-for-the-current-crop-situation-collins-edmisten/",
+    "date": "2025-07-26",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Corn Earworm Flight Has Started- Scouting Tips",
@@ -1447,6 +1870,24 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not available2025 NC Cotton Field Day Scheduled for Thursday, September 11th",
+    "url": "https://cotton.ces.ncsu.edu/news/2025-nc-cotton-field-day-scheduled-for-thursday-september-11th/",
+    "date": "2025-07-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Register Now - Southeast Strawberry Expo!",
+    "url": "https://nash.ces.ncsu.edu/news/register-now-southeast-strawberry-expo/",
+    "date": "2025-07-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Considerations for Fungicide Applications in North Carolina Corn",
@@ -1494,6 +1935,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Bt Corn and Refuge: Smart Planting for Long-Term Success",
+    "url": "https://corn.ces.ncsu.edu/news/bt-corn-and-refuge-smart-planting-for-long-term-success/",
+    "date": "2025-06-19",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Insecticide Recommendations for Tarnished Plant Bug",
+    "url": "https://cotton.ces.ncsu.edu/news/insecticide-recommendations-for-tarnished-plant-bug-2/",
+    "date": "2025-06-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Root Cause Reports: One Month In, and Growing",
     "url": "https://corn.ces.ncsu.edu/news/root-cause-reports-one-month-in-and-growing/",
     "date": "2025-06-13",
@@ -1510,6 +1969,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Be on the Lookout for Pepper Anthracnose Caused by Colletotrichum Scovillei",
+    "url": "https://plantpathology.ces.ncsu.edu/news/be-on-the-lookout-for-pepper-anthracnose-caused-by-colletotrichum-scovillei/",
+    "date": "2025-06-12",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "New Factsheet: Managing TSWV and Thrips in Tobacco",
@@ -1548,6 +2016,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Thrips Applications, Insecticide Choice, and Rainfall",
+    "url": "https://cotton.ces.ncsu.edu/news/thrips-applications-insecticide-choice-and-rainfall/",
+    "date": "2025-05-28",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Managing Tobacco Mosaic Virus (TMV) in Tobacco",
     "url": "https://tobacco.ces.ncsu.edu/news/managing-tobacco-mosaic-virus-tmv-in-tobacco/",
     "date": "2025-05-22",
@@ -1573,6 +2050,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Cotton Planting Conditions: May 8, 2025",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-condition-may-8-2025/",
+    "date": "2025-05-08",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Potential Short-Term Economic Impact of Losing Glyphosate in North Carolina",
@@ -1602,6 +2088,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Potential Short-Term Economic Impact of Losing Glyphosate in North Carolina",
+    "url": "https://cotton.ces.ncsu.edu/news/potential-short-term-economic-impact-of-losing-glyphosate-in-north-carolina/",
+    "date": "2025-05-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Potential Short-Term Economic Impact of Losing Glyphosate in North Carolina",
+    "url": "https://cotton.ces.ncsu.edu/news/potential-short-term-economic-impact-of-losing-glyphosate-in-north-carolina/",
+    "date": "2025-05-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Corn Leafhopper and Corn Stunt Disease: See but Don’t Spray",
     "url": "https://corn.ces.ncsu.edu/news/corn-leafhopper-and-corn-stunt-disease-see-but-dont-spray/",
     "date": "2025-04-29",
@@ -1620,6 +2124,33 @@
     "color": "#5d4e37"
   },
   {
+    "title": "How to Nail 2025 Thrips Management (Reisig, Huseth)",
+    "url": "https://cotton.ces.ncsu.edu/news/how-to-nail-2025-thrips-management-reisig-huseth/",
+    "date": "2025-04-28",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableUPDATE on Thrips Infestation Predictor for Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/update-on-thrips-infestation-predictor-for-cotton/",
+    "date": "2025-04-28",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Cotton Planting Conditions April 27, 2025",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-april-27-2025/",
+    "date": "2025-04-27",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Map of Soybean Buyers in North Carolina",
     "url": "https://soybeans.ces.ncsu.edu/news/map-of-soybean-buyers-in-north-carolina/",
     "date": "2025-04-21",
@@ -1636,6 +2167,24 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Map of Soybean Buyers in North Carolina",
+    "url": "https://soybeans.ces.ncsu.edu/news/map-of-soybean-buyers-in-north-carolina/",
+    "date": "2025-04-21",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableIMPORTANT Message for Thrips Infestation Predictor for Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/important-message-for-thrips-infestation-predictor-for-cotton/",
+    "date": "2025-04-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Yield Impact of Fungicides on Drought-Stressed Corn in 2024",
@@ -1674,6 +2223,123 @@
     "color": "#f0a500"
   },
   {
+    "title": "Getting Ahead of Wheat and Barley Diseases",
+    "url": "https://smallgrains.ces.ncsu.edu/news/getting-ahead-of-wheat-and-barley-diseases/",
+    "date": "2025-04-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Increased Risk of Freeze / Frost Apr 8-10",
+    "url": "https://strawberries.ces.ncsu.edu/news/increased-risk-of-freeze-frost-apr-8-10/",
+    "date": "2025-04-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableIs Starter Fertilizer Essential for Cotton? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/is-starter-fertilizer-essential-for-cotton-collins-edmisten/",
+    "date": "2025-03-26",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availablePreparations for Cotton Planting, March 24th Update (Collins, Edmisten, Foote, & Farrer)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparations-for-cotton-planting-march-24th-update-collins-edmisten-foote-farrer/",
+    "date": "2025-03-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Challenged by Mites and Aphids in Strawberries? These Resources Can Help",
+    "url": "https://strawberries.ces.ncsu.edu/news/challenged-by-mites-and-aphids-in-strawberries-these-resources-can-help/",
+    "date": "2025-03-24",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Update: Widespread FROST Thursday to Saturday",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-update-widespread-frost-thursday-to-saturday/",
+    "date": "2025-03-19",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableShort Weather Update",
+    "url": "https://strawberries.ces.ncsu.edu/news/short-weather-update/",
+    "date": "2025-03-13",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availablePreparations for Cotton Planting Start Now (Collins, Edmisten, Foote, & Farrer)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparations-for-cotton-planting-start-now-collins-edmisten-foote-farrer/",
+    "date": "2025-03-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Preserve Cotton Yield by Addressing Tarnished Plant Bug",
+    "url": "https://cotton.ces.ncsu.edu/news/preserve-cotton-yield-by-addressing-tarnished-plant-bug/",
+    "date": "2025-03-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Saving Money on Cotton in 2025? Don't Skimp on Scouting & Treating Mite and Insect Pests",
+    "url": "https://cotton.ces.ncsu.edu/news/saving-money-on-cotton-in-2025-dont-skimp-on-scouting-treating-mite-and-insect-pests/",
+    "date": "2025-03-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Timeline for Cotton Pest Management Considerations",
+    "url": "https://cotton.ces.ncsu.edu/news/timeline-for-cotton-pest-management-considerations/",
+    "date": "2025-03-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Suggested Spray Schedule for Spring Disease Control in Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/suggested-spray-schedule-for-spring-disease-control-in-strawberries/",
+    "date": "2025-03-04",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Advisory: POTENTIAL FREEZE Late This Weekend, Into Monday.",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-potential-freeze-late-this-weekend-into-monday/",
+    "date": "2025-02-26",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Image not availableReferendum Update",
     "url": "https://tobacco.ces.ncsu.edu/news/referendum-update/",
     "date": "2025-02-18",
@@ -1701,6 +2367,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Webinars: Soybean Resilience Blueprint",
+    "url": "https://soybeans.ces.ncsu.edu/news/webinars-soybean-resilience-blueprint/",
+    "date": "2025-02-12",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableInstructions for Collecting and Submitting Cotton Seed Samples to NCDA for Warm / Cool Germ Testing",
+    "url": "https://cotton.ces.ncsu.edu/news/instructions-for-collecting-and-submitting-cotton-seed-samples-to-ncda-for-warm-cool-germ-testing/",
+    "date": "2025-02-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Evaluating Fungicide Programs for Black Shank in Flue-Cured Tobacco",
     "url": "https://tobacco.ces.ncsu.edu/news/evaluating-fungicide-programs-for-black-shank-in-flue-cured-tobacco/",
     "date": "2025-02-04",
@@ -1717,6 +2401,60 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "AWIS Weather Advisory: Polar Vortex Affects North Carolina",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-polar-vortex-affects-north-carolina/",
+    "date": "2025-01-20",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not available2025 Winter Cotton Meetings & 2025 NC Commodities Conference",
+    "url": "https://cotton.ces.ncsu.edu/news/2025-winter-cotton-meetings-2025-nc-commodities-conference/",
+    "date": "2025-01-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availablePreliminary Cotton OVT Yield Data for 2 and 3 Year Averages",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-cotton-ovt-yield-data-for-2-and-3-year-average/",
+    "date": "2024-12-30",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Pest Management Strategic Plan for Strawberries in the Southeast",
+    "url": "https://strawberries.ces.ncsu.edu/news/pest-management-strategic-plan-for-strawberry-in-the-southeast/",
+    "date": "2024-12-29",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availablePreliminary 2024 Cotton OVT Results Including Newly Announced Commercial Varieties.",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-2024-cotton-ovt-results-including-newly-announced-commercial-varieties/",
+    "date": "2024-12-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not available2024 Cotton Official Variety Preliminary Results",
+    "url": "https://cotton.ces.ncsu.edu/news/2024-cotton-official-variety-preliminary-results/",
+    "date": "2024-12-10",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Image not available2024 Soybean Insecticide Ratings",
@@ -1737,6 +2475,33 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableInsecticide Ratings for Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/insecticide-ratings-for-cotton/",
+    "date": "2024-12-09",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableYield Results for the 2024 NC on-Farm Cotton Variety Evaluation Program",
+    "url": "https://cotton.ces.ncsu.edu/news/yield-results-for-the-2024-nc-on-farm-cotton-variety-evaluation-program/",
+    "date": "2024-11-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Foliar Fungicide Impact on Cotton in 2024",
+    "url": "https://cotton.ces.ncsu.edu/news/foliar-fungicide-impact-on-cotton-in-2024/",
+    "date": "2024-11-20",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "2024 Tobacco Variety Webinar",
     "url": "https://tobacco.ces.ncsu.edu/news/2024-tobacco-variety-webinar/",
     "date": "2024-10-30",
@@ -1746,6 +2511,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Update on Defoliation Conditions",
+    "url": "https://cotton.ces.ncsu.edu/news/update-on-defoliation-conditions/",
+    "date": "2024-10-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Takeaways for Cutoff Strawberry Plantings",
+    "url": "https://strawberries.ces.ncsu.edu/news/takeaways-for-cutoff-strawberry-plantings-2/",
+    "date": "2024-10-02",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "BeanPACK (Agronomic Soybean Decision Support Tool) Is LIVE",
     "url": "https://soybeans.ces.ncsu.edu/news/beanpack-agronomic-soybean-decision-support-tool-is-live/",
     "date": "2024-10-01",
@@ -1753,6 +2536,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Image not availableRecommendations for Early-Season (Fall) Chemical Treatments in Strawberry Crops With Known Presence of the Neopestalotiopsis Pathogen",
+    "url": "https://strawberries.ces.ncsu.edu/news/recommendations-for-early-season-fall-chemical-treatments-in-strawberry-crops-with-known-presence-of-the-neopestalotiopsis-pathogen/",
+    "date": "2024-10-01",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Image not availableTropical Storm & Hurricane Preparation & Recovery",
@@ -1773,6 +2565,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Thoughts as We Approach Defoliation and Harvest (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/thoughts-as-we-approach-defoliation-and-harvest-collins-edmisten/",
+    "date": "2024-09-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Don't Give Up Scouting Soybeans- Soybean Loopers and Stink Bugs Are Abundant",
     "url": "https://soybeans.ces.ncsu.edu/news/dont-give-up-scouting-soybeans-soybean-loopers-and-stink-bugs-are-abundant/",
     "date": "2024-09-06",
@@ -1789,6 +2590,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Best Management Practices for Neopestalotiopsis",
+    "url": "https://strawberries.ces.ncsu.edu/news/best-management-practices-for-neopestalotiopsis/",
+    "date": "2024-08-30",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Piedmont Soybean Field Day",
@@ -1818,6 +2628,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "Piedmont Soybean Field Day",
+    "url": "https://soybeans.ces.ncsu.edu/news/piedmont-soybean-field-day/",
+    "date": "2024-08-23",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Planting to Reduce Head Scab Risk",
     "url": "https://smallgrains.ces.ncsu.edu/news/planting-to-reduce-head-scab-risk/",
     "date": "2024-08-22",
@@ -1836,6 +2655,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Planting to Reduce Head Scab Risk",
+    "url": "https://smallgrains.ces.ncsu.edu/news/planting-to-reduce-head-scab-risk/",
+    "date": "2024-08-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "UPDATE: Neopestalotiopsis (Neo-P)",
+    "url": "https://strawberries.ces.ncsu.edu/news/update-neopestalotiopsis-neo-p/",
+    "date": "2024-08-22",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Image not availableDealing With Ear Rots in Drought Damaged Corn",
     "url": "https://corn.ces.ncsu.edu/news/dealing-with-ear-rots-in-drought-damaged-corn/",
     "date": "2024-08-19",
@@ -1843,6 +2680,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Should Additional Fertilizer Be Applied to Cotton at This Point? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/should-additional-fertilizer-be-applied-to-cotton-at-this-point-collins-edmisten/",
+    "date": "2024-08-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "NC State University - Tobacco Connection: Vol. 1, Num. 2",
@@ -1854,6 +2700,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Hurricane Preparation and Recovery in the Southeastern United States Cotton Producers Guide",
+    "url": "https://cotton.ces.ncsu.edu/news/hurricane-preparation-and-recovery-in-the-southeastern-united-states-cotton-producers-guide/",
+    "date": "2024-08-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Bollworm Populations on the Decline With Another Generation on the Way",
+    "url": "https://cotton.ces.ncsu.edu/news/bollworm-populations-on-the-decline-with-another-generation-on-the-way/",
+    "date": "2024-08-01",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Comprehending the Changing Colors of Corn Leaves",
     "url": "https://corn.ces.ncsu.edu/news/comprehending-the-changing-colors-of-corn-leaves/",
     "date": "2024-07-22",
@@ -1861,6 +2725,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Don't Forget About Stink Bugs in Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/dont-forget-about-stink-bugs-in-cotton/",
+    "date": "2024-07-17",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Concerns About Corn Earworm in Field Corn",
@@ -1881,6 +2754,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Crop Status Now That Cotton Is Entering the Bloom Period (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/crop-status-now-that-cotton-is-entering-the-bloom-period-collins-edmisten/",
+    "date": "2024-07-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "It Is a Drought! When Should I Give Up on My Corn Crop?",
     "url": "https://corn.ces.ncsu.edu/news/it-is-a-drought-when-should-i-give-up-on-my-corn-crop/",
     "date": "2024-06-27",
@@ -1888,6 +2770,33 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Tarnished Plant Bug Management in 2024",
+    "url": "https://cotton.ces.ncsu.edu/news/tarnished-plant-bug-management-in-2024/",
+    "date": "2024-06-25",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Cotton Is Still small.....Do We Even Need to Think About Irrigation? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-is-still-small-do-we-even-need-to-think-about-irrigation-collins-edmisten/",
+    "date": "2024-06-14",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Pest Alert- Scout for Foliage Feeding From Asiatic Garden Beetle",
+    "url": "https://cotton.ces.ncsu.edu/news/pest-alert-scout-for-foliage-feeding-from-asiatic-garden-beetle/",
+    "date": "2024-06-04",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "NC State University  - Tobacco Connection: Vol. 1, Num. 1",
@@ -1899,6 +2808,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Should You Treat ThryvOn Cotton With Insecticide?",
+    "url": "https://cotton.ces.ncsu.edu/news/should-you-treat-thryvon-cotton-with-insecticide/",
+    "date": "2024-05-23",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Corn Earworms and Lygus Bugs Infesting Strawberries",
+    "url": "https://strawberries.ces.ncsu.edu/news/pest-alert-corn-earworms-and-lygus-bugs-infesting-strawberries-in-north-carolina/",
+    "date": "2024-05-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "What Are the Pale Patches in Wheat Fields This Year?",
     "url": "https://smallgrains.ces.ncsu.edu/news/what-are-the-pale-patches-in-wheat-fields-this-year/",
     "date": "2024-05-14",
@@ -1906,6 +2833,60 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "What Are the Pale Patches in Wheat Fields This Year?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/what-are-the-pale-patches-in-wheat-fields-this-year/",
+    "date": "2024-05-14",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Cotton Planting Conditions May 2, 2024",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-2-2024/",
+    "date": "2024-05-02",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableConsiderations for Expected Planting Conditions (Collins, Edmisten, & Cahoon)",
+    "url": "https://cotton.ces.ncsu.edu/news/considerations-for-expected-planting-conditions-collins-edmisten-cahoon/",
+    "date": "2024-04-25",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Cotton Planting Condition April 24, 2024",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-condition-april-24-2024/",
+    "date": "2024-04-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "How to Nail 2024 Thrips Management (Reisig, Huseth)",
+    "url": "https://cotton.ces.ncsu.edu/news/how-to-nail-2024-thrips-management-reisig-huseth/",
+    "date": "2024-04-23",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "North Carolina Wheat Stripe Rust Alert—April 18, 2024",
+    "url": "https://smallgrains.ces.ncsu.edu/news/north-carolina-wheat-stripe-rust-alert-april-18-2024/",
+    "date": "2024-04-18",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Beans Gone Wild: Where We Are Headed in 2024",
@@ -1926,6 +2907,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Widespread Frost Over the Weekend Apr 4-7",
+    "url": "https://strawberries.ces.ncsu.edu/news/widespread-frost-over-the-weekend-apr-4-7/",
+    "date": "2024-04-02",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Molds and Menaces: Tobacco Greenhouse Diseases and the Like",
     "url": "https://tobacco.ces.ncsu.edu/news/molds-and-menaces-tobacco-greenhouse-diseases-and-the-like/",
     "date": "2024-03-28",
@@ -1933,6 +2923,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableNCDA&CS Cotton Seed Quality Testing Program Update (Collins, Edmisten, Foote & Bowers)",
+    "url": "https://cotton.ces.ncsu.edu/news/ncda-cs-cotton-seed-quality-testing-program-update-collins-edmisten-foote-bowers/",
+    "date": "2024-03-28",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Harvesting Success at the 2024 North Carolina Regional Soybean Schools",
@@ -1953,6 +2952,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Rain and Frost Advisory: Mar 23-25",
+    "url": "https://strawberries.ces.ncsu.edu/news/rain-and-frost-advisory-mar-23-25/",
+    "date": "2024-03-21",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "NC State Soybean Seed Treatment Webinar Recording Available",
     "url": "https://soybeans.ces.ncsu.edu/news/nc-state-soybean-seed-treatment-webinar-recording-available/",
     "date": "2024-03-19",
@@ -1971,6 +2979,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Frost Advisory: Mar 18-21",
+    "url": "https://strawberries.ces.ncsu.edu/news/frost-advisory-mar-18-21/",
+    "date": "2024-03-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Frost Advisory: Mar 10-12 2024",
+    "url": "https://strawberries.ces.ncsu.edu/news/frost-advisory-mar-10-12-2024/",
+    "date": "2024-03-08",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "North Carolina Regional Soybean School Recordings Available",
     "url": "https://soybeans.ces.ncsu.edu/news/nc-soybean-school-recordings-available/",
     "date": "2024-03-07",
@@ -1987,6 +3013,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Image not availableCotton Seed Quality Program Update - Collins & Edmisten",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-seed-quality-program-update-collins-edmisten/",
+    "date": "2024-02-29",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Wheat Variety Resistance Ratings for Hessian Fly",
+    "url": "https://smallgrains.ces.ncsu.edu/news/wheat-variety-resistance-ratings-for-hessian-fly/",
+    "date": "2024-02-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Register Now: Savvy Soybean Management Webinar Series",
@@ -2025,6 +3069,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "EPA Issues Existing Stocks Order for Engenia, Tavium, and XtendiMax",
+    "url": "https://cotton.ces.ncsu.edu/news/epa-issues-existing-stocks-order-for-engenia-tavium-and-xtendimax/",
+    "date": "2024-02-14",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "EPA Issues Existing Stocks Order for Engenia, Tavium, and XtendiMax",
+    "url": "https://cotton.ces.ncsu.edu/news/epa-issues-existing-stocks-order-for-engenia-tavium-and-xtendimax/",
+    "date": "2024-02-14",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Dicamba Labels Are Vacated, What Will We Do in Soybean?",
     "url": "https://soybeans.ces.ncsu.edu/news/dicamba-labels-are-vacated-what-will-we-do-in-soybean/",
     "date": "2024-02-07",
@@ -2050,6 +3112,42 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Engenia, Tavium, and XtendiMax Labels Vacated",
+    "url": "https://cotton.ces.ncsu.edu/news/engenia-tavium-and-xtendimax-labels-vacated/",
+    "date": "2024-02-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Engenia, Tavium, and XtendiMax Labels Vacated",
+    "url": "https://cotton.ces.ncsu.edu/news/engenia-tavium-and-xtendimax-labels-vacated/",
+    "date": "2024-02-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availablePreparations for Cotton Planting Start Now (Collins, Edmisten, Foote, & Bowers)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparations-for-cotton-planting-start-now-collins-edmisten-foote-bowers/",
+    "date": "2024-02-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not available2024 Cotton County Meetings Begin This Week (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/2024-cotton-county-meetings-begin-this-week-collins-edmisten/",
+    "date": "2024-02-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Foliar Fungicide Impact on Soybean Yield in 2023",
@@ -2097,6 +3195,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "AWIS Weather Advisory: Winter Freeze This Weekend (Jan 20-22)",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-winter-freeze-this-weekend-jan-20-22/",
+    "date": "2024-01-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "2023 North Carolina Soybean Yield Contest Results",
     "url": "https://soybeans.ces.ncsu.edu/news/2023-north-carolina-soybean-yield-contest-results/",
     "date": "2024-01-12",
@@ -2113,6 +3220,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Image not available2024 Winter Cotton Meetings, & 2024 NC Commodities Conference",
+    "url": "https://cotton.ces.ncsu.edu/news/2024-winter-cotton-meetings-2024-nc-commodities-conference/",
+    "date": "2024-01-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Image not available2024 NC State University Tobacco Short Course Applications Available",
@@ -2142,6 +3258,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availablePreliminary Cotton OVT Yields Results",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-cotton-ovt-yields-results/",
+    "date": "2023-12-16",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Seeking Nominations for Soybean Agent of the Year by 1/1/24",
     "url": "https://soybeans.ces.ncsu.edu/news/seeking-nominations-for-soybean-agent-of-the-year-by-1-1-24/",
     "date": "2023-12-09",
@@ -2149,6 +3274,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Image not availableFiber Quality Results for the 2023 NC on-Farm Cotton Variety Evaluation Program (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/fiber-quality-results-for-the-2023-nc-on-farm-cotton-variety-evaluation-program/",
+    "date": "2023-12-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableYield Results for the 2023 NC on-Farm Cotton Variety Evaluation Program (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/yield-results-for-the-2023-nc-on-farm-cotton-variety-evaluation-program-collins-edmisten/",
+    "date": "2023-12-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "New Resource Available- Stink Bug Scouting Guide for Field Corn in the Southeastern US",
@@ -2169,6 +3312,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "Non-Bt Hybrid Performance in the 2023 OVT",
+    "url": "https://corn.ces.ncsu.edu/news/non-bt-hybrid-performance-in-the-2023-ovt/",
+    "date": "2023-11-16",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "How Hedging Can Help Farmers Reduce Loss From Low Prices",
     "url": "https://smallgrains.ces.ncsu.edu/news/how-hedging-can-help-farmers-reduce-loss-from-low-prices/",
     "date": "2023-10-16",
@@ -2187,6 +3339,33 @@
     "color": "#f0a500"
   },
   {
+    "title": "How Hedging Can Help Farmers Reduce Loss From Low Prices",
+    "url": "https://smallgrains.ces.ncsu.edu/news/how-hedging-can-help-farmers-reduce-loss-from-low-prices/",
+    "date": "2023-10-16",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableDefoliation: Week of October 10th",
+    "url": "https://cotton.ces.ncsu.edu/news/defoliation-week-of-october-10/",
+    "date": "2023-10-10",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableConsiderations for Harvest Aid Product Selection (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/considerations-for-harvest-aid-product-selection-collins-edmisten/",
+    "date": "2023-10-04",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Reasons Why You Should Plant Non-Bt Corn",
     "url": "https://corn.ces.ncsu.edu/news/reasons-why-you-should-plant-non-bt-corn/",
     "date": "2023-10-02",
@@ -2194,6 +3373,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Reasons Why You Should Plant Non-Bt Corn",
+    "url": "https://corn.ces.ncsu.edu/news/reasons-why-you-should-plant-non-bt-corn/",
+    "date": "2023-10-02",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "National Extension Specialists Collaborate to Help Soybean Farmers",
@@ -2223,6 +3411,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "What Do We Know About Wheat Buyers in NC?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/what-do-we-know-about-wheat-buyers-in-nc/",
+    "date": "2023-09-26",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Italian Ryegrass Discussion on Weeds AR Wild Podcast S3 Ep19",
     "url": "https://cotton.ces.ncsu.edu/news/italian-ryegrass-discussion-on-weeds-ar-wild-podcast-s3-ep19/",
     "date": "2023-09-22",
@@ -2239,6 +3436,33 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Italian Ryegrass Discussion on Weeds AR Wild Podcast S3 Ep19",
+    "url": "https://cotton.ces.ncsu.edu/news/italian-ryegrass-discussion-on-weeds-ar-wild-podcast-s3-ep19/",
+    "date": "2023-09-22",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Italian Ryegrass Discussion on Weeds AR Wild Podcast S3 Ep19",
+    "url": "https://cotton.ces.ncsu.edu/news/italian-ryegrass-discussion-on-weeds-ar-wild-podcast-s3-ep19/",
+    "date": "2023-09-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableMonitor Maturity, Defoliate Timely and Wisely (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/monitor-maturity-defoliate-timely-and-wisely-collins-edmisten/",
+    "date": "2023-09-17",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Science for Success: Variety Selection",
@@ -2259,6 +3483,33 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableCurrent Crop Status and What Could Happen (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/current-crop-status-and-what-could-happen-collins-edmisten/",
+    "date": "2023-08-25",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "When Is the Latest Date That a Bloom Has a Reasonable Chance of Producing a Harvestable Boll? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/when-is-the-latest-date-that-a-bloom-has-a-reasonable-chance-of-producing-a-harvestable-boll-collins-edmisten/",
+    "date": "2023-08-25",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableFruit Shed: Determine the Cause (Collins, Edmisten, & Reisig)",
+    "url": "https://cotton.ces.ncsu.edu/news/fruit-shed-determine-the-cause-collins-edmisten-reisig/",
+    "date": "2023-08-15",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Grain Marketing: Forward Price Contracts",
     "url": "https://smallgrains.ces.ncsu.edu/news/grain-marketing-forward-price-contracts/",
     "date": "2023-08-09",
@@ -2275,6 +3526,24 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Grain Marketing: Forward Price Contracts",
+    "url": "https://smallgrains.ces.ncsu.edu/news/grain-marketing-forward-price-contracts/",
+    "date": "2023-08-09",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableUPDATED: 2023 NC Cotton Field Day, Thursday, September 14th",
+    "url": "https://cotton.ces.ncsu.edu/news/2023-nc-cotton-field-day-thursday-september-14th/",
+    "date": "2023-08-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Corn Earworm Flight Has Started- Scouting Tips",
@@ -2286,6 +3555,78 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Bollworm Flight Has Started- Scouting Tips",
+    "url": "https://cotton.ces.ncsu.edu/news/bollworm-flight-has-started-scouting-tips/",
+    "date": "2023-07-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Current PGR and Irrigation Considerations (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/current-pgr-and-irrigation-considerations-collins-edmisten/",
+    "date": "2023-07-17",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Early and Mid-Season Insecticide Recommendations for Tarnished Plant Bug",
+    "url": "https://cotton.ces.ncsu.edu/news/early-and-mid-season-insecticide-recommendations-for-tarnished-plant-bug/",
+    "date": "2023-07-12",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Planning for Tarnished Plant Bug in 2023",
+    "url": "https://cotton.ces.ncsu.edu/news/planning-for-tarnished-plant-bug-in-2023/",
+    "date": "2023-06-29",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "PGRs?...Why Would We Talk About That Now? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/pgrs-why-would-we-talk-about-that-now-collins-edmisten/",
+    "date": "2023-06-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "A Reasonable Expectation for Acephate (Orthene) Control",
+    "url": "https://cotton.ces.ncsu.edu/news/a-reasonable-expectation-for-acephate-orthene-control/",
+    "date": "2023-06-12",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "When Will This Cotton Start Growing? (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/when-will-this-cotton-start-growing-collins-edmisten/",
+    "date": "2023-06-05",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableOrthene Resistance Confirmed for Thrips in Cotton: A Suggested Plan Forward",
+    "url": "https://cotton.ces.ncsu.edu/news/orthene-resistance-confirmed-for-thrips-in-cotton-a-suggested-plan-forward/",
+    "date": "2023-06-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Introducing Beans Gone Wild!",
     "url": "https://soybeans.ces.ncsu.edu/news/introducing-beans-gone-wild/",
     "date": "2023-06-01",
@@ -2293,6 +3634,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Check Seedlings for Thrips Insecticide Efficacy",
+    "url": "https://cotton.ces.ncsu.edu/news/check-seedlings-for-thrips-insecticide-efficacy/",
+    "date": "2023-05-30",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Cotton Planting Conditions May 16, 2023",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-16-2023/",
+    "date": "2023-05-16",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Plant Full-Season Soybeans by Mid-May to Prevent Yield Loss",
@@ -2313,6 +3672,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Cotton Planting Conditions May 8, 2023",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-8-2023/",
+    "date": "2023-05-08",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Science for Success: Replanting Decisions",
     "url": "https://soybeans.ces.ncsu.edu/news/science-for-success-replanting-decisions/",
     "date": "2023-05-02",
@@ -2331,6 +3699,60 @@
     "color": "#f0a500"
   },
   {
+    "title": "Cotton Planting Conditions May 1, 2023",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-1-2023/",
+    "date": "2023-05-01",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "How to Nail 2023 Thrips Management (Reisig, Huseth)",
+    "url": "https://cotton.ces.ncsu.edu/news/how-to-nail-2023-thrips-management-reisig-huseth/",
+    "date": "2023-04-29",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Excluding Boll Weevil Saves North Carolina Cotton Producers Money",
+    "url": "https://cotton.ces.ncsu.edu/news/excluding-boll-weevil-saves-north-carolina-cotton-producers-money/",
+    "date": "2023-04-28",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Cotton Planting Conditions April 24, 2023",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-planting-conditions-may-24-2023/",
+    "date": "2023-04-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "AWIS Weather Update: Chances of Frost",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-update-chances-of-frost/",
+    "date": "2023-04-22",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableInterpreting Warm and Cool Germ of Cotton Seed and Understanding How Each Should Be Used (Collins, Edmisten, & Foote)",
+    "url": "https://cotton.ces.ncsu.edu/news/interpreting-warm-and-cool-germ-of-cotton-seed-and-understanding-how-each-should-be-used-collins-edmisten-foote/",
+    "date": "2023-04-21",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Precision Planting Versus Drilling Soybeans in North Carolina",
     "url": "https://soybeans.ces.ncsu.edu/news/precision-planting-versus-drilling-soybeans-in-north-carolina/",
     "date": "2023-04-14",
@@ -2338,6 +3760,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "AWIS Weather Report: Risk for Frost Increased This Weekend Into Monday",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-report-risk-for-frost-increased-this-weekend-into-monday/",
+    "date": "2023-04-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Bortytis Gray Mold Resources",
+    "url": "https://strawberries.ces.ncsu.edu/news/bortytis-gray-mold-resources/",
+    "date": "2023-04-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Soybean On-Farm Trial (OFT) Program",
@@ -2356,6 +3796,24 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Image not availableUPDATE April 3rd, 2023 - Seed Quality: It's Crunch Time Now! (Collins, Edmisten, & Foote)",
+    "url": "https://cotton.ces.ncsu.edu/news/update-april-3rd-2023-seed-quality-its-crunch-time-now-collins-edmisten-foote/",
+    "date": "2023-04-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Chocolate Chip Cookies Made With NC Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/chocolate-chip-cookies-made-with-nc-wheat/",
+    "date": "2023-04-03",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Data-Driven Recommendations for NC Soybean Planting Date",
@@ -2385,6 +3843,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "AWIS Forst Advisroy: High Chances for Frost Coming Week",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-forst-advisroy-high-chances-for-frost-coming-week/",
+    "date": "2023-03-25",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Replanting Decisions - Webinar Recording Available",
     "url": "https://soybeans.ces.ncsu.edu/news/replanting-decisions-webinar-recording-available/",
     "date": "2023-03-22",
@@ -2403,6 +3870,69 @@
     "color": "#f0a500"
   },
   {
+    "title": "Replanting Decisions - Webinar Recording Available",
+    "url": "https://soybeans.ces.ncsu.edu/news/replanting-decisions-webinar-recording-available/",
+    "date": "2023-03-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Frost/Freeze Advisory: Mid 20s Early Next Week.",
+    "url": "https://strawberries.ces.ncsu.edu/news/frost-freeze-advisory-mid-20s-early-next-week/",
+    "date": "2023-03-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableUPDATE March 15th, 2023 - Seed Quality: Start Preparing for Planting NOW ! (Collins, Edmisten, & Foote)",
+    "url": "https://cotton.ces.ncsu.edu/news/update-march-15th-2023-seed-quality-start-planning-now-collins-edmisten-foote/",
+    "date": "2023-03-15",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Weather Advisory: Multiple Frost Events Ahead",
+    "url": "https://strawberries.ces.ncsu.edu/news/weather-advisory-multiple-frost-events-ahead/",
+    "date": "2023-03-10",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Should We Be Concerned About Cereal Leaf Beetle in 2023?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/should-we-be-concerned-about-cereal-leaf-beetle-in-2023/",
+    "date": "2023-03-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "AWIS Weather Forecast: Widespread Frost Mid-Week",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-widespread-frost-mid-week/",
+    "date": "2023-03-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableNCDA Strawberry Fertilizer and Tissue Sampling Recommendations",
+    "url": "https://strawberries.ces.ncsu.edu/news/ncda-strawberry-fertilizer-and-tissue-sampling-recommendations/",
+    "date": "2023-03-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Keys to Early Season Soybean Success Webinar Series - Recordings Available",
     "url": "https://soybeans.ces.ncsu.edu/news/keys-to-early-season-soybean-success-webinar-series/",
     "date": "2023-03-03",
@@ -2419,6 +3949,33 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Keys to Early Season Soybean Success Webinar Series - Recordings Available",
+    "url": "https://soybeans.ces.ncsu.edu/news/keys-to-early-season-soybean-success-webinar-series/",
+    "date": "2023-03-03",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "AWIS Weather Advisory: Frost Days Ahead in Some Areas",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-frost-days-ahead-in-some-areas/",
+    "date": "2023-03-02",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableSeed Quality: Start Preparing for Planting NOW (Collins, Edmisten, & Foote)",
+    "url": "https://cotton.ces.ncsu.edu/news/seed-quality-start-preparing-for-planting-now-collins-edmisten-foote/",
+    "date": "2023-02-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Image not availableNew Soybean Production Videos Available",
@@ -2430,6 +3987,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "FDA Announces Changes to Harvest and Post-Harvest Ag Water: What Does This Mean for Small Fruit Farms and Packing Houses?",
+    "url": "https://ncfreshproducesafety.ces.ncsu.edu/news/fda-announces-changes-to-harvest-and-post-harvest-ag-water-what-does-this-mean-for-small-fruit-farms-and-packing-houses/",
+    "date": "2023-02-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Science for Success: Planter Technologies",
     "url": "https://soybeans.ces.ncsu.edu/news/science-for-success-planter-technologies/",
     "date": "2023-02-15",
@@ -2437,6 +4003,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Easy Homemade Pizza Recipe With NC Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/easy-homemade-pizza-recipe-with-nc-wheat/",
+    "date": "2023-02-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Why Soybean Loopers Are Frustrating to Control and What We Are Doing About It",
@@ -2448,6 +4023,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availableInsect Management in ThryvOn Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/insect-management-in-thryvon-cotton/",
+    "date": "2023-02-09",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availableFour New Cotton Management Videos Available",
+    "url": "https://cotton.ces.ncsu.edu/news/four-new-cotton-management-videos-available/",
+    "date": "2023-02-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Image not availableTobacco Greenhouse Water Testing",
     "url": "https://tobacco.ces.ncsu.edu/news/tobacco-greenhouse-water-testing/",
     "date": "2023-02-02",
@@ -2457,6 +4050,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCotton OVT Tables With Fiber Quality Data",
+    "url": "https://cotton.ces.ncsu.edu/news/cotton-ovt-tables-with-fiber-quality-data/",
+    "date": "2023-01-23",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not available2023 Winter Cotton Meeting Schedule",
+    "url": "https://cotton.ces.ncsu.edu/news/2023-winter-cotton-meeting-schedule/",
+    "date": "2023-01-23",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "2023 NC County Extension Winter Grain Meeting Schedule",
     "url": "https://soybeans.ces.ncsu.edu/news/2023-nc-county-extension-winter-grain-meeting-schedule/",
     "date": "2023-01-20",
@@ -2464,6 +4075,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Recommendations for Treating Hessian Fly in the Spring",
+    "url": "https://smallgrains.ces.ncsu.edu/news/recommendations-for-treating-hessian-fly-in-the-spring/",
+    "date": "2023-01-19",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "NC Coastal Plain Regional Grain Meeting on 2/10",
@@ -2484,6 +4104,33 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availablePreliminary One, Two and Three-Year Average Lint Yields Across Locations.",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-one-two-and-three-year-average-lint-yields-across-locations/",
+    "date": "2022-12-20",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2022 Christmas Freeze Advisory",
+    "url": "https://strawberries.ces.ncsu.edu/news/2022-christmas-freeze-advisory/",
+    "date": "2022-12-20",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Winter Weather Advisory: Rain, Followed by Freezing Temperatures",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-winter-weather-advisory-rain-followed-by-freezing-temperatures/",
+    "date": "2022-12-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Non-Bt Hybrid Performance in the OVT",
     "url": "https://corn.ces.ncsu.edu/news/non-bt-hybrid-performance-in-the-ovt/",
     "date": "2022-12-14",
@@ -2493,6 +4140,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Fiber Quality Results for the 2022 NC on-Farm Cotton Variety Evaluation Program",
+    "url": "https://cotton.ces.ncsu.edu/news/fiber-quality-results-for-the-2022-nc-on-farm-cotton-variety-evaluation-program/",
+    "date": "2022-12-11",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availablePreliminary Cotton OVT Results",
+    "url": "https://cotton.ces.ncsu.edu/news/preliminary-cotton-ovt-results-2022/",
+    "date": "2022-12-08",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "RMA Changes Earliest Planting Date Coverage to 4/1 for NC Soybeans",
     "url": "https://soybeans.ces.ncsu.edu/news/rma-changes-earliest-planting-date-coverage-to-4-1-for-nc-soybeans/",
     "date": "2022-12-05",
@@ -2500,6 +4165,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Yield Results for the 2022 NC on-Farm Cotton Variety Evaluation Program (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/yield-results-for-the-2022-nc-on-farm-cotton-variety-evaluation-program-collins-edmisten/",
+    "date": "2022-12-03",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Why You Should Plant Non-Bt Corn Refuge in the Southeastern U.S.",
@@ -2547,6 +4221,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Time to Cover a Late Planting: Colder Temperatures Ahead",
+    "url": "https://strawberries.ces.ncsu.edu/news/time-to-cover-a-late-planting-colder-temperatures-ahead/",
+    "date": "2022-11-09",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Precision Planted Versus Drilled Soybeans",
     "url": "https://soybeans.ces.ncsu.edu/news/precision-planted-versus-drilled-soybeans/",
     "date": "2022-11-08",
@@ -2574,6 +4257,60 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Early Season Weather Advisory: Cold Temperatures Ahead",
+    "url": "https://strawberries.ces.ncsu.edu/news/early-season-weather-advisory-cold-temperatures-ahead/",
+    "date": "2022-10-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availablePreparation for a Potential Frost (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparation-for-a-potential-frost-collins-edmisten/",
+    "date": "2022-10-13",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Hurricane Ian Aftermath (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/hurricane-ian-aftermath-collins-edmisten/",
+    "date": "2022-09-30",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Storm Weather Advisory: Tropical Storm IAN: Potential Flooding",
+    "url": "https://strawberries.ces.ncsu.edu/news/storm-weather-advisory-tropical-storm-ian-potential-flooding/",
+    "date": "2022-09-29",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Preparations for Hurricane Ian (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/preparations-for-hurricane-ian-collins-edmisten/",
+    "date": "2022-09-24",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Image not availablePay Attention to Weather When Making Defoliation Decisions (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/pay-attention-to-weather-when-making-defoliation-decisions-collins-edmisten/",
+    "date": "2022-09-22",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "Piedmont Soybean Field Day",
     "url": "https://soybeans.ces.ncsu.edu/news/piedmont-soybean-field-day-2022/",
     "date": "2022-09-15",
@@ -2581,6 +4318,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Image not availableEarly Season Defoliation Strategies for 2022 (Collins & Edmisten)",
+    "url": "https://cotton.ces.ncsu.edu/news/early-season-defoliation-strategies-for-2022-collins-edmisten/",
+    "date": "2022-09-08",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Easy Biscuit Recipe With NC Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/easy-biscuit-recipe-with-nc-wheat/",
+    "date": "2022-08-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Should You Control Corn Earworm Differently in Soybean With Indeterminate and Determinate Growth Habits?",
@@ -2601,6 +4356,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "How Can Farmers Export Grain Out of NC?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/how-can-farmers-export-grain-out-of-nc/",
+    "date": "2022-07-19",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Corn Earworm Flight Is Beginning - Scout Soybeans",
     "url": "https://soybeans.ces.ncsu.edu/news/corn-earworm-flight-is-beginning-scout-soybeans/",
     "date": "2022-07-18",
@@ -2610,6 +4374,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Important Alert for Bollgard 3, TwinLink Plus and WideStrike 3 Cotton as Bollworm / Corn Earworm Flight Begins",
+    "url": "https://cotton.ces.ncsu.edu/news/important-alert-for-bollgard-3-twinlink-plus-and-widestrike-3-cotton-as-bollworm-corn-earworm-flight-begins/",
+    "date": "2022-07-18",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "4-Bract Squares Observed (Collins, Edmisten & Reisig)",
+    "url": "https://cotton.ces.ncsu.edu/news/4-bract-squares-observed-collins-edmisten-reisig/",
+    "date": "2022-07-09",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
     "title": "The Impact of Insecticides on Soybean at Flowering on Beneficial Insects",
     "url": "https://soybeans.ces.ncsu.edu/news/the-impact-of-insecticides-on-soybean-at-flowering-on-beneficial-insects/",
     "date": "2022-07-07",
@@ -2617,6 +4399,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Spider Mites Are a Problem in Cotton",
+    "url": "https://cotton.ces.ncsu.edu/news/spider-mites-are-a-problem-in-cotton/",
+    "date": "2022-07-07",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Impacts of Plant Bug and Bollworm Insecticides on Natural Enemies",
+    "url": "https://cotton.ces.ncsu.edu/news/impacts-of-plant-bug-and-bollworm-insecticides-on-natural-enemies/",
+    "date": "2022-07-06",
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
   },
   {
     "title": "Corn Earworm Populations Are Heavy in Corn. What Does That Mean for Cotton and Soybean?",
@@ -2646,6 +4446,33 @@
     "color": "#d4a72c"
   },
   {
+    "title": "AWIS Weather Advisory: Rain and Frost Risk for Mid-Atlantic, Virginia and Parts of NC",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-rain-and-frost-risk-for-mid-atlantic-virginia-and-parts-of-nc/",
+    "date": "2022-04-26",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Stripe Rust Alert April 2022",
+    "url": "https://smallgrains.ces.ncsu.edu/news/stripe-rust-alert-april-2022/",
+    "date": "2022-04-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "AWIS Weather Advisory: Rain and Frost Coming Up Again",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-rain-and-frost-coming-up-again/",
+    "date": "2022-04-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Early Season Considerations for NC Soybean Production",
     "url": "https://soybeans.ces.ncsu.edu/news/early-season-considerations-for-nc-soybean-production/",
     "date": "2022-04-15",
@@ -2653,6 +4480,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Botrytis Year: Resources, Testing and Other Observations",
+    "url": "https://strawberries.ces.ncsu.edu/news/botrytis-year-resources-testing-and-other-observations/",
+    "date": "2022-04-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Weed Control in Non-Traited Row Crops",
@@ -2664,6 +4500,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "AWIS Weather Advisory (4/7): Watch Out for More Frost This Weekend",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-4-7-watch-out-for-more-frost-this-weekend/",
+    "date": "2022-04-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Update: Up and Down Temperatures the Next Weeks",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-update-up-and-down-temperatures-the-next-weeks/",
+    "date": "2022-04-01",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "What Is the Best Soybean Maturity Group to Plant Behind Wheat?",
     "url": "https://soybeans.ces.ncsu.edu/news/what-is-the-best-soybean-maturity-group-to-plant-behind-wheat/",
     "date": "2022-03-28",
@@ -2671,6 +4525,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "AWIS Weather Advisory: Frost Late Weekend, Early Next Week",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-frost-late-weekend-early-next-week/",
+    "date": "2022-03-24",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Advisory: Protect Plants This Weekend!",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-protect-plants-this-weekend/",
+    "date": "2022-03-09",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Research Update: Foliar Fungicide Impact on NC Soybean Yield and Seed Quality",
@@ -2698,6 +4570,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "AWIS Weather Advisory: Not as Cold as Initially Predicted, but Stay Alert",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-not-as-cold-as-initially-predicted-but-stay-alert/",
+    "date": "2022-02-24",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "What is the Value of a Fungicide Seed Treatment in NC Soybean Production?",
@@ -2736,6 +4617,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "February Fundraiser",
+    "url": "https://strawberries.ces.ncsu.edu/news/february-fundraiser/",
+    "date": "2022-02-08",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "2021 North Carolina Soybean Yield Contest Results",
     "url": "https://soybeans.ces.ncsu.edu/news/2021-north-carolina-soybean-yield-contest-results/",
     "date": "2022-02-04",
@@ -2743,6 +4633,60 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Weather Warning: 20s and 10s Expected This Weekend",
+    "url": "https://strawberries.ces.ncsu.edu/news/weather-warning-20s-and-10s-expected-this-weekend/",
+    "date": "2022-01-27",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Advisory: Act Now: Rain on Saturday, Followed by a Very Cold Night!",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-act-now-rain-on-saturday-followed-by-a-very-cold-night/",
+    "date": "2022-01-20",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Advisory: What to Do With All the Snow?",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-what-to-do-with-all-the-snow/",
+    "date": "2022-01-14",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availablePrevious Weather Forecasts",
+    "url": "https://strawberries.ces.ncsu.edu/news/previous-weather-forecasts/",
+    "date": "2022-01-14",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Forecast: Cold Weather Ahead",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-cold-weather-ahead/",
+    "date": "2022-01-08",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Extreme Warm Temperatures and What to Do?",
+    "url": "https://strawberries.ces.ncsu.edu/news/extreme-warm-temperatures-and-what-to-do/",
+    "date": "2022-01-01",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Effect of Xyway LFR on Corn in 2021",
@@ -2898,6 +4842,24 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availableStrawberry Breeding Trials Yield Data 2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/strawberry-breeding-trials-yield-data-2021/",
+    "date": "2021-06-23",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not available2021 Western NC Strawberry Pre-Plant Meeting July 26",
+    "url": "https://strawberries.ces.ncsu.edu/news/2021-western-nc-strawberry-pre-plant-meeting-july-26/",
+    "date": "2021-06-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Mid-Season Soybean Management Webinar 7/1/21",
     "url": "https://soybeans.ces.ncsu.edu/news/mid-season-soybean-management-webinar-7-1-21/",
     "date": "2021-06-13",
@@ -2934,6 +4896,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availableAWIS 14-Day Weather Discussion",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-14-day-weather-discussion/",
+    "date": "2021-04-24",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "PFP21: Soybean Preemergence Herbicide Decisions",
     "url": "https://soybeans.ces.ncsu.edu/news/pfp21-soybean-preemergence-herbicide-decisions/",
     "date": "2021-04-22",
@@ -2950,6 +4921,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "AWIS Weather Forecast: Frost Alert Thursday / Friday, April 22-23",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-frost-alert-thursday-friday-apr22-23/",
+    "date": "2021-04-19",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "PFP21: Soybean Cyst Nematode and HG Types – What Are They and How Can They Help You Manage SCN?",
@@ -3006,6 +4986,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "AWIS Weather Forecast: Widespread Freeze!",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-widespread-freeze/",
+    "date": "2021-03-31",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "PFP21: Soybean Seeding Rate",
     "url": "https://soybeans.ces.ncsu.edu/news/pfp21-soybean-seeding-rate/",
     "date": "2021-03-30",
@@ -3013,6 +5002,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Scout for Cereal Leaf Beetle in Wheat Soon",
+    "url": "https://smallgrains.ces.ncsu.edu/news/scout-for-cereal-leaf-beetle-in-wheat-soon/",
+    "date": "2021-03-29",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "AWIS Weather Forecast 3/25 - 3/30: Wind, Heat and a Chance for Frost",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-3-25-3-30-wind-heat-and-a-chance-for-frost/",
+    "date": "2021-03-25",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Early Season Soybean Management Webinar 4/1/21",
@@ -3051,6 +5058,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableCOVID-19 Famers Update 3/21/2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-famers-update-3-21-2021/",
+    "date": "2021-03-21",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "AWIS Weather Advisory 3/18/2021: Storm, Rain and a Chance for Frost",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-advisory-3-18-2021-storm-rain-and-a-chance-for-frost/",
+    "date": "2021-03-18",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "PFP21: Soybean Seed Treatments",
     "url": "https://soybeans.ces.ncsu.edu/news/pfp21-soybean-seed-treatments/",
     "date": "2021-03-16",
@@ -3069,6 +5094,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "AWIS Weather Forecast: One More Night of Frost",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-weather-forecast-one-more-night-of-frost/",
+    "date": "2021-03-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "PFP21: Soybean Maturity Group",
     "url": "https://soybeans.ces.ncsu.edu/news/pfp21-soybean-maturity-group/",
     "date": "2021-03-09",
@@ -3076,6 +5110,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "AWIS Frost Protection Weather Advisories 2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/awis-frost-protection-weather-advisories-2021/",
+    "date": "2021-03-08",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Science for Success: National Soybean Planting Considerations Webinar Available",
@@ -3096,6 +5139,15 @@
     "color": "#d4a72c"
   },
   {
+    "title": "Image not availableFrost/Freeze Webinar February 15, 2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/frost-freeze-webinar-feb-15-2021/",
+    "date": "2021-02-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "National Webinar 2/19: Soybean Planting Considerations",
     "url": "https://soybeans.ces.ncsu.edu/news/national-webinar-2-19-soybean-planting-considerations/",
     "date": "2021-02-11",
@@ -3114,6 +5166,15 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableFarmers Update 2/11/2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/farmers-update-2-11-2021/",
+    "date": "2021-02-11",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Webinar RECORDING: Shifting From Later to Earlier Maturing Soybean Varieties",
     "url": "https://soybeans.ces.ncsu.edu/news/webinar-recording-shifting-from-later-to-earlier-maturing-soybean-varieties/",
     "date": "2021-02-10",
@@ -3121,6 +5182,15 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Webinar Recording: Wheat Disease, Insect and Crop Management Updates",
+    "url": "https://smallgrains.ces.ncsu.edu/news/webinar-recording-wheat-disease-insect-and-crop-management-updates/",
+    "date": "2021-02-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Steward Insecticide Registered in Tobacco",
@@ -3141,6 +5211,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableSoutheastern Strawberry School Webinar Series 2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/southeastern-strawberry-school-webinar-series-2021/",
+    "date": "2021-02-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableFarmers COVID-19 Update 1/28/2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/farmers-covid-19-update-1-28-2021/",
+    "date": "2021-01-28",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Webinar: Shifting From Later to Earlier Maturing Soybean Varieties",
     "url": "https://soybeans.ces.ncsu.edu/news/webinar-shifting-from-later-to-earlier-maturing-soybean-varieties/",
     "date": "2021-01-26",
@@ -3148,6 +5236,24 @@
     "crop_name": "Soybean",
     "emoji": "🫘",
     "color": "#d4a72c"
+  },
+  {
+    "title": "Impacts of High GDD Accumulation in November of 2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/impacts-of-high-gdd-accumulation-in-november-of-2020/",
+    "date": "2021-01-26",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableDo I Need to Add Sulfur When Top-Dressing Wheat?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/do-i-need-to-add-sulfur-when-top-dressing-wheat/",
+    "date": "2021-01-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "How Does Soil Health Impact Yield?",
@@ -3168,13 +5274,40 @@
     "color": "#f0a500"
   },
   {
-    "title": "2020 NC Soybean Yield Contest Results Announced",
-    "url": "https://soybeans.ces.ncsu.edu/news/2020-nc-soybean-yield-contest-results-announced/",
+    "title": "How Much Nitrogen Should I Use at Top-Dressing?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/how-much-nitrogen-should-i-use-at-top-dressing/",
+    "date": "2021-01-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 1/11/2021",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-1-11-2021/",
     "date": "2021-01-11",
-    "crop": "soybean",
-    "crop_name": "Soybean",
-    "emoji": "🫘",
-    "color": "#d4a72c"
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19-Farming Update: What We Know About the $900B Relief Bill",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farming-update-what-we-know-about-the-900bn-relief-bill/",
+    "date": "2020-12-24",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Post-Emergence Control of Italian Ryegrass",
+    "url": "https://smallgrains.ces.ncsu.edu/news/post-emergence-control-of-italian-ryegrass/",
+    "date": "2020-12-16",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "2020 Flue-Cured Tobacco OVT Results - Now Available!",
@@ -3195,6 +5328,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Farmers Update 12/10/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-12-10-2020/",
+    "date": "2020-12-10",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Image not available2020 Tobacco Situation & Outlook",
     "url": "https://tobacco.ces.ncsu.edu/news/2020-tobacco-situation-outlook/",
     "date": "2020-12-04",
@@ -3213,6 +5355,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableVideo: Post-Emergent Italian Ryegrass Control",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-post-emergent-italian-ryegrass-control/",
+    "date": "2020-11-20",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Webinar Recording: Wheat Marketing and Weed Control",
+    "url": "https://smallgrains.ces.ncsu.edu/news/webinar-recording-wheat-marketing-and-weed-control/",
+    "date": "2020-11-17",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Image not available2021 Tobacco Winter Meetings Go Virtual!!",
     "url": "https://tobacco.ces.ncsu.edu/news/2021-tobacco-winter-meetings-go-virtual/",
     "date": "2020-11-12",
@@ -3220,6 +5380,51 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Webinar: Wheat Disease, Insect and Crop Management Updates",
+    "url": "https://smallgrains.ces.ncsu.edu/news/webinar-wheat-disease-insect-and-crop-management-updates/",
+    "date": "2020-11-06",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 10/26/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-10-26-2020/",
+    "date": "2020-10-26",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 10/13/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-10-13-2020/",
+    "date": "2020-10-13",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableWebinar Recording: Pre-Plant Strategies for Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/webinar-recording-pre-plant-strategies-for-wheat/",
+    "date": "2020-10-09",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Webinar: Wheat Marketing & Weed Control",
+    "url": "https://smallgrains.ces.ncsu.edu/news/webinar-wheat-marketing-weed-control/",
+    "date": "2020-10-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Non-Bt Hybrid Yield Trial 2020 Results and Why You Should Plant Non-Bt Corn as Resistance Insurance",
@@ -3231,6 +5436,78 @@
     "color": "#f0a500"
   },
   {
+    "title": "Video: Optimal Wheat Seeding Rates",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-optimal-wheat-seeding-rates/",
+    "date": "2020-10-02",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farming Update 9/25/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farming-update-9-25-2020/",
+    "date": "2020-09-25",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Video: Pre-Emergent Italian Ryegrass Control",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-pre-emergent-italian-ryegrass-control/",
+    "date": "2020-09-24",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Video: Early Soil Fertility Management in Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-early-soil-fertility-management-in-wheat/",
+    "date": "2020-09-21",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableA New Disease Is Emerging: Neopestalotiopsis Fruit Rot",
+    "url": "https://strawberries.ces.ncsu.edu/news/a-new-disease-is-emerging-neopestalotiopsis-fruit-rot/",
+    "date": "2020-09-18",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Video: Applying Poultry Litter to Small Grains",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-applying-poultry-litter-to-small-grains/",
+    "date": "2020-09-14",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableFarmers Update 9/13/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/farmers-update-9-13-2020/",
+    "date": "2020-09-13",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Video: Do You Know How to “Control the Spill” of Your Drill?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-do-you-know-how-to-control-the-spill-of-your-drill/",
+    "date": "2020-09-08",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Texas Panicum Management in Corn",
     "url": "https://corn.ces.ncsu.edu/news/texas-panicum-management-in-corn/",
     "date": "2020-09-04",
@@ -3238,6 +5515,51 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Image not availableCOVID-19 Update 9/3/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-update-9-3-2020/",
+    "date": "2020-09-03",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableStrawberry Pre-Plant Information",
+    "url": "https://strawberries.ces.ncsu.edu/news/strawberry-pre-plant-information/",
+    "date": "2020-09-02",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Pre-Plant Strategies for Wheat - Webinar",
+    "url": "https://smallgrains.ces.ncsu.edu/news/pre-plant-strategies-for-wheat-webinar/",
+    "date": "2020-08-31",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "New Wheat Variety Selection Tool",
+    "url": "https://smallgrains.ces.ncsu.edu/news/new-wheat-variety-selection-tool/",
+    "date": "2020-08-21",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Video: Small Grain Variety Selection",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-small-grain-variety-selection/",
+    "date": "2020-08-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Image not availableFrom the Field - Agronomy Notes: Vol. 4, Num. 9",
@@ -3249,6 +5571,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableTropical Storm Isaias",
+    "url": "https://strawberries.ces.ncsu.edu/news/tropical-storm-isaias-2/",
+    "date": "2020-08-03",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "From the Field - Agronomy Notes: Vol. 4, Num. 8",
     "url": "https://tobacco.ces.ncsu.edu/news/from-the-field-agronomy-notes-vol-4-num-8/",
     "date": "2020-08-01",
@@ -3256,6 +5587,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Video: Sugarcane Aphid Control in Sorghum",
+    "url": "https://smallgrains.ces.ncsu.edu/news/video-sugarcane-aphid-control-in-sorghum/",
+    "date": "2020-07-31",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Image not available2020 Virtual Tobacco Field Day",
@@ -3339,6 +5679,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "2020 Breeding Trial Data Now Online",
+    "url": "https://strawberries.ces.ncsu.edu/news/replicated-breeding-trial-data-now-online/",
+    "date": "2020-06-09",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 06/05/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-06-05-2020/",
+    "date": "2020-06-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – June 2, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-june-2-2020/",
     "date": "2020-06-02",
@@ -3346,6 +5704,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableFirst Peak: How Did COVID-19 Impact NC Agriculture in April 2020?",
+    "url": "https://strawberries.ces.ncsu.edu/news/first-peak-how-did-covid-19-impact-nc-agriculture-in-may-2020/",
+    "date": "2020-06-02",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Thrips Flight and TSWV Risk Assessment Report – May 26, 2020",
@@ -3366,6 +5733,24 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableTiming Wheat Harvest for Top Quality",
+    "url": "https://smallgrains.ces.ncsu.edu/news/timing-wheat-harvest-for-top-quality/",
+    "date": "2020-05-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 5/21/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-5-21-2020/",
+    "date": "2020-05-21",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – May 18, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-may-18-2020/",
     "date": "2020-05-18",
@@ -3373,6 +5758,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 05/15/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-05-15-2020/",
+    "date": "2020-05-15",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "From the Field - Agronomy Notes: Vol. 4, Num. 5",
@@ -3384,6 +5778,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Farmers Update 05/12/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-05-12-2020/",
+    "date": "2020-05-12",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Virtual Strawberry Field Day May 2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/virtual-strawberry-field-day-may-2020/",
+    "date": "2020-05-12",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – May 11, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-may-11-2020/",
     "date": "2020-05-11",
@@ -3391,6 +5803,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 05/07/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-05-07-2020/",
+    "date": "2020-05-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "From the Field - Agronomy Notes: Vol. 4, Num. 4",
@@ -3402,6 +5823,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Farmers Update 05/05/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-05-05-2020/",
+    "date": "2020-05-05",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – May 4, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-may-4-2020/",
     "date": "2020-05-04",
@@ -3409,6 +5839,24 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Stripe Rust Alert May 1st, 2020",
+    "url": "https://smallgrains.ces.ncsu.edu/news/stripe-rust-alert-may-1st-2020/",
+    "date": "2020-05-01",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 05/01/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-05-01-2020/",
+    "date": "2020-05-01",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Scout Stink Bugs in Seedling Corn",
@@ -3429,6 +5877,24 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Farmers Update 04/28/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-04-28-2020/",
+    "date": "2020-04-28",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 04/23/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-04-23-2020/",
+    "date": "2020-04-23",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – April 22, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-april-22-2020/",
     "date": "2020-04-22",
@@ -3436,6 +5902,78 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 04/20/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-04-20-2020/",
+    "date": "2020-04-20",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Low Head Scab Risk Throughout North Carolina",
+    "url": "https://smallgrains.ces.ncsu.edu/news/fhb-risk-in-north-carolina-is-currently-low/",
+    "date": "2020-04-17",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Cereal Leaf Beetle in Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/cereal-leaf-beetle-in-wheat/",
+    "date": "2020-04-17",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 04/17/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-04-17-2020/",
+    "date": "2020-04-17",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 4/16/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-4-16-2020/",
+    "date": "2020-04-16",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Farmers Update 04/14/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-farmers-update-04-14-2020/",
+    "date": "2020-04-14",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Scouting for Freeze Injury",
+    "url": "https://smallgrains.ces.ncsu.edu/news/scouting-for-freeze-injury/",
+    "date": "2020-04-11",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 04/10/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-04-10-2020/",
+    "date": "2020-04-10",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "From the Field - Agronomy Notes: Vol. 4, Num. 3",
@@ -3447,6 +5985,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 04/09/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-04-09-2020/",
+    "date": "2020-04-09",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – April 7, 2020",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-april-7-2020/",
     "date": "2020-04-07",
@@ -3456,6 +6003,60 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 04/07/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-04-07-2020/",
+    "date": "2020-04-07",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 04/06/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-04-06-2020/",
+    "date": "2020-04-06",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 04/03/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-04-03-2020/",
+    "date": "2020-04-03",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 3/31/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-3-31-2020/",
+    "date": "2020-03-31",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID-19 Daily Farmers Update 3/30/2019",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-3-30-2019/",
+    "date": "2020-03-30",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "COVID-19 Daily Farmers and Strawberry Update 3/29/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-and-strawberry-update-3-29-2020/",
+    "date": "2020-03-29",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
     "title": "From the Field - Agronomy Notes: Vol. 4., Num. 2",
     "url": "https://tobacco.ces.ncsu.edu/news/from-the-field-agronomy-notes-vol-4-num-2/",
     "date": "2020-03-27",
@@ -3463,6 +6064,24 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableCOVID 19 Daily Farmers and Strawberry Update 3/27/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-and-strawberry-update-3-27-2020/",
+    "date": "2020-03-27",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "Image not availableCOVID 19 Daily Farmers Update 3/26/2020",
+    "url": "https://strawberries.ces.ncsu.edu/news/covid-19-daily-farmers-update-3-26-2020/",
+    "date": "2020-03-26",
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   },
   {
     "title": "Tobacco Greenhouse Production Poster",
@@ -3519,6 +6138,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableWheat Quality for Commercial Entries 2018-19",
+    "url": "https://smallgrains.ces.ncsu.edu/news/wheat-quality-for-commercial-entries-2018-19/",
+    "date": "2019-08-16",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Scout Before Spraying Stink Bugs in Corn",
     "url": "https://corn.ces.ncsu.edu/news/scout-before-spraying-stink-bugs-in-corn/",
     "date": "2019-06-03",
@@ -3526,6 +6154,15 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "True Armyworm in Northeastern NC Wheat- Time to Scout",
+    "url": "https://smallgrains.ces.ncsu.edu/news/true-armyworm-in-northeastern-nc-wheat-time-to-scout-3/",
+    "date": "2019-05-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Image not availableThrips Flight and TSWV Risk Update--May 7, 2019",
@@ -3537,6 +6174,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableFusarium Head Blight Risk Update-May 1, 2019",
+    "url": "https://smallgrains.ces.ncsu.edu/news/fusarium-head-blight-risk-update-may-1-2019/",
+    "date": "2019-05-01",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Image not availableThrips Flight and TSWV Risk Assessment Report – 23 April 2019",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-23-april-2019/",
     "date": "2019-04-23",
@@ -3544,6 +6190,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableFusarium Head Blight Risk Update-April 22, 2019",
+    "url": "https://smallgrains.ces.ncsu.edu/news/fusarium-head-blight-risk-april-22-2019/",
+    "date": "2019-04-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Thrips Flight and TSWV Risk Assessment Report – 16 April 2019",
@@ -3555,6 +6210,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableFusarium Head Blight Risk Update, April 15, 2019",
+    "url": "https://smallgrains.ces.ncsu.edu/news/fusarium-head-blight-risk-update-april-15-2019/",
+    "date": "2019-04-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "From the Field - Agronomy Notes: Vol. 3, Num. 1",
     "url": "https://tobacco.ces.ncsu.edu/news/from-the-field-agronomy-notes-vol-3-num-1/",
     "date": "2019-04-12",
@@ -3562,6 +6226,24 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableFusarium Head Blight Risk Update, April 10, 2019",
+    "url": "https://smallgrains.ces.ncsu.edu/news/fusarium-head-blight-risk-update-4-10-19/",
+    "date": "2019-04-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Aphids in Wheat",
+    "url": "https://smallgrains.ces.ncsu.edu/news/aphids-in-wheat/",
+    "date": "2019-03-26",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Image not available2015 Flue-Cured Tobacco Survey: Plant Disease Survey Data",
@@ -3580,6 +6262,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableUpcoming Webinar: Management of Fusarium Head Blight",
+    "url": "https://smallgrains.ces.ncsu.edu/news/upcoming-webinar-management-of-fusarium-head-blight/",
+    "date": "2019-01-30",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Image not available2019 NC State Tobacco Short Course",
@@ -3753,6 +6444,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "True Armyworm in Northeastern NC Wheat- Time to Scout",
+    "url": "https://smallgrains.ces.ncsu.edu/news/true-armyworm-in-northeastern-nc-wheat-time-to-scout/",
+    "date": "2018-05-16",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Thrips Flight and TSWV Risk Assessment Report – May 14, 2018",
     "url": "https://tobacco.ces.ncsu.edu/news/thrips-flight-and-tswv-risk-assessment-report-may-14-2018/",
     "date": "2018-05-14",
@@ -3814,6 +6514,15 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "Image not availableWheat Scab Update-April 23, 2018",
+    "url": "https://plantpathology.ces.ncsu.edu/news/wheat-scab-update-april-23-2018/",
+    "date": "2018-04-23",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Thrips Flight and TSWV Risk Assessment Report – 19 April 2018",
@@ -3897,6 +6606,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Hessian Fly Adults Are Active- Should You Spray?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/hessian-fly-adults-are-active-should-you-spray-2/",
+    "date": "2017-11-20",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Dicamba vs. Calcium",
     "url": "https://tobacco.ces.ncsu.edu/news/dicamba-vs-calcium/",
     "date": "2017-07-12",
@@ -3924,6 +6642,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Sugarcane Aphid Has Arrived in NC Sorghum",
+    "url": "https://archive.ces.ncsu.edu/news/sugarcane-aphid-has-arrived-in-nc-sorghum/",
+    "date": "2017-07-03",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "From the Field-Agronomy Notes: Vol. 2, Num. 11",
     "url": "https://tobacco.ces.ncsu.edu/news/from-the-field-agronomy-notes-vol-2-num-11/",
     "date": "2017-06-27",
@@ -3942,6 +6669,15 @@
     "color": "#5d4e37"
   },
   {
+    "title": "Image not availableSection 18 Crisis Exemption Approved for Sivanto Prime on Sweet Sorghum for Sugarcane Aphid",
+    "url": "https://archive.ces.ncsu.edu/news/section-18-crisis-exemption-approved-for-sivanto-prime-on-sweet-sorghum-for-sugarcane-aphid-3/",
+    "date": "2017-06-20",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Manage Stink Bugs in Corn Before It Tassels",
     "url": "https://archive.ces.ncsu.edu/news/manage-stink-bugs-in-corn-before-it-tassels/",
     "date": "2017-06-05",
@@ -3949,6 +6685,33 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Image not availableInsecticidal Seed Treatment a Good Idea for Sorghum",
+    "url": "https://smallgrains.ces.ncsu.edu/news/insecticidal-seed-treatment-a-good-idea-for-sorghum/",
+    "date": "2017-05-16",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableEmergency Section 18 Approved for Transform to Control Sugarcane Aphid in NC Sorghum During 2017",
+    "url": "https://archive.ces.ncsu.edu/news/emergency-section-18-approved-for-transform-to-control-sugarcane-aphid-in-nc-sorghum-during-2017/",
+    "date": "2017-05-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableNorth Carolina Wheat Disease Update 4/25/17",
+    "url": "https://plantpathology.ces.ncsu.edu/news/north-carolina-wheat-disease-update-42517/",
+    "date": "2017-04-25",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "Scouting and Managing Stink Bugs in Seedling Corn",
@@ -3960,6 +6723,51 @@
     "color": "#f0a500"
   },
   {
+    "title": "Managing Springtime Hessian Fly Infestations in Eastern NC",
+    "url": "https://archive.ces.ncsu.edu/news/managing-springtime-hessian-fly-infestations-in-eastern-nc/",
+    "date": "2017-04-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableFreeze Warning in NC: Are Your Varieties at Risk?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/freeze-warning-in-nc-are-your-varieties-at-risk/",
+    "date": "2017-03-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "It's Been Warm! Know When to Check for Cereal Leaf Beetle in Wheat",
+    "url": "https://archive.ces.ncsu.edu/news/its-been-warm-know-when-to-check-for-cereal-leaf-beetle-in-wheat/",
+    "date": "2017-03-02",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "See an Odd Looking Critter With Red Legs in Wheat?",
+    "url": "https://archive.ces.ncsu.edu/news/see-an-odd-looking-critter-with-red-legs-in-wheat/",
+    "date": "2017-02-27",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Hessian Fly Adults Are Active- Should You Spray?",
+    "url": "https://archive.ces.ncsu.edu/news/hessian-fly-adults-are-active-should-you-spray/",
+    "date": "2016-12-02",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Stink Bugs Moving Into Corn",
     "url": "https://archive.ces.ncsu.edu/news/stink-bugs-moving-into-corn/",
     "date": "2016-06-10",
@@ -3969,6 +6777,42 @@
     "color": "#f0a500"
   },
   {
+    "title": "Image not availableWheat Infested With Hessian Fly in Spring- Disc It, Spray It, or Let It Ride?",
+    "url": "https://smallgrains.ces.ncsu.edu/news/wheat-infested-with-hessian-fly-in-spring-disc-it-spray-it-or-let-it-ride/",
+    "date": "2016-04-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableNew Invasive Aphid Pest of Wheat Now in South Carolina",
+    "url": "https://smallgrains.ces.ncsu.edu/news/new-invasive-aphid-of-wheat-now-in-south-carolina/",
+    "date": "2016-04-18",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Watch for Cereal Leaf Beetle, Especially if You Tank Mixed Insecticide With Nitrogen",
+    "url": "https://smallgrains.ces.ncsu.edu/news/watch-for-cereal-leaf-beetle-especially-if-you-tank-mixed-insecticide-with-nitrogen/",
+    "date": "2016-03-29",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Disc or Spray Your Wheat Infested With Hessian Fly?",
+    "url": "https://archive.ces.ncsu.edu/news/disc-or-spray-your-wheat-infested-with-hessian-fly/",
+    "date": "2016-03-07",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
     "title": "Be on the Lookout for a New Invasive Aphid of Wheat",
     "url": "https://archive.ces.ncsu.edu/news/be-on-the-lookout-for-a-new-invasive-aphid-of-wheat/",
     "date": "2016-01-08",
@@ -3976,6 +6820,78 @@
     "crop_name": "Corn",
     "emoji": "🌽",
     "color": "#f0a500"
+  },
+  {
+    "title": "Image not availableHessian Fly Alert - March 2014",
+    "url": "https://smallgrains.ces.ncsu.edu/news/hessian-fly-alert/",
+    "date": "2014-03-10",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Head Scab and Grain DON - May 2013",
+    "url": "https://smallgrains.ces.ncsu.edu/news/head-scab-and-grain-don-may-2013/",
+    "date": "2013-05-22",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableStripe Rust Alert for NC - April 2013",
+    "url": "https://smallgrains.ces.ncsu.edu/news/stripe-rust-alert-for-nc-april-2013/",
+    "date": "2013-04-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableYellow Wheat Needs Help! - April 2013",
+    "url": "https://smallgrains.ces.ncsu.edu/news/yellow-wheat-needs-help-april-2013/",
+    "date": "2013-04-11",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableHessian Fly, Herbicide Resistance, and Stripe Rust - January 2013",
+    "url": "https://smallgrains.ces.ncsu.edu/news/hessian-fly-herbicide-resistance-and-stripe-rust-january-2013/",
+    "date": "2013-01-31",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableWheat Variety Recommendations - July 2012",
+    "url": "https://smallgrains.ces.ncsu.edu/news/wheat-variety-recommendations-july-2012/",
+    "date": "2012-07-14",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableManaging \"Big Wheat\" - February 2012",
+    "url": "https://smallgrains.ces.ncsu.edu/news/managing-big-wheat-feb-2012/",
+    "date": "2012-02-01",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
+  },
+  {
+    "title": "Image not availableYellow Wheat and Ryegrass - December 2011",
+    "url": "https://smallgrains.ces.ncsu.edu/news/yellow-wheat-and-ryegrass-december-2011/",
+    "date": "2011-12-15",
+    "crop": "wheat",
+    "crop_name": "Wheat",
+    "emoji": "🌾",
+    "color": "#c49a3c"
   },
   {
     "title": "2024 Soybean Insecticide Ratings",
@@ -4003,5 +6919,86 @@
     "crop_name": "Tobacco",
     "emoji": "🍃",
     "color": "#5d4e37"
+  },
+  {
+    "title": "2025 Cotton OVT Results",
+    "url": "https://cotton.ces.ncsu.edu/2025-cotton-ovt-results/",
+    "date": null,
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2025 NCDA Cotton Seed Sampling Instructions and Procedures",
+    "url": "https://cotton.ces.ncsu.edu/2025/02/instructions-for-collecting-and-submitting-cotton-seed-samples-to-ncda-for-warm-cool-germ-testing/",
+    "date": null,
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Managing Thrips in Cotton",
+    "url": "https://cottoncultivated.cottoninc.com/wp-content/uploads/2016/04/Thrips-Management-in-SE.pdf",
+    "date": null,
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2024 Insecticide Ratings for Cotton",
+    "url": "https://cotton.ces.ncsu.edu/232647-2/2018-cotton-belt-regional-survey-insecticide-efficacy-cotton-corn-soy/",
+    "date": null,
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "Soil Health: What Does It Mean?",
+    "url": "https://soybeans.ces.ncsu.edu/2018/11/soil-health-what-does-is-mean-in-north-carolina/",
+    "date": null,
+    "crop": "cotton",
+    "crop_name": "Cotton",
+    "emoji": "🧶",
+    "color": "#7b8fa1"
+  },
+  {
+    "title": "2022 Webinars and Presentations",
+    "url": "https://strawberries.ces.ncsu.edu/strawberry-youtube-channel/2022-webinars-and-presentations/",
+    "date": null,
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "2021 Webinars and Presentations",
+    "url": "https://strawberries.ces.ncsu.edu/strawberry-youtube-channel/2021-webinars-and-presentations/",
+    "date": null,
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "2020 Webinars and Presentations",
+    "url": "https://strawberries.ces.ncsu.edu/strawberry-youtube-channel/2020-webinars-and-presentations/",
+    "date": null,
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
+  },
+  {
+    "title": "SRSFC IPM Guide",
+    "url": "http://strawberries.ces.ncsu.edu/wp-content/uploads/2014/10/2015StrawberryIPMGuide1.pdf",
+    "date": null,
+    "crop": "strawberry",
+    "crop_name": "Strawberry",
+    "emoji": "🍓",
+    "color": "#d32f2f"
   }
 ]
