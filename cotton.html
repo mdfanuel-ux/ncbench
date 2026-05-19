@@ -49,12 +49,22 @@ a { color: #5b8fa8; }
 <h2>Overview</h2>
 <p>North Carolina is a significant cotton-producing state, with production concentrated in the Coastal Plain counties. Cotton is often grown in rotation with peanuts, soybeans, and corn. The NC Extension cotton portal provides timely guidance on variety selection, pest management, defoliation, and harvest aids.</p>
 <div class="stat-row">
-<div class="stat-card"><div class="stat-num">125</div><div class="stat-label">Portal Articles</div></div>
-<div class="stat-card"><div class="stat-num">8</div><div class="stat-label">Crops in NCBench</div></div>
+<div class="stat-card"><div class="stat-num">175</div><div class="stat-label">QA Pairs Generated</div></div>
+<div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Source Documents</div></div>
 <div class="stat-card"><div class="stat-num">NC</div><div class="stat-label">Coastal Plain</div></div>
-<div class="stat-card"><div class="stat-num">New</div><div class="stat-label">QA Coming Soon</div></div>
+<div class="stat-card"><div class="stat-num">125</div><div class="stat-label">Portal Articles</div></div>
 </div>
-<p style="font-size:13px; color:#666;">Cotton QA pairs will be generated from Extension publications and portal articles. The portal at <a href="https://cotton.ces.ncsu.edu/" target="_blank">cotton.ces.ncsu.edu</a> publishes regular production updates.</p>
+<p style="font-size:13px; color:#666;">Cotton QA pairs generated from Extension publications and portal articles. The portal at <a href="https://cotton.ces.ncsu.edu/" target="_blank">cotton.ces.ncsu.edu</a> publishes regular production updates.</p>
+</div>
+
+<div class="section" id="qa-explorer">
+<h2>Generated QA Explorer — 175 Pairs</h2>
+<div id="cotton-btns" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:15px;"></div>
+<div id="cotton-panel" style="display:none; background:#f5f8fa; border:1px solid #d0dce6; border-radius:8px; padding:15px; max-height:500px; overflow-y:auto;">
+<div id="cotton-title" style="font-weight:700; font-size:14px; color:#4a6572; margin-bottom:4px;"></div>
+<div id="cotton-count" style="font-size:11px; color:#999; margin-bottom:12px;"></div>
+<div id="cotton-list"></div>
+</div>
 </div>
 
 <div class="section" id="updates">
@@ -86,6 +96,13 @@ fetch("updates.json").then(r=>r.json()).then(data=>{
             <span class="update-title"><a href="${u.url}" target="_blank">${u.title}</a></span>
         </div>
     `).join('');
+});
+fetch("cotton_qa.json").then(r=>r.json()).then(data=>{
+  const topics=[{name:"Planting & Variety",keywords:["plant","variety","seed","ovt","maturity"]},{name:"Insect & Pest",keywords:["insect","thrips","bollworm","stink bug","jassid","aphid","scout"]},{name:"Weed & Herbicide",keywords:["weed","herbicide","residual","gramoxone","palmer"]},{name:"Disease",keywords:["disease","boll rot","target spot","fusarium"]},{name:"Harvest & Defoliation",keywords:["harvest","defoliation","defoliant","boll open"]},{name:"General",keywords:[]}];
+  const grouped={};topics.forEach(t=>grouped[t.name]=[]);
+  data.forEach(item=>{const text=(item.instruction+" "+item.output).toLowerCase();let assigned=false;for(const t of topics){if(!t.keywords.length)continue;if(t.keywords.some(k=>text.includes(k))){grouped[t.name].push(item);assigned=true;break;}}if(!assigned)grouped["General"].push(item);});
+  const c=document.getElementById("cotton-btns");
+  topics.forEach(t=>{const items=grouped[t.name];if(!items.length)return;const btn=document.createElement("button");btn.style.cssText="padding:7px 12px;border:1px solid #d0dce6;border-radius:20px;background:#f5f8fa;font-size:11px;font-weight:600;color:#4a6572;cursor:pointer;";btn.textContent=t.name+" ("+items.length+")";btn.onclick=()=>{document.getElementById("cotton-panel").style.display="block";document.getElementById("cotton-title").textContent=t.name;document.getElementById("cotton-count").textContent=items.length+" pairs";const list=document.getElementById("cotton-list");list.innerHTML="";items.forEach(item=>{const card=document.createElement("div");card.style.cssText="margin-bottom:8px;border:1px solid #d0dce6;border-radius:6px;overflow:hidden;";const q=document.createElement("div");q.style.cssText="padding:8px 12px;cursor:pointer;background:#fff;font-size:12px;font-weight:600;color:#333;display:flex;gap:6px;";q.innerHTML='<span style="color:#7b8fa1;">▶</span><span>'+item.instruction+'</span>';const a=document.createElement("div");a.style.cssText="max-height:0;overflow:hidden;transition:max-height 0.3s;font-size:12px;color:#555;line-height:1.6;background:#f5f8fa;padding:0 12px;";a.textContent=item.output;q.onclick=()=>{const open=a.style.maxHeight!=="0px"&&a.style.maxHeight!=="";a.style.maxHeight=open?"0":"300px";a.style.padding=open?"0 12px":"10px 12px";q.querySelector("span").textContent=open?"▶":"▼";};card.appendChild(q);card.appendChild(a);list.appendChild(card);});};c.appendChild(btn);});
 });
 </script>
 </body>
