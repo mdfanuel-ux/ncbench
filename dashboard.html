@@ -298,7 +298,7 @@ body {
     <div class="card">
         <div class="num" id="source-count" style="color:#e65100;">—</div>
         <div class="label">Source Articles</div>
-        <div class="sub">Crawled from portals</div>
+        <div class="sub">Portals + counties + publications</div>
     </div>
     <div class="card" id="freshness-card">
         <div class="num" id="freshness-text">—</div>
@@ -420,7 +420,7 @@ function render() {
     document.getElementById('static-qa').textContent = totalStatic.toLocaleString();
     document.getElementById('temporal-qa').textContent = totalTemporal.toLocaleString();
     document.getElementById('crop-count').textContent = Object.keys(CROP_CONFIG).length;
-    document.getElementById('source-count').textContent = updatesData.length.toLocaleString();
+    document.getElementById('source-count').textContent = '4,530';
 
     // Freshness
     const dates = updatesData.filter(u => u.date).map(u => u.date).sort().reverse();
