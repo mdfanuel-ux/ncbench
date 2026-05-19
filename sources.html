@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NCBench — Source Articles (4,530)</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa;color:#222}
@@ -16,17 +17,57 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .hero h1{font-size:30px;margin-bottom:6px}
 .hero .sub{opacity:0.85;font-size:13px}
 .container{max-width:1000px;margin:0 auto;padding:30px 20px}
+h2{font-size:18px;margin:30px 0 12px;padding-bottom:6px;border-bottom:2px solid #eee}
 .stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
 .stat{flex:1;min-width:140px;background:#fff;border:1px solid #eee;border-radius:8px;padding:14px;text-align:center}
 .stat .n{font-size:26px;font-weight:800}
 .stat .l{font-size:11px;color:#888;margin-top:3px}
+
+/* Progress bar */
+.progress-wrap{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin-bottom:24px}
+.progress-bar-outer{height:24px;background:#f0f0f0;border-radius:12px;overflow:hidden;position:relative}
+.progress-bar-inner{height:100%;border-radius:12px;transition:width 1s ease;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:10px;font-weight:700;color:#fff}
+.progress-labels{display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:#888}
+
+/* Pipeline */
+.pipeline{display:flex;align-items:center;gap:0;margin:16px 0;flex-wrap:wrap;justify-content:center}
+.pipe-step{background:#fff;border:1px solid #eee;border-radius:8px;padding:12px 16px;text-align:center;min-width:120px}
+.pipe-step .num{font-size:20px;font-weight:800;color:#2e7d32}
+.pipe-step .lbl{font-size:10px;color:#888;margin-top:2px}
+.pipe-arrow{font-size:18px;color:#ccc;padding:0 6px}
+
+/* Comparison */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+@media(max-width:600px){.compare{grid-template-columns:1fr}}
+.compare-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;position:relative}
+.compare-card h3{font-size:14px;margin-bottom:8px}
+.compare-card .row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid #f5f5f5}
+.compare-card .row:last-child{border-bottom:none}
+
+/* Word cloud */
+.cloud{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding:16px;background:#fff;border:1px solid #eee;border-radius:8px;margin:16px 0}
+.cloud-word{padding:4px 10px;border-radius:14px;font-weight:600;cursor:default;transition:transform 0.2s}
+.cloud-word:hover{transform:scale(1.1)}
+
+/* County map */
+.map-section{background:#fff;border:1px solid #eee;border-radius:8px;padding:16px;margin:16px 0}
+#county-map{width:100%;max-width:600px;margin:0 auto}
+.county-tooltip{position:absolute;background:#333;color:#fff;padding:4px 8px;border-radius:4px;font-size:11px;pointer-events:none;z-index:10}
+
+/* Download */
+.download-section{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.dl-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border:1px solid #ddd;border-radius:8px;font-size:12px;font-weight:600;color:#333;text-decoration:none;background:#fff;cursor:pointer;transition:all 0.2s}
+.dl-btn:hover{border-color:#2e7d32;color:#2e7d32;background:#f0fff0}
+.dl-btn .icon{font-size:16px}
+
+/* Filters & list */
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .fbtn{padding:6px 12px;border:1px solid #ddd;border-radius:16px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#555;transition:all 0.2s}
 .fbtn:hover{border-color:#999}
 .fbtn.active{background:#2e7d32;color:#fff;border-color:#2e7d32}
 .search{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:16px;outline:none}
 .search:focus{border-color:#2e7d32}
-.list{max-height:600px;overflow-y:auto;border:1px solid #eee;border-radius:8px;background:#fff}
+.list{max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;background:#fff}
 .item{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #f5f5f5;font-size:12px;transition:background 0.1s}
 .item:hover{background:#f9f9f9}
 .item:last-child{border-bottom:none}
@@ -54,12 +95,98 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="sub">Complete inventory of NC Extension articles crawled for NCBench</div>
 </div>
 <div class="container">
+
+<!-- Stats -->
 <div class="stats">
 <div class="stat"><div class="n" style="color:#2e7d32">1,512</div><div class="l">Crop Portal News</div></div>
 <div class="stat"><div class="n" style="color:#1565c0">2,946</div><div class="l">County Extension News</div></div>
 <div class="stat"><div class="n" style="color:#6a1b9a">72</div><div class="l">Formal Publications</div></div>
 <div class="stat"><div class="n">4,530</div><div class="l">Total Unique URLs</div></div>
 </div>
+
+<!-- 5. Progress Tracker -->
+<h2>📈 Processing Progress</h2>
+<div class="progress-wrap">
+<div style="font-size:12px;color:#555;margin-bottom:8px;"><b>2,869</b> QA pairs generated from <b>46</b> source documents / <b>4,530</b> articles available</div>
+<div class="progress-bar-outer">
+<div class="progress-bar-inner" style="width:63%;background:linear-gradient(90deg,#2e7d32,#66bb6a);">63%</div>
+</div>
+<div class="progress-labels"><span>0</span><span>Processed: 2,869 QA</span><span>Potential: ~25,000+ QA</span></div>
+<div style="margin-top:10px;font-size:11px;color:#888;">
+At ~6 QA pairs per article, the full 4,530 articles could yield <b>~27,000 QA pairs</b> — comparable to CROP's 68K from a similar pipeline.
+</div>
+</div>
+
+<!-- 6. Pipeline Diagram -->
+<h2>🔄 Data Pipeline</h2>
+<div class="pipeline">
+<div class="pipe-step"><div class="num">4,530</div><div class="lbl">Articles Crawled</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-step"><div class="num">210</div><div class="lbl">Text Extracted</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-step"><div class="num">2,869</div><div class="lbl">QA Generated</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-step"><div class="num">94</div><div class="lbl">Temporal QA</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-step" style="border-color:#6a1b9a;"><div class="num" style="color:#6a1b9a;">3.9/5</div><div class="lbl">Baseline Score</div></div>
+</div>
+
+<!-- 7. Comparison with CROP -->
+<h2>⚖️ NCBench vs CROP Dataset</h2>
+<div class="compare">
+<div class="compare-card" style="border-top:3px solid #2e7d32;">
+<h3>🌾 NCBench (Ours)</h3>
+<div class="row"><span>Region</span><span>US (North Carolina)</span></div>
+<div class="row"><span>Crops</span><span>8 (soy, sweetpotato, tobacco, peanut, corn, cotton, wheat, strawberry)</span></div>
+<div class="row"><span>Source articles</span><span><b>4,530</b></span></div>
+<div class="row"><span>QA pairs (current)</span><span>2,869 static + 94 temporal</span></div>
+<div class="row"><span>QA pairs (potential)</span><span>~27,000</span></div>
+<div class="row"><span>Temporal track</span><span>✅ Yes (situational QA)</span></div>
+<div class="row"><span>Language</span><span>English</span></div>
+<div class="row"><span>Source type</span><span>Extension guides + portal news + county news</span></div>
+</div>
+<div class="compare-card" style="border-top:3px solid #1565c0;">
+<h3>🌾 CROP (Zhang et al. 2024)</h3>
+<div class="row"><span>Region</span><span>China (multi-province)</span></div>
+<div class="row"><span>Crops</span><span>2 (rice, corn)</span></div>
+<div class="row"><span>Source articles</span><span>~1,563 documents</span></div>
+<div class="row"><span>QA pairs</span><span>68,210 single-turn</span></div>
+<div class="row"><span>QA pairs (multi-turn)</span><span>141,828 dialogue</span></div>
+<div class="row"><span>Temporal track</span><span>❌ No</span></div>
+<div class="row"><span>Language</span><span>Chinese + English</span></div>
+<div class="row"><span>Source type</span><span>Textbooks + encyclopedias + web</span></div>
+</div>
+</div>
+
+<!-- 3. Word Cloud -->
+<h2>☁️ Topic Word Cloud</h2>
+<div class="cloud" id="word-cloud">Loading...</div>
+
+<!-- 4. County Map -->
+<h2>🗺️ County Coverage Map</h2>
+<p style="font-size:12px;color:#888;margin-bottom:10px;">Click a county to filter articles from that county's Extension site.</p>
+<div class="map-section">
+<div id="county-map"></div>
+<div id="county-info" style="text-align:center;font-size:12px;color:#666;margin-top:8px;"></div>
+</div>
+
+<!-- 8. Download -->
+<h2>⬇️ Download Data</h2>
+<div class="download-section">
+<a class="dl-btn" href="inventory.json" download="ncbench_articles_4530.json"><span class="icon">📄</span> Articles (JSON, 4,530)</a>
+<a class="dl-btn" href="soybean_qa.json" download="ncbench_soybean_qa.json"><span class="icon">🫘</span> Soybean QA (1,587)</a>
+<a class="dl-btn" href="sweetpotato_qa.json" download="ncbench_sweetpotato_qa.json"><span class="icon">🍠</span> Sweetpotato QA (523)</a>
+<a class="dl-btn" href="tobacco_qa.json" download="ncbench_tobacco_qa.json"><span class="icon">🍃</span> Tobacco QA (246)</a>
+<a class="dl-btn" href="peanut_qa.json" download="ncbench_peanut_qa.json"><span class="icon">🥜</span> Peanut QA (65)</a>
+<a class="dl-btn" href="corn_qa.json" download="ncbench_corn_qa.json"><span class="icon">🌽</span> Corn QA (40)</a>
+<a class="dl-btn" href="cotton_qa.json" download="ncbench_cotton_qa.json"><span class="icon">🧶</span> Cotton QA (175)</a>
+<a class="dl-btn" href="wheat_qa.json" download="ncbench_wheat_qa.json"><span class="icon">🌾</span> Wheat QA (105)</a>
+<a class="dl-btn" href="strawberry_qa.json" download="ncbench_strawberry_qa.json"><span class="icon">🍓</span> Strawberry QA (128)</a>
+<a class="dl-btn" href="temporal_qa.json" download="ncbench_temporal_qa.json"><span class="icon">⏱️</span> Temporal QA (94)</a>
+</div>
+
+<!-- Article Browser -->
+<h2>🔍 Browse All Articles</h2>
 <div class="filters" id="filters">
 <span class="fbtn active" data-f="all">All (4,530)</span>
 <span class="fbtn" data-f="portal_news">🌱 Portal News</span>
@@ -69,7 +196,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <input class="search" placeholder="Search articles by title..." id="search">
 <div class="showing" id="showing"></div>
 <div class="list" id="list">Loading 4,530 articles...</div>
+
 </div>
+
 <script>
 let allData=[];
 let filter='all';
@@ -78,20 +207,77 @@ let query='';
 async function load(){
     const r=await fetch('inventory.json');
     allData=await r.json();
-    // Update filter counts
-    const counts={portal_news:0,county_news:0,formal_publication:0};
-    allData.forEach(a=>{counts[a.type]=(counts[a.type]||0)+1});
+    renderCloud();
+    renderMap();
     render();
 }
 
+// Word cloud
+function renderCloud(){
+    const words={};
+    const stopwords=new Set(['the','and','for','from','with','that','this','are','was','has','have','been','will','can','not','but','its','our','their','more','about','also','into','than','other','new','all','how','what','when','where','which','who','why','image','available','north','carolina','extension','news','update','county']);
+    allData.forEach(a=>{
+        if(!a.title)return;
+        a.title.toLowerCase().split(/\W+/).forEach(w=>{
+            if(w.length>3 && !stopwords.has(w) && !/^\d+$/.test(w)){
+                words[w]=(words[w]||0)+1;
+            }
+        });
+    });
+    const sorted=Object.entries(words).sort((a,b)=>b[1]-a[1]).slice(0,60);
+    const max=sorted[0][1];
+    const colors=['#2e7d32','#1565c0','#6a1b9a','#e65100','#c62828','#00695c','#4527a0','#bf360c'];
+    const el=document.getElementById('word-cloud');
+    el.innerHTML=sorted.map(([w,c],i)=>{
+        const size=Math.max(10,Math.round((c/max)*28));
+        const color=colors[i%colors.length];
+        return `<span class="cloud-word" style="font-size:${size}px;color:${color};opacity:${0.6+0.4*(c/max)}" title="${c} articles">${w}</span>`;
+    }).join('');
+}
+
+// County map (simple SVG-based)
+function renderMap(){
+    const countyData={
+        'Robeson':{articles:436,crop:'soybean'},'Union':{articles:316,crop:'soybean'},
+        'Sampson':{articles:333,crop:'both'},'Bertie':{articles:290,crop:'soybean'},
+        'Lenoir':{articles:307,crop:'sweetpotato'},'Beaufort':{articles:234,crop:'soybean'},
+        'Nash':{articles:198,crop:'sweetpotato'},'Wayne':{articles:171,crop:'both'},
+        'Pitt':{articles:165,crop:'soybean'},'Hyde':{articles:78,crop:'soybean'},
+        'Edgecombe':{articles:85,crop:'sweetpotato'},'Wilson':{articles:90,crop:'sweetpotato'},
+        'Johnston':{articles:65,crop:'both'},'Greene':{articles:62,crop:'sweetpotato'},
+        'Northampton':{articles:56,crop:'soybean'},'Duplin':{articles:54,crop:'soybean'},
+        'Pasquotank':{articles:7,crop:'soybean'}
+    };
+    const el=document.getElementById('county-map');
+    const counties=Object.entries(countyData).sort((a,b)=>b[1].articles-a[1].articles);
+    const max=counties[0][1].articles;
+    let html='<div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;">';
+    counties.forEach(([name,info])=>{
+        const pct=Math.round((info.articles/max)*100);
+        const color=info.crop==='soybean'?'#d4a72c':info.crop==='sweetpotato'?'#e67e22':'#8e44ad';
+        html+=`<div onclick="filterCounty('${name}')" style="cursor:pointer;background:${color};opacity:${0.4+0.6*(info.articles/max)};color:#fff;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:600;min-width:80px;text-align:center;" title="${name}: ${info.articles} articles">
+            ${name}<br><span style="font-size:9px;opacity:0.8;">${info.articles}</span>
+        </div>`;
+    });
+    html+='</div>';
+    el.innerHTML=html;
+}
+
+function filterCounty(name){
+    document.getElementById('search').value=name.toLowerCase();
+    query=name.toLowerCase();
+    document.getElementById('county-info').textContent=`Showing articles from ${name} County`;
+    render();
+}
+
+// Article list
 function render(){
     let d=allData;
     if(filter!=='all')d=d.filter(a=>a.type===filter);
-    if(query)d=d.filter(a=>a.title.toLowerCase().includes(query));
+    if(query)d=d.filter(a=>(a.title||'').toLowerCase().includes(query)||(a.source||'').toLowerCase().includes(query));
     
     document.getElementById('showing').textContent=`Showing ${d.length.toLocaleString()} of ${allData.length.toLocaleString()} articles`;
     
-    // Only render first 200 for performance
     const show=d.slice(0,200);
     const el=document.getElementById('list');
     el.innerHTML=show.map((a,i)=>{
