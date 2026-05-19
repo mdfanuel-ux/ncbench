@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Source Articles (4,530)</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa;color:#222}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid #eee;padding:8px 0;text-align:center}
+.topnav a{display:inline-block;margin:0 8px;padding:4px 10px;font-size:12px;font-weight:600;color:#555;text-decoration:none;border-radius:4px}
+.topnav a:hover{background:#f0f0f0;color:#222}
+.topnav a.active{background:#2e7d32;color:#fff}
+.hero{background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 40%,#66bb6a 100%);padding:40px 20px 30px;text-align:center;color:#fff}
+.hero h1{font-size:30px;margin-bottom:6px}
+.hero .sub{opacity:0.85;font-size:13px}
+.container{max-width:1000px;margin:0 auto;padding:30px 20px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.stat{flex:1;min-width:140px;background:#fff;border:1px solid #eee;border-radius:8px;padding:14px;text-align:center}
+.stat .n{font-size:26px;font-weight:800}
+.stat .l{font-size:11px;color:#888;margin-top:3px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.fbtn{padding:6px 12px;border:1px solid #ddd;border-radius:16px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#555;transition:all 0.2s}
+.fbtn:hover{border-color:#999}
+.fbtn.active{background:#2e7d32;color:#fff;border-color:#2e7d32}
+.search{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:16px;outline:none}
+.search:focus{border-color:#2e7d32}
+.list{max-height:600px;overflow-y:auto;border:1px solid #eee;border-radius:8px;background:#fff}
+.item{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #f5f5f5;font-size:12px;transition:background 0.1s}
+.item:hover{background:#f9f9f9}
+.item:last-child{border-bottom:none}
+.item .idx{color:#ccc;min-width:35px;font-size:11px}
+.item .title{flex:1;font-weight:500}
+.item .title a{color:#333;text-decoration:none}
+.item .title a:hover{color:#2e7d32;text-decoration:underline}
+.item .badge{padding:2px 7px;border-radius:10px;font-size:9px;font-weight:700;color:#fff;white-space:nowrap}
+.badge-portal{background:#2e7d32}
+.badge-county{background:#1565c0}
+.badge-pub{background:#6a1b9a}
+.showing{font-size:11px;color:#888;margin-bottom:8px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<a href="dashboard.html">📊 Dashboard</a>
+<a href="updates.html">📡 Updates</a>
+<a href="benchmark.html">🏆 Benchmark</a>
+<a href="sources.html" class="active">📚 Sources</a>
+</nav>
+<div class="hero">
+<h1>📚 4,530 Source Articles</h1>
+<div class="sub">Complete inventory of NC Extension articles crawled for NCBench</div>
+</div>
+<div class="container">
+<div class="stats">
+<div class="stat"><div class="n" style="color:#2e7d32">1,512</div><div class="l">Crop Portal News</div></div>
+<div class="stat"><div class="n" style="color:#1565c0">2,946</div><div class="l">County Extension News</div></div>
+<div class="stat"><div class="n" style="color:#6a1b9a">72</div><div class="l">Formal Publications</div></div>
+<div class="stat"><div class="n">4,530</div><div class="l">Total Unique URLs</div></div>
+</div>
+<div class="filters" id="filters">
+<span class="fbtn active" data-f="all">All (4,530)</span>
+<span class="fbtn" data-f="portal_news">🌱 Portal News</span>
+<span class="fbtn" data-f="county_news">🏛️ County News</span>
+<span class="fbtn" data-f="formal_publication">📄 Publications</span>
+</div>
+<input class="search" placeholder="Search articles by title..." id="search">
+<div class="showing" id="showing"></div>
+<div class="list" id="list">Loading 4,530 articles...</div>
+</div>
+<script>
+let allData=[];
+let filter='all';
+let query='';
+
+async function load(){
+    const r=await fetch('inventory.json');
+    allData=await r.json();
+    // Update filter counts
+    const counts={portal_news:0,county_news:0,formal_publication:0};
+    allData.forEach(a=>{counts[a.type]=(counts[a.type]||0)+1});
+    render();
+}
+
+function render(){
+    let d=allData;
+    if(filter!=='all')d=d.filter(a=>a.type===filter);
+    if(query)d=d.filter(a=>a.title.toLowerCase().includes(query));
+    
+    document.getElementById('showing').textContent=`Showing ${d.length.toLocaleString()} of ${allData.length.toLocaleString()} articles`;
+    
+    // Only render first 200 for performance
+    const show=d.slice(0,200);
+    const el=document.getElementById('list');
+    el.innerHTML=show.map((a,i)=>{
+        const badge=a.type==='portal_news'?'badge-portal':a.type==='county_news'?'badge-county':'badge-pub';
+        const label=a.type==='portal_news'?a.source.replace('portal/',''):a.type==='county_news'?a.source.replace('county/',''):'publication';
+        return `<div class="item"><span class="idx">${i+1}</span><span class="title"><a href="${a.url}" target="_blank">${a.title||'Untitled'}</a></span><span class="badge ${badge}">${label}</span></div>`;
+    }).join('');
+    if(d.length>200)el.innerHTML+=`<div class="item" style="justify-content:center;color:#888;padding:12px;">... and ${(d.length-200).toLocaleString()} more. Use search to narrow.</div>`;
+}
+
+document.querySelectorAll('.fbtn').forEach(b=>{
+    b.addEventListener('click',()=>{
+        document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        filter=b.dataset.f;
+        render();
+    });
+});
+document.getElementById('search').addEventListener('input',e=>{
+    query=e.target.value.trim().toLowerCase();
+    render();
+});
+load();
+</script>
+</body>
+</html>
