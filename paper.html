@@ -286,7 +286,40 @@ generation (RAG) systems and continual learning approaches — a dimension absen
 original CROP benchmark.
 </p>
 
-<h3>7.4 Limitations</h3>
+<h3>7.4 Connection to AgriRegion</h3>
+<p>
+NCBench is designed as a complementary component to <b>AgriRegion</b> (Fanuel et al., 2026),
+our region-aware Retrieval-Augmented Generation framework for agricultural advisory [7].
+While AgriRegion provides the <i>retrieval and generation architecture</i> — including
+spatial-semantic retrieval, geospatial metadata injection, and region-prioritized re-ranking —
+NCBench provides the <i>training and evaluation data</i> that grounds the system in
+NC-specific agricultural knowledge.
+</p>
+<p>
+The relationship is bidirectional:
+</p>
+<ul>
+<li><b>NCBench → AgriRegion (Knowledge Base):</b> The 4,530 crawled Extension articles serve as
+the document corpus for AgriRegion's vector database. NCBench's structured QA pairs can be
+used to fine-tune the generation model (LLaMA 3) that AgriRegion employs for answer synthesis.</li>
+<li><b>AgriRegion → NCBench (Evaluation):</b> AgriRegion's spatial-semantic retrieval (Eq. 1–2)
+can be evaluated using NCBench's temporal QA track — testing whether region-aware retrieval
+improves answers to time-sensitive, location-specific agricultural questions compared to
+static fine-tuning alone.</li>
+<li><b>Shared Infrastructure:</b> Both systems use the same NC Cooperative Extension sources,
+the same chunking pipeline (300-token overlapping segments), and the same evaluation methodology
+(automated scoring on accuracy, completeness, specificity, and actionability).</li>
+</ul>
+<p>
+AgriRegion demonstrated that retrieval augmentation reduces hallucinations by 10–20% compared
+to non-RAG baselines on 160 agricultural questions. NCBench extends this by providing
+(1) a larger, crop-specific evaluation set (2,869+ QA pairs vs. 160), (2) a temporal dimension
+that tests real-time advisory capability, and (3) fine-tuning data to improve the base model
+before retrieval augmentation is applied. Together, they form a complete pipeline:
+<b>NCBench trains the model → AgriRegion grounds it in local evidence → farmers get accurate, region-specific advice.</b>
+</p>
+
+<h3>7.5 Limitations</h3>
 <ul>
 <li>No human evaluation of generated QA quality (planned for future work)</li>
 <li>Single generation model (GPT-4o) — no comparison across generators</li>
@@ -298,19 +331,26 @@ original CROP benchmark.
 <h2>8. Conclusion &amp; Future Work</h2>
 <p>
 NCBench demonstrates that the CROP dataset methodology transfers effectively to US agricultural
-crops, producing 2,461 high-quality static instruction tuning pairs plus 94 temporal QA pairs
-from 37+ authoritative NC Extension sources across 5 crops (soybean, sweetpotato, tobacco,
-peanut, corn), with 3 additional crops (cotton, wheat, strawberry) in pipeline. Baseline
-evaluation shows GPT-4o scores only 3.9/5 on NC-specific questions, validating the need for
-domain-specific fine-tuning. The dataset, interactive explorer, benchmark results, and
-generation scripts are publicly available.
+crops, producing <b>2,869 static QA pairs</b> plus <b>94 temporal QA pairs</b>
+from 4,530 source articles across 8 crops (soybean, sweetpotato, tobacco,
+peanut, corn, cotton, wheat, strawberry). Baseline evaluation across three models
+(GPT-4o, GPT-4o-mini, Mistral Small) shows that completeness remains the weakest dimension
+(3.5–3.9/5), with all models missing NC-specific details that Extension experts provide.
+This validates the need for domain-specific fine-tuning.
 </p>
 <p>
-Future work includes: (1) fine-tuning open-source LLMs (LLaMA-3, Mistral) on NCBench and
-measuring improvement, (2) expanding temporal QA to 500+ pairs across all 8 crops,
-(3) processing the remaining 2,947 county news articles with geographic tagging,
+NCBench serves as the data foundation for <b>AgriRegion</b>, our region-aware RAG framework
+(IEEE Access, 2026). Together, they form a complete agricultural AI pipeline: NCBench provides
+the training data and evaluation benchmark, while AgriRegion provides the retrieval architecture
+that ensures advice is locally accurate. The dataset, interactive explorer, benchmark results,
+and generation scripts are publicly available.
+</p>
+<p>
+Future work includes: (1) fine-tuning LLaMA-3 and Mistral on NCBench and measuring improvement
+on the benchmark, (2) expanding to 5,000+ QA pairs using the remaining 4,320 unprocessed articles,
+(3) integrating NCBench as AgriRegion's fine-tuning corpus and evaluating end-to-end,
 (4) human evaluation of QA quality, (5) RAG vs. fine-tuning comparison on temporal questions,
-and (6) developing a multi-choice evaluation benchmark analogous to CROP's 5,045-question MCQ set.
+and (6) deploying the periodic crawl pipeline for a continuously growing "living benchmark."
 </p>
 
 <h2>References</h2>
@@ -320,6 +360,7 @@ and (6) developing a multi-choice evaluation benchmark analogous to CROP's 5,045
 <div class="ref">[4] 2026 Flue-Cured Tobacco Guide (AG-187). NC State Extension, 2025. <a href="https://content.ces.ncsu.edu/flue-cured-tobacco-information">content.ces.ncsu.edu</a></div>
 <div class="ref">[5] NC Soybean Producers Association. <a href="https://www.ncsoy.org">ncsoy.org</a></div>
 <div class="ref">[6] USDA NASS. 2025 State Agriculture Overview — North Carolina. <a href="https://www.nass.usda.gov/Quick_Stats/Ag_Overview/stateOverview.php?state=NORTH%20CAROLINA">nass.usda.gov</a></div>
+<div class="ref">[7] Fanuel, M., Mahmoud, M.N., Marshall, C.C., Lakhotia, V., Dari, B., Roy, K., and Zhang, S. (2026). "AgriRegion: Region-Aware Retrieval for High-Fidelity Agricultural Advice." <i>IEEE Access</i>.</div>
 
 <div class="footnote">
 <p><b>Acknowledgments:</b> The NC Soybean Producers Association funded the NC Soybean Production Guide.
