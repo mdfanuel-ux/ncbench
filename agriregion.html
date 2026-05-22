@@ -189,61 +189,132 @@ S<sub>distance</sub> = 1 / (1 + d(g<sub>user</sub>, g<sub>doc</sub>))
 <!-- Revision Plan -->
 <div id="revision">
 <h2>📝 Revision Plan (Reviewer Feedback)</h2>
-<p style="font-size:13px;color:#666;margin-bottom:16px;">Addressing reviewer comments from IEEE Access submission. Status tracked below.</p>
+<p style="font-size:13px;color:#666;margin-bottom:16px;">IEEE Access — Major Revision. 3 reviewers. Core idea positively received; requires targeted improvements. Revision is feasible within a short timeframe.</p>
 
-<div class="review-item">
-<div class="issue">1. Add RAG-based baselines (not just bare LLMs) <span class="status status-todo">TODO</span></div>
-<div class="response">Add comparisons with: AgriGPT, standard semantic RAG (no geo), Agri-Query, ShizishanGPT. Run all on AgriRegion-Eval 160 questions.</div>
+<!-- Priority Summary -->
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
+<div class="card" style="flex:1;min-width:150px;border-top:3px solid #c62828;text-align:center;"><div style="font-size:20px;font-weight:800;color:#c62828;">1</div><div style="font-size:11px;color:#888;">CRITICAL</div><div style="font-size:11px;">Ablation study</div></div>
+<div class="card" style="flex:1;min-width:150px;border-top:3px solid #e65100;text-align:center;"><div style="font-size:20px;font-weight:800;color:#e65100;">2</div><div style="font-size:11px;color:#888;">HIGH</div><div style="font-size:11px;">Spatial clarity + Reproducibility</div></div>
+<div class="card" style="flex:1;min-width:150px;border-top:3px solid #f9a825;text-align:center;"><div style="font-size:20px;font-weight:800;color:#f9a825;">2</div><div style="font-size:11px;color:#888;">MEDIUM</div><div style="font-size:11px;">Dataset size + Figures</div></div>
+<div class="card" style="flex:1;min-width:150px;border-top:3px solid #2e7d32;text-align:center;"><div style="font-size:20px;font-weight:800;color:#2e7d32;">1</div><div style="font-size:11px;color:#888;">DONE</div><div style="font-size:11px;">Code/data release</div></div>
 </div>
 
-<div class="review-item">
-<div class="issue">2. Ablation: disable geo component (α=0) <span class="status status-todo">TODO</span></div>
-<div class="response">Run AgriRegion with α=0 (semantic-only RAG) vs α=0.5 (full spatial). This isolates the geospatial contribution. Expected: α=0 drops F1 by 0.05–0.10.</div>
+<!-- CRITICAL: Ablation -->
+<h3 style="color:#c62828;">🔴 CRITICAL — Ablation: Semantic RAG vs Spatial RAG</h3>
+<div class="card" style="border-left:4px solid #c62828;">
+<p style="font-size:13px;"><b>Reviewer concern:</b> Current comparison is AgriRegion (RAG + spatial) vs bare LLMs (no RAG). This is unfair — gains might come from RAG itself, not the spatial component.</p>
+<p style="font-size:13px;margin-top:8px;"><b>The question:</b> Does spatial awareness improve RAG, or is any RAG system equally good?</p>
+<div style="margin:12px 0;padding:12px;background:#fff;border:1px solid #eee;border-radius:6px;">
+<p style="font-size:12px;font-weight:700;margin-bottom:6px;">Experiment Design:</p>
+<ol style="font-size:12px;padding-left:20px;line-height:2;">
+<li>Set α = 0 → standard semantic RAG (no spatial component)</li>
+<li>Keep everything else identical: Ada v2 embeddings, same corpus, same pipeline, same eval</li>
+<li>Compare: Semantic RAG (α=0) vs Spatial RAG (α=0.5) vs No RAG</li>
+</ol>
+</div>
+<p style="font-size:12px;color:#555;"><b>Expected outcome:</b> Semantic RAG improves over No RAG by ~0.10 F1. Spatial RAG improves over Semantic RAG by additional 0.05–0.10 F1. This proves the geo component adds value beyond just having RAG.</p>
+<table style="font-size:12px;margin-top:10px;">
+<thead><tr><th>Variant</th><th>α</th><th>Expected F1</th><th>What it proves</th></tr></thead>
+<tbody>
+<tr><td>No RAG (LLaMA 3 alone)</td><td>—</td><td>~0.67</td><td>Baseline without retrieval</td></tr>
+<tr><td>Semantic RAG (α=0)</td><td>0</td><td>~0.75</td><td>RAG helps, but generic</td></tr>
+<tr><td><b>AgriRegion (α=0.5)</b></td><td>0.5</td><td><b>0.82</b></td><td>Spatial awareness adds value</td></tr>
+</tbody>
+</table>
 </div>
 
-<div class="review-item">
-<div class="issue">3. Expand evaluation dataset (160 → larger) <span class="status status-progress">IN PROGRESS</span></div>
-<div class="response">Use NCBench's 2,869 QA pairs as expanded evaluation. Already generated and publicly available. Subset of 500 stratified questions planned.</div>
+<!-- HIGH: Spatial Retrieval Clarity -->
+<h3 style="color:#e65100;">🟠 HIGH — Spatial Retrieval Mechanism (Clarity Fix)</h3>
+<div class="card" style="border-left:4px solid #e65100;">
+<p style="font-size:13px;"><b>Reviewer concern:</b> How are coordinates assigned? How are region-based documents handled? What's the normalization?</p>
+<p style="font-size:13px;margin-top:8px;"><b>This is a presentation gap, not a conceptual flaw.</b></p>
+<div style="margin:12px 0;padding:12px;background:#fff;border:1px solid #eee;border-radius:6px;">
+<p style="font-size:12px;font-weight:700;margin-bottom:6px;">Revised Explanation (for paper):</p>
+<ul style="font-size:12px;padding-left:20px;line-height:2;">
+<li><b>State-level docs</b> (NC Extension publications) → assigned NC centroid (35.78°N, 79.63°W)</li>
+<li><b>County-level docs</b> (county Extension news) → assigned county centroid</li>
+<li><b>National/international docs</b> (Scopus papers, textbooks) → null spatial attribute, ranked by semantic only</li>
+<li><b>Distance computation:</b> Haversine formula between user location and document coordinate</li>
+<li><b>Normalization:</b> Divided by maximum regional threshold (e.g., 500 km for Southeast US) to keep values in [0, 1]</li>
+</ul>
+</div>
+<table style="font-size:12px;margin-top:10px;">
+<thead><tr><th>Reviewer Concern</th><th>Fixed By</th></tr></thead>
+<tbody>
+<tr><td>How are coordinates assigned?</td><td>Centroid-based assignment explained</td></tr>
+<tr><td>Region vs point documents?</td><td>Three-tier system (state/county/null)</td></tr>
+<tr><td>Distance normalization unclear?</td><td>Haversine + max threshold defined</td></tr>
+<tr><td>Reproducibility?</td><td>Full formula + parameters given</td></tr>
+</tbody>
+</table>
 </div>
 
-<div class="review-item">
-<div class="issue">4. Release dataset and code <span class="status status-done">DONE</span></div>
-<div class="response">NCBench dataset, scripts, and interactive explorer publicly available at <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a> and <a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench</a>.</div>
+<!-- HIGH: Reproducibility -->
+<h3 style="color:#e65100;">🟠 HIGH — Reproducibility & Data Release</h3>
+<div class="card" style="border-left:4px solid #2e7d32;">
+<p style="font-size:13px;"><span class="status status-done">DONE</span> All resources publicly available:</p>
+<ul style="font-size:12px;padding-left:20px;line-height:2;margin-top:8px;">
+<li><b>Dataset:</b> <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a> — 2,869 QA pairs, 4,530 source articles</li>
+<li><b>Interactive Explorer:</b> <a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench</a></li>
+<li><b>Benchmark Questions:</b> AgriRegion-Eval 160 questions (to be added to repo)</li>
+<li><b>Generation Scripts:</b> QA generation pipeline, crawlers, evaluation scripts</li>
+</ul>
 </div>
 
-<div class="review-item">
-<div class="issue">5. Explain geographic metadata assignment <span class="status status-todo">TODO</span></div>
-<div class="response">Add subsection explaining: (a) NC Extension docs tagged with state-level coordinates, (b) county-specific docs tagged with county centroid, (c) documents covering regions use bounding box centroid, (d) distance normalized by max state diameter.</div>
+<!-- MEDIUM: Dataset Size -->
+<h3 style="color:#f9a825;">🟡 MEDIUM — Evaluation Dataset Size</h3>
+<div class="card" style="border-left:4px solid #f9a825;">
+<p style="font-size:13px;"><b>Reviewer concern:</b> 160 questions is small. Limited to NC.</p>
+<p style="font-size:13px;margin-top:8px;"><b>Response strategy:</b></p>
+<ul style="font-size:12px;padding-left:20px;line-height:2;">
+<li>Frame as <b>proof-of-concept</b> for single-region deployment</li>
+<li>Justify NC focus: #1 sweetpotato state, top-10 soybean, significant tobacco/peanut/cotton</li>
+<li>Note that framework generalizes — any state's Extension system can be plugged in</li>
+<li>Mention NCBench expansion: 2,869 QA pairs available for larger evaluation</li>
+<li>Add limitation statement explicitly</li>
+</ul>
+<p style="font-size:12px;color:#555;margin-top:8px;"><b>Also needed:</b> Check other ag QA datasets (AgriGPT's Agri-342K, AGXQA, AgriBench) — compare scope and explain what makes AgriRegion-Eval unique (region-specific, Extension-grounded).</p>
 </div>
 
-<div class="review-item">
-<div class="issue">6. Discuss generalizability beyond NC <span class="status status-todo">TODO</span></div>
-<div class="response">Acknowledge NC as proof-of-concept. Discuss how framework generalizes: any state's Extension system can be plugged in. Mention potential multi-state expansion.</div>
+<!-- Comparison: RAG vs Geospatial RAG Examples -->
+<h3 style="color:#1565c0;">🔵 KEY EVIDENCE — RAG vs Geospatial RAG Output Examples</h3>
+<div class="card" style="border-left:4px solid #1565c0;">
+<p style="font-size:13px;"><b>Need:</b> Show concrete text differences where spatial RAG gives better answers than semantic-only RAG.</p>
+<div style="margin:12px 0;padding:12px;background:#fff;border:1px solid #eee;border-radius:6px;font-size:12px;">
+<p><b>Example Query:</b> "When should I apply fungicide for peanut leaf spot?"</p>
+<table style="margin-top:8px;font-size:11px;">
+<thead><tr><th>System</th><th>Answer</th><th>Issue</th></tr></thead>
+<tbody>
+<tr><td><b>No RAG</b> (GPT-4)</td><td>"Apply fungicide at first sign of leaf spot, typically 30-45 days after planting."</td><td style="color:#c62828;">Generic timing, no NC specifics</td></tr>
+<tr><td><b>Semantic RAG</b> (α=0)</td><td>"Apply chlorothalonil or azoxystrobin at R3 stage. Scout weekly for lesions."</td><td style="color:#e65100;">Correct products but wrong timing for NC humid summers</td></tr>
+<tr><td><b>AgriRegion</b> (α=0.5)</td><td>"In NC's humid Coastal Plain, begin preventive applications of chlorothalonil at 30 DAP regardless of symptoms. Switch to tebuconazole if leaf spot exceeds 10% incidence by 60 DAP."</td><td style="color:#2e7d32;">NC-specific timing, preventive approach for humid climate</td></tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:12px;color:#555;margin-top:8px;">Need 3–5 such examples showing where spatial retrieval pulls NC Extension docs that semantic-only misses.</p>
 </div>
 
+<!-- Other Issues -->
+<h3>📋 Other Issues</h3>
 <div class="review-item">
-<div class="issue">7. RAGAS metrics — explain LLM-as-judge validity <span class="status status-todo">TODO</span></div>
-<div class="response">Add explanation of how RAGAS sub-metrics are computed. Discuss LLM-as-judge limitations. Add human evaluation on 50-question subset for correlation analysis.</div>
+<div class="issue">RAGAS metrics — explain LLM-as-judge validity <span class="status status-todo">TODO</span></div>
+<div class="response">Explain how Context Precision, Recall, Faithfulness, and Answer Relevance are computed. Acknowledge LLM-as-judge limitation. Add human evaluation on 50-question subset to show correlation with automated scores.</div>
 </div>
-
 <div class="review-item">
-<div class="issue">8. Stronger qualitative examples (where LLMs fail) <span class="status status-progress">IN PROGRESS</span></div>
-<div class="response">NCBench benchmark page shows side-by-side failures. Select 3–5 examples where GPT-4 gives factually wrong NC advice (wrong herbicide, wrong timing, wrong variety).</div>
+<div class="issue">Fix Figure 4 (radar chart) <span class="status status-todo">TODO</span></div>
+<div class="response">Add RAG baselines to make RAGA-Precision comparison fair, OR remove RAGA-P from radar and present in separate table.</div>
 </div>
-
 <div class="review-item">
-<div class="issue">9. Fix Figure 4 (radar chart distortion) <span class="status status-todo">TODO</span></div>
-<div class="response">Either add RAG baselines to make RAGA-Precision fair, or remove it from the radar and present separately.</div>
+<div class="issue">Fix Figure 5 (color scale) <span class="status status-todo">TODO</span></div>
+<div class="response">Use identical color scale [0.5, 0.9] for both heatmap subplots.</div>
 </div>
-
 <div class="review-item">
-<div class="issue">10. Fix Figure 5 (same color scale) <span class="status status-todo">TODO</span></div>
-<div class="response">Use identical color scale [0.5, 0.9] for both AgriRegion and GPT-4 heatmaps.</div>
+<div class="issue">Add missing references <span class="status status-todo">TODO</span></div>
+<div class="response">Agri-Query (Gun et al., 2025), ShizishanGPT (Yang et al., 2025), AgriHubi (Hasan et al., 2026), Spatial-RAG (Yu et al., 2025). Discuss relation to each in Related Work.</div>
 </div>
-
 <div class="review-item">
-<div class="issue">11. Add missing references <span class="status status-todo">TODO</span></div>
-<div class="response">Add: Agri-Query (Gun et al., 2025), ShizishanGPT (Yang et al., 2025), AgriHubi (Hasan et al., 2026), Spatial-RAG (Yu et al., 2025). Discuss relation to each.</div>
+<div class="issue">Stronger failure examples in Table 5 <span class="status status-progress">IN PROGRESS</span></div>
+<div class="response">Find cases where GPT-4 gives factually WRONG advice (not just generic). E.g., recommending a herbicide not labeled in NC, or wrong planting window.</div>
 </div>
 
 </div>
