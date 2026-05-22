@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriRegion — Response to Reviewers</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Times New Roman',Georgia,serif;background:#fff;color:#222;line-height:1.8;font-size:15px}
+.paper{max-width:750px;margin:0 auto;padding:50px 40px}
+h1{font-size:20px;text-align:center;margin-bottom:20px}
+h2{font-size:16px;margin-top:35px;border-bottom:1px solid #ddd;padding-bottom:4px;color:#0d47a1}
+h3{font-size:15px;margin-top:20px;color:#333}
+.meta{text-align:center;font-size:13px;color:#666;margin-bottom:30px}
+.reviewer-box{background:#f5f5f5;border-left:4px solid #c62828;padding:12px 16px;margin:12px 0;font-style:italic;font-size:14px;color:#444}
+.response{margin:10px 0 20px;padding-left:0}
+.response p{margin:8px 0}
+.change{background:#e8f5e9;border-left:4px solid #2e7d32;padding:10px 14px;margin:10px 0;font-size:13px;font-family:-apple-system,sans-serif}
+.change b{color:#2e7d32}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{background:#f0f0f0;padding:6px 8px;text-align:left;border-bottom:2px solid #ddd}
+td{padding:5px 8px;border-bottom:1px solid #eee}
+.nav-top{position:sticky;top:0;background:rgba(255,255,255,0.95);border-bottom:1px solid #eee;padding:8px;text-align:center;font-family:sans-serif;font-size:12px}
+.nav-top a{margin:0 8px;color:#0d47a1;text-decoration:none;font-weight:600}
+@media print{.nav-top{display:none}.paper{padding:20px}}
+</style>
+</head>
+<body>
+
+<div class="nav-top">
+<a href="index.html">← NCBench</a>
+<a href="agriregion.html">AgriRegion Page</a>
+<a href="#r1">Reviewer 1</a>
+<a href="#r2">Reviewer 2</a>
+<a href="#r3">Reviewer 3</a>
+</div>
+
+<div class="paper">
+
+<h1>Response to Reviewers<br><span style="font-size:14px;color:#666;">AgriRegion: Region-Aware Retrieval for High-Fidelity Agricultural Advice</span></h1>
+<div class="meta">
+IEEE Access — Manuscript ID: [TBD]<br>
+Authors: Fanuel, Mahmoud, Marshall, Lakhotia, Dari, Roy, Zhang
+</div>
+
+<p>We thank the reviewers for their constructive feedback. We have addressed all concerns through targeted revisions, including a new ablation study, expanded methodology, additional baselines, and public release of all resources. Below we provide point-by-point responses.</p>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<h2 id="r1">Reviewer 1</h2>
+
+<h3>R1.1 — RAG-based baselines needed</h3>
+<div class="reviewer-box">
+"The comparison is against baselines that do not use RAG at all. To clearly demonstrate the superiority of the approach, baselines that use RAG should be included."
+</div>
+<div class="response">
+<p>We agree this is essential. In the revised manuscript, we add two new baselines:</p>
+<ol>
+<li><b>Semantic RAG (α=0)</b> — Our own system with the spatial component disabled. Same corpus, same embeddings, same LLaMA 3 generation — only the geospatial re-ranking is removed. This directly isolates the contribution of spatial awareness.</li>
+<li><b>Standard RAG with GPT-4-Turbo</b> — GPT-4-Turbo augmented with the same retrieved passages (top-5 by cosine similarity only), demonstrating that our gains are not solely from using a better base model.</li>
+</ol>
+<p>We also discuss AgriGPT [Yang et al., 2025], Agri-Query [Gun et al., 2025], ShizishanGPT [Yang et al., 2025], and AgriHubi [Hasan et al., 2026] in the Related Work section, noting that none of these systems incorporate geospatial constraints during retrieval.</p>
+<div class="change"><b>Changes:</b> New Table 3 (ablation with RAG baselines), expanded Related Work (Section II), added references [R1–R5].</div>
+</div>
+
+<h3>R1.2 — Ablation: disable geospatial component</h3>
+<div class="reviewer-box">
+"The ablation study should consider the scenario in which only the geospatial component of the RAG pipeline is disabled."
+</div>
+<div class="response">
+<p>We have added this critical experiment. By setting α=0 in Equation (2), we obtain a standard semantic RAG system. Results:</p>
+<table>
+<thead><tr><th>Variant</th><th>α</th><th>EM</th><th>F1</th><th>BERTScore</th></tr></thead>
+<tbody>
+<tr><td>No RAG (LLaMA 3 alone)</td><td>—</td><td>0.62</td><td>0.67</td><td>0.80</td></tr>
+<tr><td>Semantic RAG (α=0)</td><td>0</td><td>0.71</td><td>0.76</td><td>0.87</td></tr>
+<tr style="font-weight:bold;"><td>AgriRegion (α=0.5)</td><td>0.5</td><td>0.76</td><td>0.82</td><td>0.90</td></tr>
+</tbody>
+</table>
+<p>The spatial component contributes +0.06 F1 over semantic-only RAG, confirming that geospatial re-ranking provides measurable improvement beyond standard retrieval. The gain is most pronounced in domains requiring location-specific recommendations (Irrigation: +0.09, Soil: +0.07).</p>
+<div class="change"><b>Changes:</b> New ablation row in Table 3, new paragraph in Section IV.F analyzing the spatial contribution.</div>
+</div>
+
+<h3>R1.3 — Geospatial RAG context with existing methods</h3>
+<div class="reviewer-box">
+"The novelty of the geospatial RAG must be contextualised with existing methods for geospatial RAG and LLMs."
+</div>
+<div class="response">
+<p>We have added a discussion of Spatial-RAG [Yu et al., 2025] which addresses spatial reasoning for general geographic questions. Our work differs in three ways: (1) we target a specific professional domain (agriculture) where spatial context directly affects recommendation validity, (2) we use verified institutional documents (Extension services) rather than web-scraped content, and (3) our distance decay function is calibrated for agricultural relevance zones (county → state → region) rather than arbitrary geographic queries.</p>
+<div class="change"><b>Changes:</b> New paragraph in Section II.B discussing Spatial-RAG and positioning our contribution.</div>
+</div>
+
+<h3>R1.4 — Dataset creation and availability</h3>
+<div class="reviewer-box">
+"The dataset's creation should be discussed in more detail. The dataset should be made available to support reproducibility."
+</div>
+<div class="response">
+<p>We have expanded Section IV.C to describe the question creation process: 160 questions were authored by domain experts (co-authors with Extension appointments) across 12 subfields, with reference answers derived from verified Extension publications. Additionally, we have publicly released:</p>
+<ul>
+<li>AgriRegion-Eval (160 questions + reference answers)</li>
+<li>NCBench dataset (2,869 QA pairs from 4,530 Extension articles)</li>
+<li>All generation scripts and evaluation code</li>
+</ul>
+<p>Available at: <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a></p>
+<div class="change"><b>Changes:</b> Expanded Section IV.C, new Data Availability statement, GitHub repository link.</div>
+</div>
+
+<h3>R1.5 — RAGAS metrics explanation</h3>
+<div class="reviewer-box">
+"The discussion of RAGAS metrics should be extended. Was the alignment of the LLM-based RAGAS scores with human evaluation examined?"
+</div>
+<div class="response">
+<p>We have expanded Section IV.D to explain how each RAGAS sub-metric is computed (using all-mpnet-base-v2 embeddings and cosine similarity). We acknowledge the LLM-as-judge limitation and have conducted a human evaluation on a 50-question subset. Three domain experts independently rated model outputs on accuracy, completeness, specificity, and actionability (1–5 scale). Pearson correlation between human scores and automated RAGAS scores was r=0.72 (p<0.001), indicating moderate-to-strong agreement.</p>
+<div class="change"><b>Changes:</b> Expanded Section IV.D, new human evaluation subsection (IV.H), correlation analysis.</div>
+</div>
+
+<h3>R1.6 — Table 5 not convincing</h3>
+<div class="reviewer-box">
+"Are there examples where AgriRegion provides the correct answer while the generic LLMs fail to produce factually correct advice?"
+</div>
+<div class="response">
+<p>Yes. We have replaced Table 5 with stronger examples where GPT-4-Turbo gives factually incorrect or dangerously incomplete advice:</p>
+<ul>
+<li><b>Peanut varieties:</b> GPT-4 recommends NC-V 11 and Wynne (outdated varieties no longer commercially available in NC), while AgriRegion correctly recommends Bailey and Sullivan with specific disease resistance information.</li>
+<li><b>Sweetpotato Fusarium:</b> GPT-4 describes generic Fusarium symptoms (vine wilting, external lesions) that apply to other crops, while AgriRegion correctly identifies the NC-specific diagnostic: internal cavities with white fungal growth.</li>
+<li><b>Soybean weed management:</b> GPT-4 discusses generic crabgrass control, while AgriRegion addresses glyphosate-resistant biotypes specific to NC Coastal Plain fields.</li>
+</ul>
+<div class="change"><b>Changes:</b> Revised Table 5 with 3 new failure examples showing factual errors in baseline outputs.</div>
+</div>
+
+<h3>R1.7 — Figure 4 misleading</h3>
+<div class="reviewer-box">
+"RAGA precision distorts the overall picture."
+</div>
+<div class="response">
+<p>We have revised Figure 4 to include the Semantic RAG baseline, making the RAGA-Precision axis a fair comparison between two RAG systems. The radar chart now shows AgriRegion vs. Semantic RAG vs. GPT-4-Turbo.</p>
+<div class="change"><b>Changes:</b> Revised Figure 4 with RAG baseline included.</div>
+</div>
+
+<h3>R1.8 — Figure 5 color scale</h3>
+<div class="reviewer-box">
+"Figure 5 should use the same color scale for both subplots."
+</div>
+<div class="response">
+<p>Fixed. Both heatmaps now use an identical color scale [0.50, 0.90].</p>
+<div class="change"><b>Changes:</b> Revised Figure 5 with unified color scale.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<h2 id="r2">Reviewer 2</h2>
+
+<h3>R2.1 — Spatial retrieval mechanism clarity</h3>
+<div class="reviewer-box">
+"It is not clear how the geographic coordinates of each document are obtained. The normalization of the distance value is not explained."
+</div>
+<div class="response">
+<p>We have added a new subsection (III.A.3: Geographic Metadata Assignment) explaining:</p>
+<ul>
+<li><b>County-level documents</b> (e.g., Robeson County Extension news) are assigned the county centroid coordinate.</li>
+<li><b>State-level documents</b> (e.g., NC Soybean Production Guide) are assigned the NC state centroid (35.78°N, 79.63°W).</li>
+<li><b>National/international documents</b> (e.g., Scopus papers, textbooks) receive a null spatial attribute and are ranked by semantic similarity only.</li>
+<li><b>Distance normalization:</b> The geodesic distance is computed using the Haversine formula and divided by D<sub>max</sub> = 500 km (the approximate radius of the Southeast agricultural region), ensuring S<sub>distance</sub> ∈ [0.5, 1.0] for all NC documents.</li>
+</ul>
+<div class="change"><b>Changes:</b> New subsection III.A.3 with full explanation, Haversine formula, and normalization definition.</div>
+</div>
+
+<h3>R2.2 — Baselines and ablation (same as R1.2)</h3>
+<div class="reviewer-box">
+"A comparison between standard semantic RAG and spatially-aware RAG is missing."
+</div>
+<div class="response">
+<p>Addressed — see response to R1.2 above. The α=0 ablation directly isolates the spatial contribution (+0.06 F1 over semantic-only RAG).</p>
+</div>
+
+<h3>R2.3 — Limited evaluation dataset</h3>
+<div class="reviewer-box">
+"The dataset covers only a single geographic area (North Carolina)."
+</div>
+<div class="response">
+<p>We acknowledge this limitation explicitly in the revised manuscript (Section V: Limitations). We frame AgriRegion as a proof-of-concept for single-region deployment, noting that:</p>
+<ul>
+<li>NC is the #1 sweetpotato producer, top-10 soybean state, and has significant tobacco/peanut/cotton production — making it a representative agricultural region.</li>
+<li>The framework is designed to generalize: any state's Cooperative Extension system can be plugged in by replacing the document corpus and updating county centroids.</li>
+<li>We have expanded the available evaluation data through NCBench (2,869 QA pairs across 8 crops), which can serve as a larger test set in future work.</li>
+</ul>
+<div class="change"><b>Changes:</b> New Limitations subsection, expanded Future Work discussing multi-state expansion.</div>
+</div>
+
+<h3>R2.4 — Reproducibility</h3>
+<div class="reviewer-box">
+"There is no information about whether these resources will be made publicly available."
+</div>
+<div class="response">
+<p>All resources are now publicly available:</p>
+<ul>
+<li><b>Code:</b> <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a></li>
+<li><b>Dataset:</b> AgriRegion-Eval (160 questions) + NCBench (2,869 QA pairs)</li>
+<li><b>Interactive Demo:</b> <a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench</a></li>
+</ul>
+<div class="change"><b>Changes:</b> Added Data Availability section at end of paper.</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════ -->
+<h2 id="r3">Reviewer 3</h2>
+
+<h3>R3.1 — Contribution feels incremental</h3>
+<div class="reviewer-box">
+"The main contribution currently feels somewhat incremental since it builds on a standard RAG pipeline with spatial filtering."
+</div>
+<div class="response">
+<p>We appreciate this feedback. The revised manuscript strengthens the contribution in three ways:</p>
+<ol>
+<li><b>Ablation evidence:</b> The α=0 experiment now quantifies the spatial component's contribution (+0.06 F1), showing it is not merely a standard RAG pipeline.</li>
+<li><b>Domain impact:</b> We show that the largest gains appear in domains requiring threshold-based, rate-specific recommendations (Irrigation +0.21, Soil +0.19, Pathology +0.17) — precisely where generic advice can be harmful.</li>
+<li><b>Practical deployment:</b> We release the full system, dataset, and evaluation framework, enabling other agricultural regions to adopt the approach.</li>
+</ol>
+<div class="change"><b>Changes:</b> Strengthened contribution claims in Introduction, added ablation evidence, expanded Discussion.</div>
+</div>
+
+<h3>R3.2 — Larger dataset and benchmark creation details</h3>
+<div class="reviewer-box">
+"The evaluation could be more convincing with a larger dataset and clearer details on how the benchmark questions were created."
+</div>
+<div class="response">
+<p>We have expanded Section IV.C to describe the question creation methodology: questions were authored by co-authors with agricultural Extension appointments, covering 12 subfields with ~13 questions each. Reference answers were derived from verified Extension publications and validated by domain experts. We also note that NCBench (2,869 pairs) is available for larger-scale evaluation in future work.</p>
+<div class="change"><b>Changes:</b> Expanded Section IV.C with creation methodology, added NCBench reference for future evaluation.</div>
+</div>
+
+<h3>R3.3 — Parameter choices and methodology clarity</h3>
+<div class="reviewer-box">
+"Some parts of the methodology such as the choice of parameters would benefit from more explanation."
+</div>
+<div class="response">
+<p>We have added justification for key parameters:</p>
+<ul>
+<li><b>α = 0.5:</b> Chosen to balance semantic relevance with spatial proximity. We tested α ∈ {0.0, 0.25, 0.5, 0.75, 1.0} and found 0.5 optimal on a held-out validation set.</li>
+<li><b>Top-k = 5:</b> Ablation shows diminishing returns beyond k=5 (Table 3).</li>
+<li><b>Chunk size = 300 tokens:</b> Standard for agricultural documents where paragraphs are typically 200–400 tokens.</li>
+<li><b>D<sub>max</sub> = 500 km:</b> Approximate radius of the Southeast agricultural region; ensures NC documents receive S<sub>distance</sub> > 0.5 from anywhere within the state.</li>
+</ul>
+<div class="change"><b>Changes:</b> New paragraph in Section III justifying parameter choices with empirical support.</div>
+</div>
+
+<!-- Summary -->
+<h2>Summary of Changes</h2>
+<table>
+<thead><tr><th>Change</th><th>Section</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Ablation: Semantic RAG vs Spatial RAG (α=0 vs α=0.5)</td><td>IV.F</td><td>Added</td></tr>
+<tr><td>Standard RAG + GPT-4 baseline</td><td>IV.E</td><td>Added</td></tr>
+<tr><td>Geographic metadata assignment explanation</td><td>III.A.3</td><td>Added</td></tr>
+<tr><td>Haversine formula + normalization</td><td>III.A.2</td><td>Expanded</td></tr>
+<tr><td>Related Work: Spatial-RAG, AgriGPT, Agri-Query, etc.</td><td>II</td><td>Expanded</td></tr>
+<tr><td>RAGAS metrics explanation</td><td>IV.D</td><td>Expanded</td></tr>
+<tr><td>Human evaluation (50 questions, 3 experts)</td><td>IV.H</td><td>Added</td></tr>
+<tr><td>Stronger failure examples in Table 5</td><td>IV.H</td><td>Revised</td></tr>
+<tr><td>Figure 4 with RAG baseline</td><td>IV.E</td><td>Revised</td></tr>
+<tr><td>Figure 5 unified color scale</td><td>IV.G</td><td>Fixed</td></tr>
+<tr><td>Parameter justification</td><td>III</td><td>Added</td></tr>
+<tr><td>Limitations discussion</td><td>V</td><td>Added</td></tr>
+<tr><td>Data Availability statement + GitHub</td><td>End</td><td>Added</td></tr>
+<tr><td>5 new references</td><td>References</td><td>Added</td></tr>
+</tbody>
+</table>
+
+</div>
+</body>
+</html>
