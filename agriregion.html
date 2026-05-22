@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriRegion — Region-Aware Retrieval for Agricultural Advice</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fff;color:#222;line-height:1.7}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid #eee;padding:8px 0;text-align:center}
+.topnav a{display:inline-block;margin:0 8px;padding:4px 10px;font-size:12px;font-weight:600;color:#555;text-decoration:none;border-radius:4px}
+.topnav a:hover{background:#f0f0f0;color:#222}
+.topnav a.active{background:#0d47a1;color:#fff}
+.hero{background:linear-gradient(135deg,#0d47a1 0%,#1565c0 40%,#42a5f5 100%);padding:50px 20px 40px;text-align:center;color:#fff;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='20' fill='none' stroke='rgba(255,255,255,0.05)' stroke-width='1'/%3E%3Cpath d='M30 10 L30 50 M10 30 L50 30' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/svg%3E") repeat;}
+.hero h1{font-size:32px;margin-bottom:6px;position:relative;z-index:1}
+.hero .subtitle{opacity:0.85;font-size:14px;position:relative;z-index:1;max-width:700px;margin:0 auto}
+.hero .venue{opacity:0.6;font-size:12px;margin-top:10px;position:relative;z-index:1}
+.hero .authors{opacity:0.75;font-size:12px;margin-top:8px;position:relative;z-index:1}
+.container{max-width:900px;margin:0 auto;padding:30px 20px}
+h2{font-size:20px;margin:35px 0 12px;padding-bottom:6px;border-bottom:2px solid #e3f2fd}
+h3{font-size:15px;margin:20px 0 8px;color:#1565c0}
+.card{background:#f8fbff;border:1px solid #e3f2fd;border-radius:8px;padding:16px;margin:12px 0}
+.card-row{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+.card-row .card{flex:1;min-width:200px}
+.highlight{background:#e3f2fd;border-left:4px solid #1565c0;padding:14px 18px;border-radius:0 6px 6px 0;margin:16px 0}
+.highlight b{color:#0d47a1}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0}
+th{background:#f0f7ff;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase;color:#555;border-bottom:2px solid #e3f2fd}
+td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
+tr:hover td{background:#f8fbff}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;color:#fff;margin-right:4px}
+.pipeline-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.pipe-box{background:#fff;border:2px solid #1565c0;border-radius:8px;padding:10px 14px;text-align:center;min-width:100px}
+.pipe-box .label{font-size:10px;color:#888;text-transform:uppercase}
+.pipe-box .val{font-size:16px;font-weight:700;color:#1565c0}
+.pipe-arrow{font-size:18px;color:#90caf9;padding:0 6px}
+.review-item{background:#fff;border:1px solid #eee;border-radius:8px;padding:14px;margin:10px 0}
+.review-item .issue{font-weight:600;font-size:13px;color:#c62828;margin-bottom:4px}
+.review-item .response{font-size:12px;color:#333;line-height:1.6}
+.review-item .status{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;margin-left:8px}
+.status-done{background:#e8f5e9;color:#2e7d32}
+.status-progress{background:#fff3e0;color:#e65100}
+.status-todo{background:#fbe9e7;color:#c62828}
+.footer{text-align:center;color:#888;font-size:12px;margin-top:40px;padding:20px 0;border-top:1px solid #eee}
+@media(max-width:600px){.card-row{flex-direction:column}.pipeline-flow{flex-direction:column}.pipe-arrow{transform:rotate(90deg)}}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<a href="#overview">Overview</a>
+<a href="#system">System</a>
+<a href="#results">Results</a>
+<a href="#revision">Revision</a>
+<a href="agriregion.html" class="active">🌍 AgriRegion</a>
+</nav>
+
+<div class="hero">
+<h1>🌍 AgriRegion</h1>
+<div class="subtitle">Region-Aware Retrieval for High-Fidelity Agricultural Advice</div>
+<div class="authors">Mesafint Fanuel, Mahmoud Nabil Mahmoud, Crystal Cook Marshall, Vishal Lakhotia, Biswanath Dari, Kaushik Roy, Shaohu Zhang</div>
+<div class="venue">IEEE Access (Under Revision) · NC A&T State University · University of Alabama</div>
+</div>
+
+<div class="container">
+
+<!-- Overview -->
+<div id="overview">
+<h2>Abstract</h2>
+<p>
+LLMs frequently suffer from <b>"contextual hallucination"</b> in agriculture — providing advice that is scientifically sound in one region but disastrous in another due to variations in soil, climate, and local regulations. <b>AgriRegion</b> is a RAG framework that incorporates a geospatial metadata injection layer and a region-prioritized re-ranking mechanism. By restricting the knowledge base to verified local Extension documents and enforcing geospatial constraints during retrieval, AgriRegion ensures locally accurate advice.
+</p>
+
+<div class="highlight">
+<b>Key Result:</b> AgriRegion reduces hallucinations by 10–20% compared to GPT-4-Turbo, Claude 3.5 Sonnet, Gemini 1.5 Pro, and Mistral-7B on 160 agricultural questions across 12 subfields.
+</div>
+</div>
+
+<!-- System Design -->
+<div id="system">
+<h2>System Design</h2>
+
+<div class="pipeline-flow">
+<div class="pipe-box"><div class="label">Corpus</div><div class="val">70K+ docs</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-box"><div class="label">Chunk</div><div class="val">4M chunks</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-box"><div class="label">Embed</div><div class="val">Ada v2</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-box"><div class="label">Index</div><div class="val">ChromaDB</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-box" style="border-color:#c62828;"><div class="label">Spatial Re-rank</div><div class="val" style="color:#c62828;">Geo α=0.5</div></div>
+<span class="pipe-arrow">→</span>
+<div class="pipe-box"><div class="label">Generate</div><div class="val">LLaMA 3</div></div>
+</div>
+
+<h3>Spatial-Semantic Retrieval (Key Innovation)</h3>
+<div class="card">
+<p style="font-size:13px;">Standard RAG retrieves by semantic similarity alone. AgriRegion adds a <b>distance decay function</b>:</p>
+<div style="background:#fff;border:1px solid #e3f2fd;border-radius:6px;padding:12px;margin:10px 0;font-family:monospace;font-size:13px;text-align:center;">
+S<sub>final</sub> = (1 − α) · S<sub>semantic</sub> + α · S<sub>distance</sub><br><br>
+S<sub>distance</sub> = 1 / (1 + d(g<sub>user</sub>, g<sub>doc</sub>))
+</div>
+<p style="font-size:12px;color:#555;margin-top:8px;">Where d is normalized geodesic distance. NC Extension docs get S<sub>distance</sub> ≈ 1 for NC users. Out-of-region docs are penalized but not eliminated.</p>
+</div>
+
+<h3>Knowledge Sources</h3>
+<div class="card-row">
+<div class="card"><b>Scopus AGRI</b><br><span style="font-size:12px;color:#666;">70K+ peer-reviewed papers filtered by agricultural subject codes</span></div>
+<div class="card"><b>Textbooks (4)</b><br><span style="font-size:12px;color:#666;">Nature of Soils, Soil Fertility, Principles of Agronomy, Plant Pathology</span></div>
+<div class="card"><b>NC Extension</b><br><span style="font-size:12px;color:#666;">Local publications, IPM factsheets, production guides — the "last mile" of agricultural knowledge</span></div>
+</div>
+</div>
+
+<!-- Results -->
+<div id="results">
+<h2>Results</h2>
+
+<table>
+<thead>
+<tr><th>Model</th><th>EM</th><th>F1</th><th>BLEU-4</th><th>ROUGE-L</th><th>BERTScore</th><th>RAGA-P</th></tr>
+</thead>
+<tbody>
+<tr style="background:#e8f5e9;font-weight:600;"><td>AgriRegion (ours)</td><td>0.76</td><td>0.82</td><td>0.65</td><td>0.72</td><td>0.90</td><td>0.86</td></tr>
+<tr><td>GPT-4-Turbo</td><td>0.64</td><td>0.70</td><td>0.55</td><td>0.61</td><td>0.82</td><td>—</td></tr>
+<tr><td>Claude 3.5 Sonnet</td><td>0.60</td><td>0.66</td><td>0.51</td><td>0.57</td><td>0.80</td><td>—</td></tr>
+<tr><td>Gemini 1.5 Pro</td><td>0.56</td><td>0.61</td><td>0.46</td><td>0.52</td><td>0.77</td><td>—</td></tr>
+<tr><td>Mistral-7B-Instruct</td><td>0.49</td><td>0.55</td><td>0.39</td><td>0.45</td><td>0.71</td><td>—</td></tr>
+</tbody>
+</table>
+
+<h3>Domain-wise F1 Gains over GPT-4-Turbo</h3>
+<table>
+<thead><tr><th>Subdomain</th><th>GPT-4-Turbo</th><th>AgriRegion</th><th>Δ Gain</th></tr></thead>
+<tbody>
+<tr><td>Irrigation</td><td>0.58</td><td>0.79</td><td style="color:#2e7d32;font-weight:700;">+0.21</td></tr>
+<tr><td>Soil Science</td><td>0.63</td><td>0.82</td><td style="color:#2e7d32;font-weight:700;">+0.19</td></tr>
+<tr><td>Plant Pathology</td><td>0.61</td><td>0.78</td><td style="color:#2e7d32;font-weight:700;">+0.17</td></tr>
+<tr><td>Weeds</td><td>0.66</td><td>0.77</td><td style="color:#2e7d32;">+0.11</td></tr>
+<tr><td>Horticulture</td><td>0.67</td><td>0.78</td><td style="color:#2e7d32;">+0.11</td></tr>
+<tr><td>Agronomy</td><td>0.70</td><td>0.81</td><td style="color:#2e7d32;">+0.11</td></tr>
+<tr><td>Extension</td><td>0.72</td><td>0.79</td><td style="color:#2e7d32;">+0.07</td></tr>
+<tr><td>Economics</td><td>0.73</td><td>0.80</td><td style="color:#2e7d32;">+0.07</td></tr>
+</tbody>
+</table>
+
+<h3>Ablation Study</h3>
+<table>
+<thead><tr><th>Variant</th><th>Top-k</th><th>EM</th><th>F1</th><th>BERTScore</th><th>RAGA-P</th></tr></thead>
+<tbody>
+<tr style="font-weight:600;"><td>AgriRegion</td><td>5</td><td>0.76</td><td>0.82</td><td>0.90</td><td>0.86</td></tr>
+<tr><td>No RAG</td><td>—</td><td>0.62</td><td>0.67</td><td>0.80</td><td>—</td></tr>
+<tr><td>Top-k=2</td><td>2</td><td>0.72</td><td>0.77</td><td>0.88</td><td>0.82</td></tr>
+<tr><td>Top-k=8</td><td>8</td><td>0.74</td><td>0.79</td><td>0.89</td><td>0.84</td></tr>
+<tr><td>Random Docs</td><td>5</td><td>0.56</td><td>0.62</td><td>0.76</td><td>0.50</td></tr>
+</tbody>
+</table>
+</div>
+
+<!-- Connection to NCBench -->
+<h2>🔗 Connection to NCBench</h2>
+<div class="highlight">
+<b>NCBench trains the model → AgriRegion grounds it in local evidence → Farmers get accurate, region-specific advice.</b>
+</div>
+<div class="card-row">
+<div class="card" style="border-top:3px solid #2e7d32;">
+<b>NCBench provides:</b>
+<ul style="font-size:12px;margin-top:6px;padding-left:16px;line-height:2;">
+<li>2,869 static QA pairs for fine-tuning LLaMA 3</li>
+<li>94 temporal QA pairs for RAG evaluation</li>
+<li>4,530 source articles for the vector database</li>
+<li>8-crop coverage across NC agriculture</li>
+</ul>
+</div>
+<div class="card" style="border-top:3px solid #1565c0;">
+<b>AgriRegion provides:</b>
+<ul style="font-size:12px;margin-top:6px;padding-left:16px;line-height:2;">
+<li>Spatial-semantic retrieval architecture</li>
+<li>Geospatial metadata injection</li>
+<li>Region-prioritized re-ranking</li>
+<li>Fine-tuned LLaMA 3 generation</li>
+</ul>
+</div>
+</div>
+
+<!-- Revision Plan -->
+<div id="revision">
+<h2>📝 Revision Plan (Reviewer Feedback)</h2>
+<p style="font-size:13px;color:#666;margin-bottom:16px;">Addressing reviewer comments from IEEE Access submission. Status tracked below.</p>
+
+<div class="review-item">
+<div class="issue">1. Add RAG-based baselines (not just bare LLMs) <span class="status status-todo">TODO</span></div>
+<div class="response">Add comparisons with: AgriGPT, standard semantic RAG (no geo), Agri-Query, ShizishanGPT. Run all on AgriRegion-Eval 160 questions.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">2. Ablation: disable geo component (α=0) <span class="status status-todo">TODO</span></div>
+<div class="response">Run AgriRegion with α=0 (semantic-only RAG) vs α=0.5 (full spatial). This isolates the geospatial contribution. Expected: α=0 drops F1 by 0.05–0.10.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">3. Expand evaluation dataset (160 → larger) <span class="status status-progress">IN PROGRESS</span></div>
+<div class="response">Use NCBench's 2,869 QA pairs as expanded evaluation. Already generated and publicly available. Subset of 500 stratified questions planned.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">4. Release dataset and code <span class="status status-done">DONE</span></div>
+<div class="response">NCBench dataset, scripts, and interactive explorer publicly available at <a href="https://github.com/mdfanuel-ux/ncbench">github.com/mdfanuel-ux/ncbench</a> and <a href="https://mdfanuel-ux.github.io/ncbench/">mdfanuel-ux.github.io/ncbench</a>.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">5. Explain geographic metadata assignment <span class="status status-todo">TODO</span></div>
+<div class="response">Add subsection explaining: (a) NC Extension docs tagged with state-level coordinates, (b) county-specific docs tagged with county centroid, (c) documents covering regions use bounding box centroid, (d) distance normalized by max state diameter.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">6. Discuss generalizability beyond NC <span class="status status-todo">TODO</span></div>
+<div class="response">Acknowledge NC as proof-of-concept. Discuss how framework generalizes: any state's Extension system can be plugged in. Mention potential multi-state expansion.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">7. RAGAS metrics — explain LLM-as-judge validity <span class="status status-todo">TODO</span></div>
+<div class="response">Add explanation of how RAGAS sub-metrics are computed. Discuss LLM-as-judge limitations. Add human evaluation on 50-question subset for correlation analysis.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">8. Stronger qualitative examples (where LLMs fail) <span class="status status-progress">IN PROGRESS</span></div>
+<div class="response">NCBench benchmark page shows side-by-side failures. Select 3–5 examples where GPT-4 gives factually wrong NC advice (wrong herbicide, wrong timing, wrong variety).</div>
+</div>
+
+<div class="review-item">
+<div class="issue">9. Fix Figure 4 (radar chart distortion) <span class="status status-todo">TODO</span></div>
+<div class="response">Either add RAG baselines to make RAGA-Precision fair, or remove it from the radar and present separately.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">10. Fix Figure 5 (same color scale) <span class="status status-todo">TODO</span></div>
+<div class="response">Use identical color scale [0.5, 0.9] for both AgriRegion and GPT-4 heatmaps.</div>
+</div>
+
+<div class="review-item">
+<div class="issue">11. Add missing references <span class="status status-todo">TODO</span></div>
+<div class="response">Add: Agri-Query (Gun et al., 2025), ShizishanGPT (Yang et al., 2025), AgriHubi (Hasan et al., 2026), Spatial-RAG (Yu et al., 2025). Discuss relation to each.</div>
+</div>
+
+</div>
+
+<div class="footer">
+<p>AgriRegion · IEEE Access (Under Revision) · <a href="index.html">NCBench Project</a> · <a href="https://github.com/mdfanuel-ux/ncbench">GitHub</a></p>
+</div>
+
+</div>
+</body>
+</html>
