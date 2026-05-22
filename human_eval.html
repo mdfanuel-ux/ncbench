@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Human Evaluation Tool</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa;color:#222}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid #eee;padding:8px 0;text-align:center}
+.topnav a{display:inline-block;margin:0 8px;padding:4px 10px;font-size:12px;font-weight:600;color:#555;text-decoration:none;border-radius:4px}
+.topnav a:hover{background:#f0f0f0;color:#222}
+.topnav a.active{background:#e65100;color:#fff}
+.hero{background:linear-gradient(135deg,#bf360c 0%,#e65100 40%,#ff9800 100%);padding:40px 20px 30px;text-align:center;color:#fff}
+.hero h1{font-size:28px;margin-bottom:6px}
+.hero .sub{opacity:0.85;font-size:13px}
+.container{max-width:800px;margin:0 auto;padding:30px 20px}
+h2{font-size:18px;margin:25px 0 12px}
+.progress-bar{height:6px;background:#eee;border-radius:3px;margin:12px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,#e65100,#ff9800);border-radius:3px;transition:width 0.3s}
+.progress-text{font-size:11px;color:#888;margin-bottom:16px}
+.eval-card{background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin:16px 0;box-shadow:0 1px 4px rgba(0,0,0,0.05)}
+.eval-question{font-size:15px;font-weight:600;line-height:1.5;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #f0f0f0}
+.eval-crop{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;color:#fff;margin-bottom:8px}
+.answer-section{margin:12px 0}
+.answer-label{font-size:11px;text-transform:uppercase;font-weight:700;color:#888;margin-bottom:4px;letter-spacing:0.04em}
+.answer-text{font-size:13px;line-height:1.6;color:#333;padding:10px 14px;background:#f9f9f9;border-radius:6px;border-left:3px solid #ddd}
+.answer-text.reference{border-left-color:#2e7d32;background:#f0fff0}
+.rating-section{margin-top:16px;padding-top:14px;border-top:1px solid #f0f0f0}
+.rating-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+.rating-label{font-size:12px;font-weight:600;min-width:120px;color:#555}
+.rating-btns{display:flex;gap:4px}
+.rating-btn{width:32px;height:32px;border:1px solid #ddd;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;background:#fff;color:#555;transition:all 0.15s;display:flex;align-items:center;justify-content:center}
+.rating-btn:hover{border-color:#e65100;color:#e65100}
+.rating-btn.selected{background:#e65100;color:#fff;border-color:#e65100}
+.nav-btns{display:flex;gap:12px;margin-top:20px;justify-content:space-between}
+.nav-btn{padding:10px 20px;border:1px solid #ddd;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:#555;transition:all 0.2s}
+.nav-btn:hover{border-color:#e65100;color:#e65100}
+.nav-btn.primary{background:#e65100;color:#fff;border-color:#e65100}
+.nav-btn.primary:hover{background:#bf360c}
+.nav-btn:disabled{opacity:0.4;cursor:not-allowed}
+.results-section{margin-top:30px;padding:20px;background:#fff;border:1px solid #eee;border-radius:10px}
+.export-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 18px;border:1px solid #2e7d32;border-radius:8px;font-size:12px;font-weight:600;color:#2e7d32;text-decoration:none;background:#fff;cursor:pointer;margin-top:12px}
+.export-btn:hover{background:#f0fff0}
+.instructions{background:#fff3e0;border:1px solid #ffe0b2;border-radius:8px;padding:14px;margin:14px 0;font-size:12px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<a href="benchmark.html">🏆 Benchmark</a>
+<a href="human_eval.html" class="active">📋 Human Eval</a>
+</nav>
+
+<div class="hero">
+<h1>📋 Human Evaluation Tool</h1>
+<div class="sub">Rate QA pairs to validate automated scoring — for collaborators</div>
+</div>
+
+<div class="container">
+
+<div class="instructions">
+<b>Instructions for evaluators:</b><br>
+For each question, you'll see the <b>reference answer</b> (from NC Extension) and the <b>model answer</b> (from an LLM).<br>
+Rate the model answer on 4 dimensions (1–5 scale):<br>
+• <b>Accuracy</b> — Is the information factually correct?<br>
+• <b>Completeness</b> — Does it cover the key points from the reference?<br>
+• <b>Specificity</b> — Does it include specific details (products, rates, timing)?<br>
+• <b>Actionability</b> — Would a farmer find this useful and actionable?<br><br>
+<b>1</b> = Wrong/useless &nbsp; <b>2</b> = Poor &nbsp; <b>3</b> = Partial &nbsp; <b>4</b> = Good &nbsp; <b>5</b> = Excellent (matches expert)
+</div>
+
+<!-- Progress -->
+<div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+<div class="progress-text" id="progress-text">Loading questions...</div>
+
+<!-- Eval Card -->
+<div class="eval-card" id="eval-card">
+<div class="eval-crop" id="eval-crop"></div>
+<div class="eval-question" id="eval-question">Loading...</div>
+
+<div class="answer-section">
+<div class="answer-label">✅ Reference Answer (NC Extension Expert)</div>
+<div class="answer-text reference" id="ref-answer"></div>
+</div>
+
+<div class="answer-section">
+<div class="answer-label">🤖 Model Answer</div>
+<div class="answer-text" id="model-answer"></div>
+</div>
+
+<div class="rating-section">
+<div class="rating-row"><span class="rating-label">Accuracy</span><div class="rating-btns" data-dim="accuracy"></div></div>
+<div class="rating-row"><span class="rating-label">Completeness</span><div class="rating-btns" data-dim="completeness"></div></div>
+<div class="rating-row"><span class="rating-label">Specificity</span><div class="rating-btns" data-dim="specificity"></div></div>
+<div class="rating-row"><span class="rating-label">Actionability</span><div class="rating-btns" data-dim="actionability"></div></div>
+</div>
+
+<div class="nav-btns">
+<button class="nav-btn" id="prev-btn" onclick="prevItem()">← Previous</button>
+<span id="counter" style="font-size:12px;color:#888;align-self:center;"></span>
+<button class="nav-btn primary" id="next-btn" onclick="nextItem()">Next →</button>
+</div>
+</div>
+
+<!-- Results -->
+<div class="results-section" id="results-section" style="display:none;">
+<h2>✅ Evaluation Complete</h2>
+<p style="font-size:13px;color:#555;margin:8px 0;">Thank you! Your ratings have been saved locally. Export below to share with the team.</p>
+<div id="summary-stats"></div>
+<button class="export-btn" onclick="exportResults()">⬇️ Export Results (JSON)</button>
+<button class="export-btn" onclick="exportCSV()" style="border-color:#1565c0;color:#1565c0;">⬇️ Export Results (CSV)</button>
+</div>
+
+</div>
+
+<script>
+let evalData = [];
+let ratings = {};
+let currentIdx = 0;
+
+async function loadData() {
+    try {
+        const resp = await fetch('eval_data.json');
+        const all = await resp.json();
+        // Take 50 for human eval
+        evalData = all.slice(0, 50);
+        // Load saved ratings from localStorage
+        const saved = localStorage.getItem('ncbench_human_eval');
+        if (saved) ratings = JSON.parse(saved);
+        renderItem();
+    } catch(e) {
+        document.getElementById('eval-question').textContent = 'Error loading data. Make sure eval_data.json exists.';
+    }
+}
+
+function renderItem() {
+    if (currentIdx >= evalData.length) {
+        showResults();
+        return;
+    }
+    const item = evalData[currentIdx];
+    const cropColors = {soybean:'#d4a72c',sweetpotato:'#e67e22',tobacco:'#5d4e37',peanut:'#8B4513',corn:'#f0a500',cotton:'#7b8fa1',wheat:'#c49a3c',strawberry:'#d32f2f'};
+    
+    document.getElementById('eval-crop').textContent = item.crop;
+    document.getElementById('eval-crop').style.background = cropColors[item.crop] || '#555';
+    document.getElementById('eval-question').textContent = item.question;
+    document.getElementById('ref-answer').textContent = item.reference;
+    document.getElementById('model-answer').textContent = item.model_answer;
+    
+    // Progress
+    const rated = Object.keys(ratings).length;
+    document.getElementById('progress-fill').style.width = `${(rated/evalData.length)*100}%`;
+    document.getElementById('progress-text').textContent = `${rated} of ${evalData.length} rated`;
+    document.getElementById('counter').textContent = `${currentIdx+1} / ${evalData.length}`;
+    
+    // Render rating buttons
+    document.querySelectorAll('.rating-btns').forEach(container => {
+        const dim = container.dataset.dim;
+        container.innerHTML = [1,2,3,4,5].map(v => {
+            const key = `${currentIdx}_${dim}`;
+            const selected = ratings[key] === v ? 'selected' : '';
+            return `<button class="rating-btn ${selected}" onclick="rate('${dim}',${v})">${v}</button>`;
+        }).join('');
+    });
+    
+    document.getElementById('prev-btn').disabled = currentIdx === 0;
+}
+
+function rate(dim, value) {
+    const key = `${currentIdx}_${dim}`;
+    ratings[key] = value;
+    localStorage.setItem('ncbench_human_eval', JSON.stringify(ratings));
+    renderItem();
+}
+
+function nextItem() {
+    if (currentIdx < evalData.length - 1) {
+        currentIdx++;
+        renderItem();
+    } else {
+        showResults();
+    }
+}
+
+function prevItem() {
+    if (currentIdx > 0) {
+        currentIdx--;
+        renderItem();
+    }
+}
+
+function showResults() {
+    document.getElementById('results-section').style.display = 'block';
+    // Compute averages
+    const dims = ['accuracy','completeness','specificity','actionability'];
+    const avgs = {};
+    dims.forEach(d => {
+        const vals = [];
+        for (let i = 0; i < evalData.length; i++) {
+            const key = `${i}_${d}`;
+            if (ratings[key]) vals.push(ratings[key]);
+        }
+        avgs[d] = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2) : '—';
+    });
+    document.getElementById('summary-stats').innerHTML = `
+        <div style="display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;">
+            ${dims.map(d => `<div style="flex:1;min-width:100px;text-align:center;padding:10px;background:#f9f9f9;border-radius:6px;"><div style="font-size:20px;font-weight:700;">${avgs[d]}</div><div style="font-size:11px;color:#888;">${d}</div></div>`).join('')}
+        </div>
+    `;
+}
+
+function exportResults() {
+    const output = evalData.map((item, i) => ({
+        question: item.question,
+        crop: item.crop,
+        model: item.model,
+        split: item.split,
+        accuracy: ratings[`${i}_accuracy`] || null,
+        completeness: ratings[`${i}_completeness`] || null,
+        specificity: ratings[`${i}_specificity`] || null,
+        actionability: ratings[`${i}_actionability`] || null,
+    }));
+    const blob = new Blob([JSON.stringify(output, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'ncbench_human_eval_results.json'; a.click();
+}
+
+function exportCSV() {
+    let csv = 'question,crop,model,split,accuracy,completeness,specificity,actionability\n';
+    evalData.forEach((item, i) => {
+        csv += `"${item.question.replace(/"/g,'""')}",${item.crop},${item.model},${item.split},${ratings[`${i}_accuracy`]||''},${ratings[`${i}_completeness`]||''},${ratings[`${i}_specificity`]||''},${ratings[`${i}_actionability`]||''}\n`;
+    });
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'ncbench_human_eval_results.csv'; a.click();
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') nextItem();
+    if (e.key === 'ArrowLeft') prevItem();
+});
+
+loadData();
+</script>
+
+</body>
+</html>
