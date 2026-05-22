@@ -187,14 +187,14 @@ body {
 
 <!-- Key finding -->
 <div class="callout">
-    <div class="big">GPT-4o scores 3.9/5 on NC crop questions</div>
-    <div class="desc">Even the best commercial LLM misses ~20% of expert-level agricultural detail. Farmers deserve better.</div>
+    <div class="big">Completeness is the weakest: models cover only 65-78% of expert detail</div>
+    <div class="desc">Across 3 models and 98 questions, all LLMs miss NC-specific product names, rates, and timing windows that Extension experts provide.</div>
 </div>
 
 <!-- Results table -->
 <h2 style="font-size:18px; margin-bottom:12px;">Model Comparison</h2>
 <p style="font-size:12px; color:#888; margin-bottom:14px;">
-    10 questions per split, scored by GPT-4o judge (1–5 scale). Reference answers from NC Extension documents.
+    3 models evaluated on 10–50 questions per split, scored 1–5. GPT models judged by GPT-4o; Mistral judged by Mistral Small. Reference answers from NC Extension documents.
 </p>
 <table class="results-table">
     <thead>
@@ -225,10 +225,11 @@ body {
     <div style="flex:1; min-width:200px; background:#fff; border:1px solid #eee; border-radius:8px; padding:14px;">
         <div style="font-size:11px; color:#888; text-transform:uppercase; font-weight:700; margin-bottom:6px;">Key Takeaways</div>
         <div style="font-size:12px; line-height:1.8; color:#555;">
+            • <b>Completeness</b> is the weakest dimension (3.5–3.9)<br>
             • Models give <b>generic</b> advice instead of NC-specific<br>
-            • <b>Completeness</b> is the weakest dimension<br>
-            • Smaller models (mini) lose ~0.3 points<br>
-            • Fine-tuning on NCBench should close the gap
+            • All models score below 4/5 on specificity for static QA<br>
+            • Fine-tuning on NCBench should close the gap<br>
+            • 3 models tested: GPT-4o, GPT-4o-mini, Mistral Small
         </div>
     </div>
 </div>
@@ -276,10 +277,12 @@ body {
 
 <script>
 const SCORES_DATA = {
-    "gpt-4o_static": { accuracy: 3.9, completeness: 3.7, specificity: 4.4, actionability: 4.4, overall: 3.9 },
-    "gpt-4o_temporal": { accuracy: 4.0, completeness: 3.9, specificity: 4.2, actionability: 4.4, overall: 4.0 },
-    "gpt-4o-mini_static": { accuracy: 3.6, completeness: 3.5, specificity: 4.0, actionability: 4.2, overall: 3.6 },
-    "gpt-4o-mini_temporal": { accuracy: 3.9, completeness: 3.8, specificity: 4.2, actionability: 4.4, overall: 3.9 },
+    "gpt-4o_static": { accuracy: 3.9, completeness: 3.7, specificity: 4.4, actionability: 4.4, overall: 3.9, n: 10 },
+    "gpt-4o_temporal": { accuracy: 4.0, completeness: 3.9, specificity: 4.2, actionability: 4.4, overall: 4.0, n: 10 },
+    "gpt-4o-mini_static": { accuracy: 3.6, completeness: 3.5, specificity: 4.0, actionability: 4.2, overall: 3.6, n: 10 },
+    "gpt-4o-mini_temporal": { accuracy: 3.9, completeness: 3.8, specificity: 4.2, actionability: 4.4, overall: 3.9, n: 10 },
+    "mistral-small_static": { accuracy: 4.56, completeness: 3.65, specificity: 3.75, actionability: 4.08, overall: 4.0, n: 48 },
+    "mistral-small_temporal": { accuracy: 4.74, completeness: 3.90, specificity: 4.16, actionability: 4.56, overall: 4.42, n: 50 },
 };
 
 function scoreClass(v) {
@@ -295,6 +298,8 @@ function renderTable() {
         ['GPT-4o', 'Temporal', SCORES_DATA['gpt-4o_temporal']],
         ['GPT-4o-mini', 'Static', SCORES_DATA['gpt-4o-mini_static']],
         ['GPT-4o-mini', 'Temporal', SCORES_DATA['gpt-4o-mini_temporal']],
+        ['Mistral Small', 'Static', SCORES_DATA['mistral-small_static']],
+        ['Mistral Small', 'Temporal', SCORES_DATA['mistral-small_temporal']],
     ];
     tbody.innerHTML = rows.map(([model, split, s]) => `
         <tr>
