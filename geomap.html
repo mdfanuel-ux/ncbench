@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — Geospatial Retrieval Map</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa;color:#222}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid #eee;padding:8px 0;text-align:center}
+.topnav a{display:inline-block;margin:0 8px;padding:4px 10px;font-size:12px;font-weight:600;color:#555;text-decoration:none;border-radius:4px}
+.topnav a:hover{background:#f0f0f0;color:#222}
+.topnav a.active{background:#0d47a1;color:#fff}
+.hero{background:linear-gradient(135deg,#1a237e 0%,#283593 40%,#5c6bc0 100%);padding:40px 20px 30px;text-align:center;color:#fff}
+.hero h1{font-size:28px;margin-bottom:6px}
+.hero .sub{opacity:0.85;font-size:13px}
+.container{max-width:1000px;margin:0 auto;padding:30px 20px}
+h2{font-size:18px;margin:30px 0 12px;padding-bottom:6px;border-bottom:2px solid #e8eaf6}
+.formula{background:#fff;border:1px solid #e8eaf6;border-radius:8px;padding:16px;margin:14px 0;text-align:center;font-family:'Courier New',monospace;font-size:14px}
+.map-container{position:relative;background:#fff;border:1px solid #eee;border-radius:10px;padding:20px;margin:16px 0}
+#map-svg{width:100%;height:auto}
+.county-dot{cursor:pointer;transition:r 0.2s}
+.county-dot:hover{r:8}
+.user-marker{cursor:move}
+.distance-line{stroke-dasharray:4,4;opacity:0.6}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin:12px 0;font-size:11px;align-items:center}
+.legend-item{display:flex;align-items:center;gap:4px}
+.legend-dot{width:10px;height:10px;border-radius:50%}
+.score-table{width:100%;border-collapse:collapse;font-size:12px;margin:14px 0;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden}
+.score-table th{background:#e8eaf6;padding:8px 10px;text-align:left;font-size:11px;text-transform:uppercase}
+.score-table td{padding:7px 10px;border-bottom:1px solid #f0f0f0}
+.score-bar{height:14px;border-radius:3px;transition:width 0.5s}
+.controls{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0;align-items:center}
+.controls label{font-size:12px;font-weight:600;color:#555}
+.controls select,.controls input{padding:6px 10px;border:1px solid #ddd;border-radius:6px;font-size:12px}
+.info-panel{background:#fff;border:1px solid #e8eaf6;border-radius:8px;padding:14px;margin:14px 0;font-size:12px}
+.highlight{background:#e8eaf6;border-left:4px solid #3f51b5;padding:12px 16px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13px}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<a href="agriregion.html">🌍 AgriRegion</a>
+<a href="sources.html">📚 Sources</a>
+<a href="geomap.html" class="active">🗺️ Geo Map</a>
+</nav>
+
+<div class="hero">
+<h1>🗺️ Geospatial Retrieval Visualization</h1>
+<div class="sub">How AgriRegion's spatial-semantic scoring works across NC counties</div>
+</div>
+
+<div class="container">
+
+<h2>Haversine Distance & Spatial Scoring</h2>
+<p style="font-size:13px;color:#555;margin-bottom:10px;">
+AgriRegion uses a distance decay function to prioritize local Extension documents. Documents closer to the user get higher spatial scores.
+</p>
+
+<div class="formula">
+S<sub>distance</sub> = 1 / (1 + d(g<sub>user</sub>, g<sub>doc</sub>) / D<sub>max</sub>)<br><br>
+S<sub>final</sub> = (1 − α) · S<sub>semantic</sub> + α · S<sub>distance</sub> &nbsp;&nbsp; where α = 0.5, D<sub>max</sub> = 500 km
+</div>
+
+<div class="highlight">
+<b>Try it:</b> Select a user location below to see how distance scores change for each county's Extension documents. Counties closer to the user get higher S<sub>distance</sub> scores (greener = higher priority in retrieval).
+</div>
+
+<!-- Controls -->
+<div class="controls">
+<label>User Location:</label>
+<select id="user-select">
+<option value="36.07,-79.79">Greensboro, NC</option>
+<option value="35.78,-78.64">Raleigh, NC</option>
+<option value="35.26,-77.58">Kinston, NC</option>
+<option value="35.22,-80.84">Charlotte, NC</option>
+<option value="34.23,-77.94">Wilmington, NC</option>
+<option value="37.54,-77.44">Richmond, VA</option>
+<option value="33.75,-84.39">Atlanta, GA</option>
+</select>
+<label>α (spatial weight):</label>
+<input type="range" id="alpha-slider" min="0" max="1" step="0.1" value="0.5" style="width:120px;">
+<span id="alpha-val" style="font-size:12px;font-weight:700;">0.5</span>
+</div>
+
+<!-- Map -->
+<div class="map-container">
+<svg id="map-svg" viewBox="0 0 700 400"></svg>
+<div class="legend">
+<div class="legend-item"><div class="legend-dot" style="background:#2e7d32;"></div> High S<sub>distance</sub> (close)</div>
+<div class="legend-item"><div class="legend-dot" style="background:#fdd835;"></div> Medium</div>
+<div class="legend-item"><div class="legend-dot" style="background:#c62828;"></div> Low S<sub>distance</sub> (far)</div>
+<div class="legend-item"><div class="legend-dot" style="background:#1565c0;border:2px solid #0d47a1;"></div> User location</div>
+</div>
+</div>
+
+<!-- Score Table -->
+<h2>Distance Scores by County</h2>
+<p style="font-size:12px;color:#888;margin-bottom:8px;">Sorted by distance from selected user location. S<sub>distance</sub> determines how much local documents are boosted in retrieval.</p>
+<table class="score-table" id="score-table">
+<thead><tr><th>County</th><th>Articles</th><th>Distance (km)</th><th>S<sub>distance</sub></th><th>Score Bar</th></tr></thead>
+<tbody id="score-tbody"></tbody>
+</table>
+
+<!-- Explanation -->
+<h2>What This Means for Retrieval</h2>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin:14px 0;">
+<div class="info-panel" style="flex:1;min-width:250px;border-top:3px solid #2e7d32;">
+<b>α = 0.5 (default)</b><br>
+Equal weight to semantic relevance and spatial proximity. A document from the user's county gets a 50% boost from location alone.
+</div>
+<div class="info-panel" style="flex:1;min-width:250px;border-top:3px solid #e65100;">
+<b>α = 0 (semantic only)</b><br>
+No spatial component. All documents ranked purely by content similarity. This is the ablation baseline.
+</div>
+<div class="info-panel" style="flex:1;min-width:250px;border-top:3px solid #1565c0;">
+<b>α = 1 (spatial only)</b><br>
+Pure proximity ranking. Closest documents always win regardless of content. Not useful alone but shows spatial signal.
+</div>
+</div>
+
+<h2>Geo Metadata Assignment</h2>
+<table class="score-table">
+<thead><tr><th>Document Type</th><th>Geo Assignment</th><th>Example</th><th>Count</th></tr></thead>
+<tbody>
+<tr><td>County Extension News</td><td>County centroid</td><td>Robeson → (34.63°N, 79.10°W)</td><td>2,946</td></tr>
+<tr><td>Crop Portal News</td><td>NC state centroid</td><td>peanut.ces.ncsu.edu → (35.78°N, 79.63°W)</td><td>1,512</td></tr>
+<tr><td>Formal Publications</td><td>NC state centroid</td><td>AG-835 Soybean Guide → (35.78°N, 79.63°W)</td><td>72</td></tr>
+<tr><td>National/International</td><td>Null (semantic only)</td><td>Scopus papers → no spatial score</td><td>—</td></tr>
+</tbody>
+</table>
+
+</div>
+
+<script>
+// County data
+const COUNTIES = {
+    "Robeson":{"lat":34.63,"lon":-79.10,"articles":436},
+    "Union":{"lat":34.98,"lon":-80.53,"articles":316},
+    "Sampson":{"lat":35.00,"lon":-78.37,"articles":333},
+    "Bertie":{"lat":36.07,"lon":-76.97,"articles":290},
+    "Lenoir":{"lat":35.24,"lon":-77.64,"articles":307},
+    "Beaufort":{"lat":35.49,"lon":-76.85,"articles":234},
+    "Nash":{"lat":35.97,"lon":-77.97,"articles":198},
+    "Wayne":{"lat":35.37,"lon":-78.00,"articles":171},
+    "Pitt":{"lat":35.59,"lon":-77.37,"articles":165},
+    "Hyde":{"lat":35.40,"lon":-76.16,"articles":78},
+    "Edgecombe":{"lat":35.89,"lon":-77.60,"articles":85},
+    "Wilson":{"lat":35.72,"lon":-77.92,"articles":90},
+    "Johnston":{"lat":35.52,"lon":-78.37,"articles":65},
+    "Greene":{"lat":35.48,"lon":-77.68,"articles":62},
+    "Northampton":{"lat":36.42,"lon":-77.40,"articles":56},
+    "Duplin":{"lat":34.94,"lon":-77.93,"articles":54},
+    "Pasquotank":{"lat":36.26,"lon":-76.23,"articles":7}
+};
+
+const MAX_DIST = 500;
+
+function haversine(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2-lat1)*Math.PI/180;
+    const dLon = (lon2-lon1)*Math.PI/180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+    return R * 2 * Math.asin(Math.sqrt(a));
+}
+
+function sDistance(userLat, userLon, docLat, docLon) {
+    const d = haversine(userLat, userLon, docLat, docLon);
+    return 1 / (1 + d/MAX_DIST);
+}
+
+function scoreColor(s) {
+    // Green (high) → Yellow (mid) → Red (low)
+    if (s > 0.8) return '#2e7d32';
+    if (s > 0.7) return '#66bb6a';
+    if (s > 0.6) return '#fdd835';
+    if (s > 0.5) return '#ff9800';
+    return '#c62828';
+}
+
+// Map projection (simple linear for NC)
+function project(lat, lon) {
+    // NC bounds approx: lat 33.8-36.6, lon -84.3 to -75.5
+    const x = ((lon - (-84.3)) / ((-75.5) - (-84.3))) * 680 + 10;
+    const y = ((36.6 - lat) / (36.6 - 33.8)) * 380 + 10;
+    return [x, y];
+}
+
+let userLat = 36.07, userLon = -79.79;
+let alpha = 0.5;
+
+function render() {
+    const svg = document.getElementById('map-svg');
+    let html = '';
+    
+    // NC outline (simplified)
+    html += `<rect x="5" y="5" width="690" height="390" fill="#f5f5f5" stroke="#ddd" rx="8"/>`;
+    html += `<text x="350" y="25" text-anchor="middle" font-size="11" fill="#aaa">North Carolina</text>`;
+    
+    // Draw lines from user to each county
+    const [ux, uy] = project(userLat, userLon);
+    
+    Object.entries(COUNTIES).forEach(([name, c]) => {
+        const [cx, cy] = project(c.lat, c.lon);
+        const s = sDistance(userLat, userLon, c.lat, c.lon);
+        const color = scoreColor(s);
+        html += `<line x1="${ux}" y1="${uy}" x2="${cx}" y2="${cy}" stroke="${color}" stroke-width="1" class="distance-line" opacity="${s*0.8}"/>`;
+    });
+    
+    // Draw county dots
+    Object.entries(COUNTIES).forEach(([name, c]) => {
+        const [cx, cy] = project(c.lat, c.lon);
+        const s = sDistance(userLat, userLon, c.lat, c.lon);
+        const color = scoreColor(s);
+        const r = 4 + (c.articles / 100);
+        html += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}" stroke="#fff" stroke-width="1.5" class="county-dot"/>`;
+        html += `<text x="${cx}" y="${cy-r-4}" text-anchor="middle" font-size="9" fill="#333">${name}</text>`;
+    });
+    
+    // User marker
+    html += `<circle cx="${ux}" cy="${uy}" r="8" fill="#1565c0" stroke="#fff" stroke-width="2" class="user-marker"/>`;
+    html += `<circle cx="${ux}" cy="${uy}" r="12" fill="none" stroke="#1565c0" stroke-width="1" opacity="0.5"/>`;
+    html += `<text x="${ux}" y="${uy+22}" text-anchor="middle" font-size="10" fill="#1565c0" font-weight="700">📍 User</text>`;
+    
+    svg.innerHTML = html;
+    
+    // Update table
+    const tbody = document.getElementById('score-tbody');
+    const rows = Object.entries(COUNTIES).map(([name, c]) => {
+        const d = haversine(userLat, userLon, c.lat, c.lon);
+        const s = sDistance(userLat, userLon, c.lat, c.lon);
+        return {name, d, s, articles: c.articles};
+    }).sort((a, b) => a.d - b.d);
+    
+    tbody.innerHTML = rows.map(r => {
+        const barWidth = Math.round(r.s * 100);
+        const color = scoreColor(r.s);
+        return `<tr>
+            <td style="font-weight:600;">${r.name}</td>
+            <td>${r.articles}</td>
+            <td>${r.d.toFixed(1)}</td>
+            <td style="font-weight:700;color:${color};">${r.s.toFixed(4)}</td>
+            <td><div class="score-bar" style="width:${barWidth}%;background:${color};"></div></td>
+        </tr>`;
+    }).join('');
+}
+
+// Event listeners
+document.getElementById('user-select').addEventListener('change', (e) => {
+    const [lat, lon] = e.target.value.split(',').map(Number);
+    userLat = lat; userLon = lon;
+    render();
+});
+
+document.getElementById('alpha-slider').addEventListener('input', (e) => {
+    alpha = parseFloat(e.target.value);
+    document.getElementById('alpha-val').textContent = alpha.toFixed(1);
+    render();
+});
+
+render();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+{
+  "nc_centroid": {
+    "lat": 35.78,
+    "lon": -79.63
+  },
+  "counties": {
+    "Robeson": {
+      "lat": 34.63,
+      "lon": -79.1
+    },
+    "Union": {
+      "lat": 34.98,
+      "lon": -80.53
+    },
+    "Sampson": {
+      "lat": 35.0,
+      "lon": -78.37
+    },
+    "Bertie": {
+      "lat": 36.07,
+      "lon": -76.97
+    },
+    "Lenoir": {
+      "lat": 35.24,
+      "lon": -77.64
+    },
+    "Beaufort": {
+      "lat": 35.49,
+      "lon": -76.85
+    },
+    "Nash": {
+      "lat": 35.97,
+      "lon": -77.97
+    },
+    "Wayne": {
+      "lat": 35.37,
+      "lon": -78.0
+    },
+    "Pitt": {
+      "lat": 35.59,
+      "lon": -77.37
+    },
+    "Hyde": {
+      "lat": 35.4,
+      "lon": -76.16
+    },
+    "Edgecombe": {
+      "lat": 35.89,
+      "lon": -77.6
+    },
+    "Wilson": {
+      "lat": 35.72,
+      "lon": -77.92
+    },
+    "Johnston": {
+      "lat": 35.52,
+      "lon": -78.37
+    },
+    "Greene": {
+      "lat": 35.48,
+      "lon": -77.68
+    },
+    "Northampton": {
+      "lat": 36.42,
+      "lon": -77.4
+    },
+    "Duplin": {
+      "lat": 34.94,
+      "lon": -77.93
+    },
+    "Pasquotank": {
+      "lat": 36.26,
+      "lon": -76.23
+    }
+  },
+  "max_distance_km": 500.0,
+  "reference_points": {
+    "Greensboro, NC": {
+      "lat": 36.07,
+      "lon": -79.79
+    },
+    "Raleigh, NC": {
+      "lat": 35.78,
+      "lon": -78.64
+    },
+    "Kinston, NC": {
+      "lat": 35.26,
+      "lon": -77.58
+    },
+    "Richmond, VA": {
+      "lat": 37.54,
+      "lon": -77.44
+    },
+    "Atlanta, GA": {
+      "lat": 33.75,
+      "lon": -84.39
+    },
+    "Washington, DC": {
+      "lat": 38.91,
+      "lon": -77.04
+    }
+  },
+  "geo_counts": {
+    "county": 2946,
+    "state": 1584,
+    "null": 0
+  },
+  "total_articles": 4530,
+  "county_articles": {
+    "Beaufort": 234,
+    "Robeson": 436,
+    "Union": 316,
+    "Pitt": 165,
+    "Pasquotank": 7,
+    "Duplin": 54,
+    "Hyde": 78,
+    "Northampton": 56,
+    "Bertie": 290,
+    "Nash": 197,
+    "Wilson": 90,
+    "Edgecombe": 85,
+    "Greene": 62,
+    "Lenoir": 307,
+    "Sampson": 333,
+    "Johnston": 65,
+    "Wayne": 171
+  }
+}
