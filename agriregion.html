@@ -189,7 +189,34 @@ S<sub>distance</sub> = 1 / (1 + d(g<sub>user</sub>, g<sub>doc</sub>))
 <!-- Revision Plan -->
 <div id="revision">
 <h2>📝 Revision Plan (Reviewer Feedback)</h2>
-<p style="font-size:13px;color:#666;margin-bottom:16px;">IEEE Access — Major Revision. 3 reviewers. Core idea positively received; requires targeted improvements. Revision is feasible within a short timeframe.</p>
+<p style="font-size:13px;color:#666;margin-bottom:16px;">IEEE Access — Major Revision. 3 reviewers. Core idea positively received; requires targeted improvements.</p>
+
+<!-- Quick Status Table -->
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:20px;background:#fff;border:1px solid #eee;border-radius:8px;overflow:hidden;">
+<thead><tr style="background:#f0f4ff;"><th style="padding:8px;text-align:left;">R#</th><th style="padding:8px;text-align:left;">Concern</th><th style="padding:8px;text-align:center;">Status</th></tr></thead>
+<tbody>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R1.1</td><td>RAG baselines (not just bare LLMs)</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R1.2</td><td>Ablation: disable geo (α=0)</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R1.3</td><td>Contextualize with geo-RAG literature</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R1.4</td><td>Discuss limitations / generalizability</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R1.5</td><td>Dataset creation details + release</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R1.6</td><td>RAGAS metrics + human eval alignment</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R1.7</td><td>Table 5 needs real failure examples</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R1.8</td><td>Figure 4 misleading (RAGA-P distortion)</td><td style="text-align:center;color:#e65100;font-weight:700;">⏳ Remake</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R1.9</td><td>Figure 5 same color scale</td><td style="text-align:center;color:#e65100;font-weight:700;">⏳ Remake</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R2.1</td><td>Spatial retrieval mechanism unclear</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R2.2</td><td>Baselines / ablation (same as R1.2)</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R2.3</td><td>Limited dataset (160 Qs, NC only)</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R2.4</td><td>Reproducibility (no code/data)</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;background:#fafafa;"><td style="padding:6px 8px;">R3.1</td><td>Contribution feels incremental</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr style="border-bottom:1px solid #f0f0f0;"><td style="padding:6px 8px;">R3.2</td><td>Larger dataset + creation details</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+<tr><td style="padding:6px 8px;">R3.3</td><td>Parameter choices not explained</td><td style="text-align:center;color:#2e7d32;font-weight:700;">✅</td></tr>
+</tbody>
+</table>
+<div style="font-size:12px;color:#555;margin-bottom:20px;">
+<b>14/16 addressed</b> with written text ready to paste. 2 remaining: Figures 4 & 5 (visual remake).
+<br>All revised sections available at <a href="revision_text.html">revision_text.html</a> | Response letter at <a href="response_letter.html">response_letter.html</a>
+</div>
 
 <!-- Priority Summary -->
 <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px;">
