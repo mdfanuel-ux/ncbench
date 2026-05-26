@@ -32,6 +32,8 @@ tr:nth-child(even) { background: #fafafa; }
 <a href="index.html">← NCBench</a>
 <a href="#soybean">Soybean</a>
 <a href="#sweetpotato">Sweetpotato</a>
+<a href="#tobacco">Tobacco</a>
+<a href="#other">Other Crops</a>
 <a href="#county">County News</a>
 </nav>
 <div class="container">
@@ -43,62 +45,31 @@ Tracks which NC Extension documents have been processed through the QA generatio
 
 <div class="stat-row" id="dynamic-stats">
 <div class="stat-card">
-<div class="stat-num" id="stat-soy">—</div>
-<div class="stat-label">Soybean QA Pairs</div>
+<div class="stat-num">2,869</div>
+<div class="stat-label">Total QA Pairs</div>
+</div>
+<div class="stat-card" style="border-top-color:#1565c0;">
+<div class="stat-num">73</div>
+<div class="stat-label">Source Docs Processed</div>
+</div>
+<div class="stat-card" style="border-top-color:#6a1b9a;">
+<div class="stat-num">8</div>
+<div class="stat-label">Crops Covered</div>
 </div>
 <div class="stat-card" style="border-top-color:#ff9800;">
-<div class="stat-num" id="stat-sp">—</div>
-<div class="stat-label">Sweetpotato QA Pairs</div>
+<div class="stat-num">4,530</div>
+<div class="stat-label">Articles Inventoried</div>
 </div>
-<div class="stat-card" style="border-top-color:#999;">
-<div class="stat-num" id="stat-docs">—</div>
-<div class="stat-label">Documents Processed</div>
-</div>
-<div class="stat-card" style="border-top-color:#999;">
-<div class="stat-num" id="stat-remaining">—</div>
-<div class="stat-label">Documents Remaining</div>
+<div class="stat-card" style="border-top-color:#c62828;">
+<div class="stat-num">4,457</div>
+<div class="stat-label">Articles Remaining</div>
 </div>
 </div>
-
-<script>
-// Dynamic stats from topic_index.json and county_documents.json
-Promise.all([
-  fetch("topic_index.json").then(r => r.ok ? r.json() : null),
-  fetch("county_documents.json").then(r => r.ok ? r.json() : null)
-]).then(([topicIdx, countyDocs]) => {
-  // Count QA pairs from topic index (soybean = corn analog for now)
-  if (topicIdx) {
-    const cornPairs = Object.entries(topicIdx)
-      .filter(([k]) => k.startsWith("Corn/"))
-      .reduce((sum, [, v]) => sum + v.length, 0);
-    const ricePairs = Object.entries(topicIdx)
-      .filter(([k]) => k.startsWith("Rice/"))
-      .reduce((sum, [, v]) => sum + v.length, 0);
-    // We know we generated 736 soybean pairs
-    document.getElementById("stat-soy").textContent = "736";
-    document.getElementById("stat-sp").textContent = "~80";
-  }
-  if (countyDocs) {
-    const counties = Object.keys(countyDocs.counties || {});
-    const totalLocal = counties.reduce((sum, c) => {
-      const info = countyDocs.counties[c];
-      return sum + (info.tier1_docs || []).length + (info.tier2_docs || []).length;
-    }, 0);
-    document.getElementById("stat-docs").textContent = "13";
-    document.getElementById("stat-remaining").textContent = "~" + Math.round(totalLocal / 10) * 10 + "+";
-  }
-}).catch(() => {
-  document.getElementById("stat-soy").textContent = "736";
-  document.getElementById("stat-sp").textContent = "~80";
-  document.getElementById("stat-docs").textContent = "13";
-  document.getElementById("stat-remaining").textContent = "~3,000+";
-});
-</script>
 
 <!-- SOYBEAN -->
 <h2 id="soybean">🫘 Soybean Sources</h2>
 
-<h3>NC Soybean Production Guide (12 chapters) — ✅ All Processed</h3>
+<h3>NC Soybean Production Guide (12 chapters) — ✅ All Processed (1,587 QA pairs)</h3>
 <table>
 <thead><tr><th>#</th><th>Chapter</th><th>Chars</th><th>QA Pairs</th><th>Status</th></tr></thead>
 <tbody>
@@ -176,34 +147,78 @@ Promise.all([
 </table>
 
 <!-- COUNTY NEWS -->
+<h2 id="tobacco">🍃 Tobacco Sources</h2>
+<h3>Tobacco Production Guide (13 chapters) + Portal — ✅ All Processed</h3>
+<table>
+<thead><tr><th>Document</th><th>QA Pairs</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>AG-660 Ch. 6: Tobacco (Organic Guide)</td><td>~30</td><td class="status-done">✅ Done</td></tr>
+<tr><td>Tobacco Guide Ch. 1-13 (variety, nutrients, weeds, diseases, curing, etc.)</td><td>~170</td><td class="status-done">✅ Done</td></tr>
+<tr><td>Portal: Target Spot 2025, TMV, TSWV/Thrips, Barn Rots, Late Season Insects</td><td>~46</td><td class="status-done">✅ Done</td></tr>
+<tr style="font-weight:700;"><td>Total Tobacco</td><td>246</td><td></td></tr>
+</tbody>
+</table>
+
+<h2 id="other">🌱 Other Crops</h2>
+<table>
+<thead><tr><th>Crop</th><th>Sources</th><th>QA Pairs</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>🧶 Cotton</td><td>Cotton Info 2026, Insect Scouting, Jassid Pest, 15 portal articles</td><td>175</td><td class="status-done">✅ Done</td></tr>
+<tr><td>🌾 Wheat</td><td>Production Guide, Topics, 15 portal articles</td><td>105</td><td class="status-done">✅ Done</td></tr>
+<tr><td>🍓 Strawberry</td><td>Sustainable Plasticulture Production Guide</td><td>128</td><td class="status-done">✅ Done</td></tr>
+<tr><td>🥜 Peanut</td><td>AG-660 Ch. 7, Crop Updates (4)</td><td>65</td><td class="status-done">✅ Done</td></tr>
+<tr><td>🌽 Corn</td><td>AG-660 Ch. 3</td><td>40</td><td class="status-done">✅ Done</td></tr>
+</tbody>
+</table>
+
+<h3>Cross-Crop Sources (AG-660)</h3>
+<table>
+<thead><tr><th>Document</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>AG-660 Ch. 9: Soil Management</td><td class="status-done">✅ Done</td></tr>
+<tr><td>AG-660 Ch. 10: Weed Management</td><td class="status-done">✅ Done</td></tr>
+<tr><td>AG-660 Ch. 11: Cover Crop Mulches</td><td class="status-done">✅ Done</td></tr>
+</tbody>
+</table>
+
+<!-- COUNTY NEWS -->
 <h2 id="county">📰 County Extension News</h2>
 <p style="font-size:13px; color:#555;">
-2,947 unique local news articles across 17 counties. These are Tier 2 (general agriculture)
-and lower priority for QA generation. Not yet processed.
+2,946 unique local news articles across 17 counties + 1,512 crop portal articles. 
+Text fetched from 210 articles so far. Remaining articles available for future QA generation.
 </p>
 <table>
 <thead><tr><th>Status</th><th>Count</th><th>Notes</th></tr></thead>
 <tbody>
-<tr><td class="status-done">✅ Crawled & Inventoried</td><td>2,947</td><td>URLs and titles saved in county_documents.json</td></tr>
-<tr><td class="status-pending">⏳ Text Extraction</td><td>0</td><td>Not yet extracted — would need to fetch each article's full text</td></tr>
-<tr><td class="status-not">— QA Generation</td><td>0</td><td>Pending text extraction</td></tr>
+<tr><td class="status-done">✅ Crawled & Inventoried</td><td>4,530</td><td>URLs and titles saved (portals + counties + publications)</td></tr>
+<tr><td class="status-done">✅ Text Extracted</td><td>270</td><td>73 source docs + 210 portal articles with full text</td></tr>
+<tr><td class="status-done">✅ QA Generated</td><td>2,869 static + 94 temporal</td><td>From 73 source documents</td></tr>
+<tr><td class="status-pending">⏳ Text Extraction Pending</td><td>~4,260</td><td>URLs known, text not yet fetched</td></tr>
+<tr><td class="status-pending">⏳ QA Generation Pending</td><td>~4,260</td><td>Waiting for API credits</td></tr>
 </tbody>
 </table>
 
 <h2>Pipeline Summary</h2>
 <table>
-<thead><tr><th>Crop</th><th>Sources Processed</th><th>QA Pairs Generated</th><th>Sources Remaining</th></tr></thead>
+<thead><tr><th>Crop</th><th>Sources Processed</th><th>QA Pairs</th><th>Sources Remaining</th></tr></thead>
 <tbody>
-<tr><td>🫘 Soybean</td><td>12 chapters</td><td>736</td><td>~52 portal + NCSoy articles</td></tr>
-<tr><td>🍠 Sweetpotato</td><td>13 documents</td><td>523</td><td>More factsheets available</td></tr>
-<tr><td>📰 County News</td><td>0 (crawled only)</td><td>0</td><td>2,947 articles</td></tr>
-<tr style="font-weight:700; border-top:2px solid #ddd;"><td>Total</td><td>25</td><td>1,998</td><td>~3,000</td></tr>
+<tr><td>🫘 Soybean</td><td>15 (AG-835 12ch + AG-660 Ch.5,9,10)</td><td>1,587</td><td>~46 portal articles</td></tr>
+<tr><td>🍠 Sweetpotato</td><td>13 (AG-660 Ch.8 + factsheets)</td><td>523</td><td>More factsheets available</td></tr>
+<tr><td>🍃 Tobacco</td><td>19 (AG-660 Ch.6 + 13 guide ch + 5 portal)</td><td>246</td><td>~232 portal articles</td></tr>
+<tr><td>🧶 Cotton</td><td>5 (Info guide + scouting + portal)</td><td>175</td><td>~400 portal articles</td></tr>
+<tr><td>🌾 Wheat</td><td>7 (Guide + topics + portal articles)</td><td>105</td><td>~84 portal articles</td></tr>
+<tr><td>🍓 Strawberry</td><td>2 (Sustainable Production + IPM)</td><td>128</td><td>~167 portal articles</td></tr>
+<tr><td>🥜 Peanut</td><td>5 (AG-660 Ch.7 + crop updates)</td><td>65</td><td>~400 portal articles</td></tr>
+<tr><td>🌽 Corn</td><td>1 (AG-660 Ch.3)</td><td>40</td><td>~82 portal articles</td></tr>
+<tr><td>📰 County News</td><td>0 (crawled only)</td><td>0</td><td>2,946 articles</td></tr>
+<tr><td>⏱️ Temporal QA</td><td>210 articles (text fetched)</td><td>94</td><td>More from periodic crawl</td></tr>
+<tr style="font-weight:700; border-top:2px solid #ddd;"><td>TOTAL</td><td>73 documents</td><td>2,963</td><td>~4,457 articles</td></tr>
 </tbody>
 </table>
 
 </div>
 <div class="footer">
-<p>NCBench Document Tracker — <a href="index.html">Back to NCBench</a></p>
+<p>NCBench Document Tracker — <a href="index.html">Back to NCBench</a> | <a href="sources.html">Full Sources (4,530)</a> | <a href="dashboard.html">Dashboard</a></p>
 <p>Last updated: May 2026</p>
 </div>
 </body>
