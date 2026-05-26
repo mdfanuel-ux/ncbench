@@ -163,16 +163,18 @@ d = 2R · arcsin(√(sin²(Δφ/2) + cos(φ₁)·cos(φ₂)·sin²(Δλ/2)))
 <div class="section-text">
 <h3>Add to Section II.B (after AgriGPT discussion):</h3>
 
-<p>Several other systems have explored RAG for agricultural applications. Agri-Query [R1] proposes a retrieval-based QA system for agricultural extension, though without explicit geospatial constraints. ShizishanGPT [R2] develops a Chinese agricultural LLM with retrieval capabilities focused on crop disease diagnosis. AgriHubi [R3] presents a multi-agent agricultural advisory system combining retrieval with specialized sub-agents. While these systems demonstrate the value of retrieval augmentation in agriculture, none explicitly incorporate geospatial metadata into the retrieval pipeline or enforce regional constraints during re-ranking—the core contribution of AgriRegion.</p>
+<p>Several recent systems have explored RAG for agricultural applications. ShizishanGPT [R2] develops a modular Chinese agricultural LLM that integrates multiple domain knowledge sources and tools, evaluated on 100 agricultural questions. Its modular architecture allows plugging in different knowledge bases, but retrieval is performed purely by semantic similarity without geographic constraints. AgriHubi [R3] presents a domain-adapted RAG system for Finnish-language agricultural decision support, combining Finnish agricultural documents with open-source PORO language models and incorporating user feedback for iterative refinement. While AgriHubi demonstrates the value of domain-specific document grounding, it does not incorporate spatial metadata or location-aware re-ranking.</p>
 
-<p>In the broader NLP literature, Spatial-RAG [R4] addresses spatial reasoning in retrieval-augmented generation for general geographic questions. Our work differs in three key aspects: (1) we target a specific professional domain where spatial context directly affects recommendation validity, (2) we use verified institutional documents (Cooperative Extension services) rather than web-scraped content, and (3) our distance decay function is calibrated for agricultural relevance zones (county → state → region) rather than arbitrary geographic queries.</p>
+<p>In the broader NLP literature, Spatial-RAG [R4] introduces a hybrid spatial retriever that combines sparse spatial filtering with dense semantic matching for general geospatial question answering. Spatial-RAG operates over structured spatial databases (e.g., points of interest, geographic entities) and targets general geographic queries. AgriRegion differs in three key aspects: (1) we target a specific professional domain where spatial context directly affects recommendation validity and farmer safety, (2) we retrieve from unstructured Extension documents rather than structured spatial databases, and (3) our distance decay function is calibrated for agricultural relevance zones (county → state → region) rather than arbitrary point-to-point queries.</p>
+
+<p>Critically, none of the above systems enforce geospatial constraints during the retrieval re-ranking stage. AgriRegion's contribution lies in demonstrating that this spatial awareness—implemented through a simple but effective distance decay function—provides measurable improvement (+0.06 F1) over semantic-only retrieval in agricultural advisory contexts.</p>
 
 <h3>New References:</h3>
 <p style="font-size:13px;">
-[R1] Gun, S., et al. (2025). "Agri-Query: Retrieval-Augmented Generation for Agricultural Extension Question Answering." arXiv:2508.18093.<br>
-[R2] Yang, S., et al. (2025). "ShizishanGPT: An Agricultural Large Language Model Integrating Tools and Resources." arXiv:2409.13537.<br>
-[R3] Hasan, M., et al. (2026). "AgriHubi: A Multi-Agent Agricultural Advisory System." arXiv:2602.02208.<br>
-[R4] Yu, D., et al. (2025). "Spatial-RAG: Spatial Retrieval Augmented Generation for Real-World Spatial Reasoning Questions." arXiv:2502.18470.
+[R1] S. Gun, et al., "Agri-Query: Retrieval-Augmented Generation for Agricultural Extension Question Answering," arXiv preprint arXiv:2508.18093, 2025.<br>
+[R2] S. Yang, et al., "ShizishanGPT: An Agricultural Large Language Model Integrating Tools and Resources," arXiv preprint arXiv:2409.13537, 2025.<br>
+[R3] M. Hasan, et al., "AgriHubi: Towards AI Evaluation in Domain-Specific RAG Systems for Finnish Agricultural Decision Support," arXiv preprint arXiv:2602.02208, 2026.<br>
+[R4] D. Yu, R. Bao, G. Mai, and L. Zhao, "Spatial-RAG: Spatial Retrieval Augmented Generation for Real-World Geospatial Reasoning Questions," arXiv preprint arXiv:2502.18470, 2025.
 </p>
 </div>
 
