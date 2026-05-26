@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NCBench — RAG Corpus (1,172 docs, 2.1M words)</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📖</text></svg>">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#fafafa;color:#222}
+.topnav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.95);backdrop-filter:blur(6px);border-bottom:1px solid #eee;padding:8px 0;text-align:center}
+.topnav a{display:inline-block;margin:0 8px;padding:4px 10px;font-size:12px;font-weight:600;color:#555;text-decoration:none;border-radius:4px}
+.topnav a:hover{background:#f0f0f0;color:#222}
+.topnav a.active{background:#4527a0;color:#fff}
+.hero{background:linear-gradient(135deg,#311b92 0%,#4527a0 40%,#7c4dff 100%);padding:40px 20px 30px;text-align:center;color:#fff}
+.hero h1{font-size:28px;margin-bottom:6px}
+.hero .sub{opacity:0.85;font-size:13px}
+.container{max-width:1000px;margin:0 auto;padding:30px 20px}
+h2{font-size:18px;margin:25px 0 12px;padding-bottom:6px;border-bottom:2px solid #ede7f6}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.stat{flex:1;min-width:130px;background:#fff;border:1px solid #eee;border-radius:8px;padding:14px;text-align:center}
+.stat .n{font-size:24px;font-weight:800}
+.stat .l{font-size:11px;color:#888;margin-top:3px}
+.crop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:14px 0}
+.crop-card{background:#fff;border:1px solid #eee;border-radius:8px;padding:12px;text-align:center;transition:transform 0.2s}
+.crop-card:hover{transform:translateY(-2px);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.crop-card .emoji{font-size:24px}
+.crop-card .name{font-size:12px;font-weight:700;margin-top:4px}
+.crop-card .info{font-size:11px;color:#888;margin-top:2px}
+.search{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:13px;margin-bottom:12px;outline:none}
+.search:focus{border-color:#4527a0}
+.doc-list{max-height:500px;overflow-y:auto;border:1px solid #eee;border-radius:8px;background:#fff}
+.doc-item{display:flex;align-items:center;gap:10px;padding:8px 14px;border-bottom:1px solid #f5f5f5;font-size:12px}
+.doc-item:hover{background:#f9f9f9}
+.doc-crop{padding:2px 6px;border-radius:8px;font-size:9px;font-weight:700;color:#fff;min-width:60px;text-align:center}
+.doc-title{flex:1;font-weight:500}
+.doc-meta{color:#888;font-size:11px;min-width:80px;text-align:right}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.fbtn{padding:5px 10px;border:1px solid #ddd;border-radius:14px;font-size:11px;font-weight:600;cursor:pointer;background:#fff;color:#555}
+.fbtn:hover{border-color:#4527a0}
+.fbtn.active{background:#4527a0;color:#fff;border-color:#4527a0}
+.note{background:#ede7f6;border-left:4px solid #4527a0;padding:12px 16px;border-radius:0 6px 6px 0;margin:14px 0;font-size:12px}
+</style>
+</head>
+<body>
+<nav class="topnav">
+<a href="index.html">← NCBench</a>
+<a href="agriregion.html">🌍 AgriRegion</a>
+<a href="sources.html">📚 Sources</a>
+<a href="corpus.html" class="active">📖 Corpus</a>
+</nav>
+<div class="hero">
+<h1>📖 RAG Corpus</h1>
+<div class="sub">1,172 NC Extension documents · 2.1 million words · Ready for vector indexing</div>
+</div>
+<div class="container">
+
+<div class="stats" id="stats"></div>
+
+<div class="note">
+This is the knowledge base for <b>AgriRegion</b>'s retrieval system. Each document is chunked (300 tokens), embedded, geo-tagged, and stored in ChromaDB for spatial-semantic retrieval. Tables and image captions are preserved.
+</div>
+
+<h2>By Crop</h2>
+<div class="crop-grid" id="crop-grid"></div>
+
+<h2>Browse Documents</h2>
+<div class="filters" id="filters"></div>
+<input class="search" placeholder="Search documents..." id="search">
+<div class="doc-list" id="doc-list">Loading...</div>
+
+</div>
+<script>
+const CROP_COLORS = {general:'#555',soybean:'#d4a72c',sweetpotato:'#e67e22',tobacco:'#5d4e37',peanut:'#8B4513',corn:'#f0a500',cotton:'#7b8fa1',wheat:'#c49a3c',strawberry:'#d32f2f'};
+const CROP_EMOJI = {general:'🌱',soybean:'🫘',sweetpotato:'🍠',tobacco:'🍃',peanut:'🥜',corn:'🌽',cotton:'🧶',wheat:'🌾',strawberry:'🍓'};
+
+let allDocs=[];
+let filter='all';
+let query='';
+
+async function load(){
+    const r=await fetch('corpus_manifest.json');
+    const data=await r.json();
+    allDocs=data.documents;
+    
+    // Stats
+    document.getElementById('stats').innerHTML=`
+        <div class="stat"><div class="n">${data.total_documents.toLocaleString()}</div><div class="l">Documents</div></div>
+        <div class="stat"><div class="n">${(data.total_words/1000000).toFixed(1)}M</div><div class="l">Words</div></div>
+        <div class="stat"><div class="n">${data.total_tables}</div><div class="l">Tables</div></div>
+        <div class="stat"><div class="n">${data.total_images.toLocaleString()}</div><div class="l">Images Catalogued</div></div>
+        <div class="stat"><div class="n">${Object.keys(data.by_crop).length}</div><div class="l">Crop Categories</div></div>
+    `;
+    
+    // Crop grid
+    let grid='';
+    for(const[crop,info]of Object.entries(data.by_crop).sort((a,b)=>b[1].count-a[1].count)){
+        grid+=`<div class="crop-card" onclick="setFilter('${crop}')">
+            <div class="emoji">${CROP_EMOJI[crop]||'📄'}</div>
+            <div class="name">${crop}</div>
+            <div class="info">${info.count} docs · ${(info.words/1000).toFixed(0)}K words</div>
+        </div>`;
+    }
+    document.getElementById('crop-grid').innerHTML=grid;
+    
+    // Filters
+    let fhtml='<span class="fbtn active" data-f="all" onclick="setFilter(\'all\')">All</span>';
+    for(const crop of Object.keys(data.by_crop).sort()){
+        fhtml+=`<span class="fbtn" data-f="${crop}" onclick="setFilter('${crop}')">${CROP_EMOJI[crop]||''} ${crop}</span>`;
+    }
+    document.getElementById('filters').innerHTML=fhtml;
+    
+    render();
+}
+
+function setFilter(f){
+    filter=f;
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    const btn=document.querySelector(`.fbtn[data-f="${f}"]`);
+    if(btn)btn.classList.add('active');
+    render();
+}
+
+function render(){
+    let d=allDocs;
+    if(filter!=='all')d=d.filter(x=>x.crop===filter);
+    if(query)d=d.filter(x=>x.title.toLowerCase().includes(query));
+    
+    const show=d.slice(0,150);
+    document.getElementById('doc-list').innerHTML=show.map(doc=>{
+        const color=CROP_COLORS[doc.crop]||'#555';
+        return `<div class="doc-item">
+            <span class="doc-crop" style="background:${color}">${doc.crop}</span>
+            <span class="doc-title">${doc.title}</span>
+            <span class="doc-meta">${doc.words.toLocaleString()}w${doc.tables?' · '+doc.tables+'T':''}${doc.images?' · '+doc.images+'img':''}</span>
+        </div>`;
+    }).join('')+(d.length>150?`<div class="doc-item" style="justify-content:center;color:#888;">...${d.length-150} more</div>`:'');
+}
+
+document.getElementById('search').addEventListener('input',e=>{query=e.target.value.trim().toLowerCase();render();});
+load();
+</script>
+</body>
+</html>
